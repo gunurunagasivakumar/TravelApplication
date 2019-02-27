@@ -1,0 +1,156 @@
+
+    
+<header-component></header-component>
+
+  
+    <div class="col-sm-2 aside" >
+     <ul class="nav nav-stacked">
+     	<li><button  ><img src="assets/login/images/home_selected.png" alt="IMG" ><br /><span>HOME</span></button></li>
+        <li><button  ng-click="newrequest()"><img src="assets/login/images/new_request.png" alt="IMG" ><br /><span>NEW REQUEST</span></button></li>
+        <li ><button  ng-click="myRequestList();checkList()"><img src="assets/login/images/request_list.png" alt="IMG"><br /><span>REQUEST LIST</span></button></li>
+		<li ng-if="user.grade == 'M5' || user.grade == 'M6' && user.isApprover"><button  ng-click="requestList()" ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		<li ng-if="user.grade != 'M5' && user.grade != 'M6' && user.isApprover"><button  ng-click="requestList()" ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		
+      </ul>
+    </div>
+    
+             
+    <div class="col-sm-10 ">
+	
+	<div class="col-sm-7">
+	<div class="row">
+		
+		<div class="col-sm-6 portal-body">
+	    	 <table width="100%" class=" ticket-expense" ng-click="requestDetailsByType('Visa')">
+			<tr>
+				<td width="80%"><div class=" status"><span>Visa</span></div></td>
+				<td width="20%"><div class=" statusApp"><img src="assets/login/images/group-7.png" alt="IMG" /></div></td>
+			</tr>
+			</table>
+	  
+			
+			<table width="100%" class=" ticket-status">
+			<tr>
+			<td>	<div class=" status" style="color:white;"><span>Pending</span><br /></div><div style="color:white;text-align:center;padding-right:25px"><span>{{count.visaPending}}</span></div></td>
+			<td>	<div class=" statusApp" style="color:white;"><span>Approved</span><br /></div><div style="color:white;text-align:center;padding-left:25px"><span>{{count.visaApproved}}</span></div></td>
+			</tr>
+			</table>
+	  </div>
+	
+	
+	
+		<div class="col-sm-6 portal-body">
+			<table width="100%" class=" travel-expense" ng-click="requestDetailsByType('Flight')">
+			<tr>
+				<td width="80%"><div class=" status"><span>Flight</span></div></td>
+				<td width="20%"><div class=" statusApp"><img src="assets/login/images/group-5.png" alt="IMG" /></div></td>
+			</tr>
+			</table>
+			
+			<table width="100%" class=" travel-status">
+			<tr>
+				<td width="50%"><div class=" status"  style="color:white;"><span>Pending</span><br /></div><div style="color:white;text-align:center;padding-right:25px"><span>{{count.flightPending}}</span></div></td>
+				<td width="50%"><div class=" statusApp" style="color:white;"><span>Approved</span><br /></div><div style="color:white;text-align:center;padding-left:25px"><span>{{count.flightApproved}}</span></div></td>
+			</tr>
+			</table>
+	   
+	  </div>
+	
+	 
+	    
+	  
+	  
+	
+	</div>
+	<div class="row">
+	
+    <div class="col-sm-6 portal-body">
+	  		<table width="100%" class=" forex-expense" ng-click="requestDetailsByType('Forex')">
+			<tr>
+				<td width="80%"><div class=" status"><span>Forex</span></div></td>
+				<td width="20%"><div class=" statusApp"><img src="assets/login/images/group.png" alt="IMG" /></i></div></td>
+			</tr>
+			</table>
+	 		
+	  	
+			<table width="100%" class=" forex-status">
+			<tr>
+				<td><div class=" status" style="color:white;"><span>Pending</span><br /></div><div style="color:white;text-align:center;padding-right:25px"><span>{{count.forexPending}}</span></div></td>
+				<td><div class=" statusApp" style="color:white;"><span>Approved</span><br /></div><div style="color:white;text-align:center;padding-left:25px"><span>{{count.forexApproved}}</span></div></td>
+				</tr>
+			</table>
+	  </div>
+	  
+	  
+	   <div class="col-sm-6 portal-body">
+	  			
+			
+			<table width="100%" class=" home-expense" ng-click="requestDetailsByType('Accomodation')">
+			<tr>
+				<td width="80%"><div class=" status"><span>Hotel</span></div></td>
+				<td width="20%"><div class=" statusApp"><img src="assets/login/images/group-6.png" alt="IMG" /></div></td>
+			</tr>
+			</table>
+	    	
+			
+			<table width="100%" class=" home-status">
+			<tr>
+				<td><div class=" status" style="color:white;"><span>Pending</span><br /></div><div style="color:white;text-align:center;padding-right:25px"><span>{{count.accomodationPending}}</span></div></td>
+				<td><div class=" statusApp" style="color:white;"><span>Approved</span><br /></div><div style="color:white;text-align:center;padding-left:25px"><span>{{count.accomodationApproved}}</span></div></td>
+				</tr>
+			</table>
+	  </div>
+	    
+	
+	</div>
+	
+	
+      
+	  
+	  
+	  </div>
+	  <div class="col-sm-5 no-margin">
+	  <!-- Calender Block Start -->
+          
+                   
+                           <h4>Approved Request List</h4>
+                        <div class="table-responsive text-center approval-list col-sm-12">
+                           <table class="table table-hover">
+                            <thead>
+                            	<th class="text-cen"><span>Request Id</span></th>
+                            	<th class="text-cen"><span>Project Name</span></th>
+                            </thead>
+                            <tbody ng-repeat="name in tripsObj"> 
+								<tr  ng-click="getRequestDetails(name.requestId)" data-toggle="modal" title="View" data-target="#rejectRequestModal" class="curPointer">
+                            		<td>{{name.requestId}}</td>
+                            		<!-- <td><span  ng-class="accomodationIconClass" class="fa fa-home " aria-hidden="true"></span>
+                            		<span  ng-class="flightIconClass" class="fa fa-plane " aria-hidden="true"></span>
+                            		<span  ng-class="cabIconClass" class="fa fa-taxi " aria-hidden="true"></span></td>
+                            		 --><!-- <td><i ng-if="x.category" class="fa fa-home " aria-hidden="true"></i></td> -->
+                            		
+                            		<td><span>{{name.projectName}}</span></td>
+                            		<!-- <td><button class="btn btn-primary"  ng-click="getRequestDetails(x.requestId)" ><i class="fa fa-eye"></i></button></td> -->
+                            	</tr>
+                           </tbody>
+                            	</table> 
+ 
+                        </div> 
+                       
+                        
+            </div>           
+                        
+                   
+            
+            <!-- Calender Block End -->
+         </div>   
+            
+	  
+	
+   
+  
+  <footer-component></footer-component>
+  
+
+
+
+

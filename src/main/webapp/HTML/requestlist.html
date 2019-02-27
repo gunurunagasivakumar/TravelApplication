@@ -1,0 +1,250 @@
+  <!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/cust-Travel-Portal.css">
+    <link rel="stylesheet" href="../assets/js/calendar/bootstrap_calendar.css" type="text/css" />
+    <style>
+      .input-s-sm {
+          width: 120px;
+      }
+      .v-middle {
+          vertical-align: middle !important;
+      }
+      .inline {
+          display: inline-block !important;
+      }
+      .th-sort i {
+          position: relative;
+          z-index: 1;
+      }
+
+      .text-active, .active > .text, .active > .auto .text {
+          display: none !important;
+      }
+
+      .panel .table-striped > thead th {
+          background-color: #f9fafc;
+          border-right: 1px solid #eaeef1;
+          padding: 8px 15px;
+      }
+    </style>
+
+</head>
+
+<body class="">
+  <section class="f-box">
+  <header class="hdr-h p">
+            <section>
+                <article class="pull-left">
+                    <img class="tp-logo img-responsive" src="../assets/images/logo.png">
+                </article>
+
+                <article class="pull-right head-pad">
+                    <div class="dropdown">
+                        <div class="travel-user-btn dropdown-toggle" type="button" data-toggle="dropdown"><span><img class="img-circle" width="20px" src="../assets/images/user.png" alt=""></span>
+                            <label>Hemant Vedak</label>
+                            <span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu">
+                                <li><a href="../html/requestlist.html">Request List</a>
+                                </li>
+                                <li><a href="../html/approveRequest.html">Approve Request</a>
+                                </li>
+                                <li><a href="#">Logout</a>
+                                </li>
+                            </ul>
+                    </div>
+                </article>
+                    </div>
+                </article>
+            </section>
+        </header>
+    <section>
+      <section class="hbox stretch">
+        <!-- .aside -->
+     
+        <!-- /.aside -->
+        <section id="content">
+          <section class="vbox">
+            <section class="container-bg">
+              <div class="m-b-md">
+                <h3 class="m-b-none">Request Lists</h3>
+              </div>
+      
+              <section class="panel panel-default">
+            
+                <div class="row p">
+                  <div class="col-sm-5 m-b-xs">
+                    <select class="input-sm form-control input-s-sm inline v-middle">
+                      <option value="0">Bulk action</option>
+                      <option value="1">Delete selected</option>
+                      <option value="2">Bulk edit</option>
+                      <option value="3">Export</option>
+                    </select>
+                    <button class="btn btn-sm btn-default">Apply</button>                
+                  </div>
+                  <div class="col-sm-4 m-b-xs">
+                    <div class="btn-group" data-toggle="buttons">
+                      <label class="btn btn-sm btn-default active">
+                        <input type="radio" name="options" id="option1"> Day
+                      </label>
+                      <label class="btn btn-sm btn-default">
+                        <input type="radio" name="options" id="option2"> Week
+                      </label>
+                      <label class="btn btn-sm btn-default">
+                        <input type="radio" name="options" id="option2"> Month
+                      </label>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="input-group">
+                      <input type="text" class="input-sm form-control" placeholder="Search">
+                      <span class="input-group-btn">
+                        <button class="btn btn-sm btn-default" type="button">Go!</button>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="table-responsive">
+                  <table class="table table-striped b-t b-light">
+                    <thead>
+                      <tr>
+                        <th width="20"></th>
+                        <th>Name</th>
+                        <th class="th-sortable" data-toggle="class">Project
+                          <span class="th-sort">
+                            <i class="fa fa-sort-down hide"></i>
+                            <i class="fa fa-sort-up text-active"></i>
+                            <i class="fa fa-sort"></i>
+                          </span>
+                        </th>
+                        <th>Request</th>
+                        <th>Date</th>
+                        <th width="30"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Idrawfast</td>
+                        <td>Cab</td>
+                        <td>Jul 25, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Formasa</td>
+                        <td>Cab</td>
+                        <td>Jul 22, 2017</td>
+                        <td>
+                          <a href="#" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Avatar system</td>
+                        <td>Cab</td>
+                        <td>Jul 15, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Throwdown</td>
+                        <td>Flight</td>
+                        <td>Jul 11, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Idrawfast</td>
+                        <td>Flight</td>
+                        <td>Jul 7, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Formasa</td>
+                        <td>Flight</td>
+                        <td>Jul 3, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Avatar system </b></td>
+                        <td>Flight</td>
+                        <td>Jul 2, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label class="checkbox m-n i-checks"><input type="checkbox" name="post[]"><i></i></label></td>
+                        <td>hemant</td>
+                        <td>Videodown</td>
+                        <td>Hotel</td>
+                        <td>Jul 1, 2017</td>
+                        <td>
+                          <a href="#" class="active" data-toggle="class"><i class="fa fa-check text-success text-active"></i><i class="fa fa-times text-danger hide"></i></a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <footer class="panel-footer">
+                  <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                      <select class="input-sm form-control input-s-sm inline v-middle">
+                        <option value="0">Filter Option</option>
+                        <option value="1">Option1</option>
+                        <option value="2">Option2</option>
+                        <option value="3">Option3</option>
+                      </select>
+                      <button class="btn btn-sm btn-default">Apply</button>                  
+                    </div>
+                    <div class="col-sm-4 text-center">
+                      <small class="text-muted inline m-t-sm m-b-sm">showing 20-30 of 50 items</small>
+                    </div>
+                    <div class="col-sm-4 text-right text-center-xs">                
+                      <ul class="pagination pagination-sm m-t-none m-b-none">
+                        <li><a href="#"><i class="fa fa-chevron-left"></i></a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#"><i class="fa fa-chevron-right"></i></a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </footer>
+              </section>
+            </section>
+          </section>
+          <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen" data-target="#nav"></a>
+        </section>
+      </section>
+    </section>
+  </section>
+</body>
+
+</html>

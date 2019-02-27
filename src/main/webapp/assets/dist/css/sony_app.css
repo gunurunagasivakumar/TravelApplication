@@ -1,0 +1,211 @@
+.flex-space-between {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.flex-child {
+  flex: 1;
+}
+.link-color {
+  color: #4b8fe2;
+}
+.inline-block {
+  display: inline-block;
+}
+.border-bottom {
+  border-bottom: 1px solid #e2e2e2;
+}
+.no-margin {
+  margin: 0px;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 50px white inset;
+}
+.capco-request {
+  height: 100%;
+}
+.capco-request .request-wrapper {
+  height: calc(100% - 60px);
+}
+.capco-request .request-wrapper section {
+  height: 100%;
+}
+.capco-request .request-wrapper section .side-navigator {
+  height: 100%;
+  background-color: #000000;
+}
+.capco-request .request-wrapper section .side-navigator .flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.capco-request .request-wrapper section .side-navigator .flex .nav-pills {
+  flex: 1;
+  text-align: center;
+}
+.capco-request .request-wrapper section .side-navigator .flex .nav-pills .nav-icon {
+  width: 25px;
+  height: 25px;
+  margin: 0 auto;
+}
+.capco-request .request-wrapper section .side-navigator .flex .nav-pills .nav-icon img {
+  height: 100%;
+  width: 100%;
+}
+.capco-request .request-wrapper section .side-navigator .flex .nav-pills .nav-name {
+  font-size: 11px;
+  padding: 10px;
+}
+.capco-request .request-wrapper section .travel-details {
+  height: 100%;
+  padding: 0px;
+}
+.capco-request .request-wrapper section header {
+  background-color: #cccccc;
+  color: #595959;
+  padding: 15px;
+  font-size: 16px;
+}
+.capco-request .request-wrapper section .main-tabs {
+  padding: 25px 35px;
+}
+.capco-request .request-wrapper section .main-tabs .main-navigator ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.capco-request .request-wrapper section .main-tabs .main-navigator ul:before,
+.capco-request .request-wrapper section .main-tabs .main-navigator ul:after {
+  content: none;
+}
+.capco-request .request-wrapper section .main-tabs .main-navigator li {
+  max-width: 250px;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .tab-name {
+  font-weight: 600;
+  color: #000000;
+  font-size: 20px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #e2e2e2;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .request-details {
+  padding-top: 10px;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .form-label {
+  color: #00aabb;
+  font-size: 18px;
+  padding-top: 15px;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .form-data {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: #000000;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .form-data .flex-child {
+  flex: 1 0 20%;
+  padding: 10px 0px;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .form-data .data-label {
+  font-size: 12px;
+  color: #4e4e4e;
+}
+.capco-request .request-wrapper section .main-tabs .confirm-tab .form-data .data-value {
+  padding: 2px 0px;
+  font-size: 16px;
+}
+.capco-request .request-wrapper section .main-tabs .nav-tabs > li a {
+  color: #cccccc;
+  padding-bottom: 20px;
+  font-weight: 400;
+  margin: 0 auto;
+  border: unset;
+  border-bottom: 2px solid #cccccc;
+}
+.capco-request .request-wrapper section .main-tabs .nav-tabs > li a:hover {
+  background-color: initial;
+  border: unset;
+  border-bottom: 2px solid #cccccc;
+}
+.capco-request .request-wrapper section .main-tabs .nav-tabs > li.active > a,
+.capco-request .request-wrapper section .main-tabs .nav-tabs > li.focus > a {
+  border-bottom: 2px solid #4b8fe2 !important;
+  text-align: center;
+  border: unset;
+  color: #4b8fe2;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content {
+  padding-top: 20px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .limited-width {
+  max-width: 30%;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector .flex-child {
+  flex: 1 1 auto;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector label.radio {
+  display: inline-block;
+  text-align: center;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  color: #4b8fe2;
+  margin: 0px 12px 0px 0px;
+  padding: 10px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector label.radio:last-child {
+  margin-right: 0px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector label.tour {
+  width: auto;
+  padding: 8px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector input[type="radio"] {
+  display: none;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .empInfo .nested-selector input[type="radio"]:checked + label {
+  background-color: #00aabb;
+  color: #ffffff;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper {
+  font-size: 12px;
+  color: #cccccc;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .form-seperator {
+  padding: 15px 0px;
+  border-bottom: 1px solid #f8f8f8;
+  border-top: 1px solid #f8f8f8;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .form-border {
+  padding: 15px;
+  border: 1px solid #00aabb;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .form-border .form-group {
+  padding-bottom: 5px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .form-border .form-group .error {
+  padding: 5px 0px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .footer-nav {
+  padding-top: 20px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .footer-nav button {
+  padding: 9px 28px;
+  font-size: 13px;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .footer-nav .previous {
+  color: #afafaf;
+  background-color: #f6f6f6;
+}
+.capco-request .request-wrapper section .main-tabs .tab-content .form-wrapper .footer-nav .next {
+  background-color: #4b8fe2;
+  color: #ffffff;
+}

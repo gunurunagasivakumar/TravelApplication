@@ -1,0 +1,406 @@
+
+    <style>
+      .input-s-sm {
+          width: 120px;
+      }
+      .v-middle {
+          vertical-align: middle !important;
+      }
+      .inline {
+          display: inline-block !important;
+      }
+      .th-sort i {
+          position: relative;
+          z-index: 1;
+      }
+
+      .text-active, .active > .text, .active > .auto .text {
+          display: none !important;
+      }
+
+      .panel .table-striped > thead th {
+          background-color: #f9fafc;
+          border-right: 1px solid #eaeef1;
+          padding: 8px 15px;
+      }
+    </style>
+
+
+<header-component></header-component>
+ <div ng-if=" user.capcoUserId != 'TRDK' && user.capcoUserId != 'FINC' && user.capcoUserId != 'HCOP'" class="col-sm-2 aside">
+     <ul class="nav nav-stacked">
+     	<li ng-click="home()" ><button ><img src="assets/login/images/home.png" alt="IMG" ><br /><span>HOME</span></button></li>
+        <li ng-click="newrequest()"><button  ><img src="assets/login/images/new_request.png" alt="IMG" ><br /><span>NEW REQUEST</span></button></li>
+        <li ng-click="myRequestList();checkList()"><button  ><img src="assets/login/images/request_list.png" alt="IMG"><br /><span>REQUEST LIST</span></button></li>
+		<li ng-if="user.grade == 'M5' || user.grade == 'M6' && user.isApprover"><button><img src="assets/login/images/manager_request_list_selected.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		<li ng-if="user.grade != 'M5' && user.grade != 'M6' && user.isApprover"><button><img src="assets/login/images/manager_request_list_selected.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		
+      </ul>
+    </div>
+    
+       <div ng-if=" user.capcoUserId != 'TRDK' && user.capcoUserId != 'FINC' && user.capcoUserId != 'HCOP'" class="col-sm-10" ng-init="checkList()">
+       		 
+              <h4 >Request Lists</h4>
+              
+              <div class="table-responsive approval-list ">
+                  <table class="table table-striped b-t b-light">
+                    <thead>
+                      
+                      <tr>
+                       <!--  <th width="20"></th> -->
+                        
+                        <th>Request Id</th>
+                        <th>Requested By</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="x in requestToApprove">
+                       
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.requestedBy}}</td>
+                        <td style="color:#ff7500">{{x.currentStatus}}</td>
+                        <td>{{x.createdOn}}</td>
+                      
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+                  <div class="text-center">
+                   		<ul  ng-if="totalItems > pagination.itemsPerPage" uib-pagination total-items="totalItems" max-size="pagination.maxSize" ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" ng-change="setPagingData()"></ul>
+                   </div>
+                </div>
+        
+       </div>
+      
+       <div ng-if=" user.capcoUserId == 'TRDK' " class="col-sm-12" ng-init="getTravelDeskRecords()">
+       		 
+              <h4 >Request Lists</h4>
+              
+              <div class="table-responsive approval-list ">
+                <h3 class="panel-title panel-heading action-status">
+          				<a data-toggle="collapse" href="#collapse2">Action Pending</a>
+        		</h3>
+        		<div class="alert alert-info no-margin text-center" ng-if="!travelDeskObjPending.length">
+					  <strong>No Records Found</strong>
+				</div>
+        		<table ng-if="travelDeskObjPending.length" class="table table-striped b-t b-light collapse in no-margin" id="collapse2">
+                    <thead  >
+                     <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Requested By</th>
+                        <th>Current Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in travelDeskObjPending">
+                   	<tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td ng-if="mainObj.actionDetailsBO">{{x.employeeName}}</td>
+                        <td ng-if="!mainObj.actionDetailsBO">{{x.requestedBy}}</td>
+                        <th ng-if="!mainObj.actionDetailsBO">{{x.currentStatus}}</th>
+                        <td>{{x.createdOn | date: 'mediumDate'}}</td>
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                      
+                   	
+                   </tbody>
+                   
+                  </table>
+               <!--   <table ng-if="!mainObj.actionDetailsBO && travelDeskObjPending.length" class="table table-striped b-t b-light collapse in no-margin" id="collapse2">
+                    <thead>
+                     <tr>
+                        <th>Request Id</th>
+                        <th>Requested By</th>
+                        <th>Current Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in travelDeskObjPending" >
+                    
+                   	<tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.requestedBy}}</td>
+                        <td>{{x.currentStatus}}</td>
+                        <td>{{x.createdOn | date: 'mediumDate'}}</td>
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                      
+                   	
+                   </tbody>
+                   
+                  </table>-->
+                   <h3 class="panel-title panel-heading horizontalBorder action-status">
+          				<a data-toggle="collapse" href="#collapse3">On Hold</a>
+        			</h3>
+                	<div class="alert alert-info no-margin text-center" ng-if="!travelDeskObjHold.length">
+						  <strong>No Records Found</strong>
+					</div>
+                  <table ng-if="travelDeskObjHold.length" class="table table-striped b-t b-light collapse in no-margin" id="collapse3">
+                    <thead>
+                      <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Requested By</th>
+                        <th>Current Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in travelDeskObjHold">
+                    	
+                      <tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.requestedBy}}</td>
+                        <td>{{x.currentStatus}}</td>
+                        <td>{{x.createdOn | date: 'mediumDate'}}</td>
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                       
+                   </tbody>
+                   
+                   
+                  </table>
+                  
+                  <h3 class="panel-title panel-heading horizontalBorder action-status">
+          				<a data-toggle="collapse" href="#collapse4">Completed</a>
+        		</h3>
+                	<div class="alert alert-info no-margin text-center" ng-if="!travelDeskObjCompleted.length">
+						  <strong>No Records Found</strong>
+					</div>
+                  <table ng-if="travelDeskObjCompleted.length" class="table table-striped b-t b-light collapse in no-margin" id="collapse4">
+                    <thead>
+                      <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Requested By</th>
+                        <th>Current Status</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in travelDeskObjCompleted">
+                    
+                      <tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.requestedBy}}</td>
+                        <td>{{x.currentStatus}}</td>
+                        <td>{{x.createdOn | date: 'mediumDate'}}</td>
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                   </tbody>
+                   
+                   
+                  </table>
+                  
+                </div>
+              
+              
+       
+       </div>
+   
+   <!-- travel desk ends -->           
+
+
+<!-- Hcops data start-->
+
+
+<div ng-if="user.capcoUserId == 'HCOP'" class="col-sm-12" ng-init="getHcOpsRecords()">
+       		 
+              <h4 >Request Lists</h4>
+              
+              <div class="table-responsive approval-list ">
+                <h3 class="panel-title panel-heading action-status">
+          				<a data-toggle="collapse" href="#collapse2">Action Pending</a>
+        		</h3>
+                <table  class="table table-striped b-t b-light collapse in no-margin" id="collapse2">
+                    <thead  >
+                     <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Action Id</th>
+                        <th>Status</th>
+                        <th>Pending Items</th>
+                        <th>Pending Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody  ng-repeat="x in HcopsObj | filter: ({actionStatus: 'Pending with HC'} || {actionStatus: 'Pending with HC,Finance'})">
+                   	<tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.actionId}}</td>
+                        <td>{{x.actionStatus}}</td>
+                        <td>{{x.pendingItems || '-'}}</td>
+                        <td>{{x.status || '-'}}</td>
+                        
+                      
+                         <td>
+                         	<button class="btn btn-primary"  ng-click="getRequestToApproveDetails(x.requestId);getpendingItems(x.pendingItems)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                      
+                   	
+                   </tbody>
+                   
+                  </table>
+                  
+                   <h3 class="panel-title panel-heading topBorder action-status">
+          				<a data-toggle="collapse" href="#collapse4">Completed</a>
+        		</h3>
+                
+                  <table class="table table-striped b-t b-light collapse in no-margin" id="collapse4">
+                    <thead>
+                      <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Action Id</th>
+                        <th>Status</th>
+                        <th>Pending Items</th>
+                        <th>Pending Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in HcopsObj | filter: {actionStatus: 'Issued by HC'}"">
+                    
+                      <tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.actionId}}</td>
+                        <td>{{x.actionStatus}}</td>
+                        <td>{{x.pendingItems || '-'}}</td>
+                        <td>{{x.status || '-'}}</td>
+                       
+                      
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                   </tbody>
+                   
+                   
+                  </table>
+                
+                     
+                </div>
+              
+              
+       
+       </div>
+              
+<!--  Hcops end -->
+
+<!--  finance start -->
+
+
+		<div ng-if=" user.capcoUserId == 'FINC' " class="col-sm-12" ng-init="getFinanceRecords()">
+       		 
+              <h4 >Request Lists</h4>
+              
+              <div class="table-responsive approval-list ">
+                <h3 class="panel-title panel-heading action-status">
+          				<a data-toggle="collapse" href="#collapse2">Action Pending</a>
+        		</h3>
+                <table  class="table table-striped b-t b-light collapse in no-margin" id="collapse2">
+                    <thead  >
+                     <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Action Id</th>
+                        <th>Status</th>
+                        <th>Pending Items</th>
+                        <th>Pending Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody  ng-repeat="x in FinanceObj | filter: ({actionStatus: 'Pending with finance'} || {actionStatus: 'Pending with HC,Finance'})" >
+                   	<tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.actionId}}</td>
+                        <td>{{x.actionStatus}}</td>
+                        <td>{{x.pendingItems || '-'}}</td>
+                        <td>{{x.status || '-'}}</td>
+                        
+                      
+                         <td>
+                         	<button class="btn btn-primary" ng-click="getRequestToApproveDetails(x.requestId);getpendingItems(x.pendingItems)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                      
+                   	
+                   </tbody>
+                   
+                  </table>
+                  
+                   <h3 class="panel-title panel-heading horizontalBorder action-status">
+          				<a data-toggle="collapse" href="#collapse4">Completed</a>
+        		   </h3>
+                
+                  <table class="table table-striped b-t b-light collapse in no-margin" id="collapse4">
+                    <thead>
+                      <tr>
+                       <!--  <th width="20"></th> -->
+                        <th>Request Id</th>
+                        <th>Action Id</th>
+                        <th>Status</th>
+                        <th>Pending Items</th>
+                        <th>Pending Status</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody ng-repeat="x in FinanceObj | filter: {actionStatus: 'Issued by Finance'}">
+                    
+                      <tr>
+                        
+                        <td>{{x.requestId}}</td>
+                        <td>{{x.actionId}}</td>
+                        <td>{{x.actionStatus}}</td>
+                        <td>{{x.pendingItems || '-'}}</td>
+                        <td>{{x.status || '-'}}</td>
+                        
+                      
+                         <td>
+                         	<button class="btn btn-primary"   ng-click="getRequestToApproveDetails(x.requestId)" data-toggle="tooltip" title="View"><i class="fa fa-eye"></i></button>
+                         </td>
+                      </tr>
+                   </tbody>
+                   
+                   
+                  </table>
+                </div>
+             
+       
+       </div>
+              
+<!--  Finance ends -->
+  
+    <footer-component></footer-component>
+    
+  
+    
+    
+    
+    
+    
+    

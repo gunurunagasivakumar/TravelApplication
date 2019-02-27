@@ -1,0 +1,1993 @@
+<div class="capco-request" ui-view>
+    <header-component></header-component>
+    <div class="col-sm-2 aside">
+     <ul class="nav nav-stacked">
+     	<li ng-click="home()"><button ><img src="assets/login/images/home.png" alt="IMG" ><br /><span>HOME</span></button></li>
+        <li><button  ><img src="assets/login/images/new_request_selected.png" alt="IMG" ><br /><span>NEW REQUEST</span></button></li>
+        <li  ng-click="myRequestList();checkList()"><button ><img src="assets/login/images/request_list.png" alt="IMG"><br /><span>REQUEST LIST</span></button></li>
+		<li ng-click="requestList()" ng-if="user.grade == 'M5' || user.grade == 'M6' && user.isApprover"><button   ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		<li ng-click="requestList()"  ng-if="user.grade != 'M5' && user.grade != 'M6' && user.isApprover"><button  ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		
+      </ul>
+    </div> 
+    <div class="request-wrapper" ng-controller="newRequestCtrl as ctrl">
+    
+       
+    		<section class="col-sm-10 travel-details">
+       			<header>
+       				New Travel Request
+       			</header>
+       			<div class="main-tabs">
+       				<div name="outerForm" class="tab-form-demo">
+					    <uib-tabset class="main-navigator" active="ctrl.activePersonalForm">
+					      <uib-tab index="0" heading="Personal Details" class="text-center">
+					      
+					        <div class="empInfo">
+					          <!-- <div class="form-group">
+					            <h6>You are requesting new travel for?</h6>
+					            <div class="nested-selector limited-width">
+						            <input type="radio" class="form-control" id="self" name="self" ng-model="cell.evaluator" value="Self" checked>
+						            <label class="radio flex-child" for="self">Self</label>
+									<input type="radio" class="form-control" id="other" name="other" ng-model="cell.evaluator" value="Other">
+									<label class="radio flex-child" for="other">Other</label>
+								</div>
+					          </div>-->
+					          <div>
+					          	<div class="form-wrapper">
+					          	
+					          		<!-- self form -->
+					          		<form name="ctrl.personal" novalidate>
+					          			<div class="form-seperator">
+						          			<div class="row">
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Employee Name<span class="errMsg">*</span></label>
+						          						<input type="text" class="form-control" name="personName" ng-model="empObj.employeeName" id="empName"
+						          						ng-minlength="4" ng-maxlength="50" ng-pattern="/^[a-zA-Z ][ a-zA-Z\\s]+$/"
+						          						ng-readonly="cell.evaluator=='Self'" required>
+						          						<div ng-messages="ctrl.personal.personName.$error" ng-if="ctrl.personal.personName.$invalid && ctrl.personal.$submitted" class="errMsg error">
+			                                                <span ng-message="required">{{::err.data.validations.employeeName.required}}</span>
+			                                                <span ng-message="pattern">{{::err.data.validations.employeeName.pattern}}</span>
+			                                                <span ng-message="minlength">{{::err.data.validations.employeeName.minlength}}</span>
+			                                                <span ng-message="maxlength">{{::err.data.validations.employeeName.maxlength}}</span>
+			                                            </div>
+						          					</div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Employee Contact<span class="errMsg">*</span></label>
+						          						<input type="number" class="form-control" id="empContact"
+						          						ng-model="empObj.employeeMobileNumber" name="personContact"
+			                                            ng-minlength="10" ng-maxlength="10" ng-pattern="/^[0-9]*$/" required
+			                                            >
+			                                            <div ng-messages="ctrl.personal.personContact.$error" ng-if="ctrl.personal.personContact.$invalid && ctrl.personal.$submitted" class="errMsg error">
+			                                                <span ng-message="required">{{::err.data.validations.employeeContact.required}}</span>
+			                                                <span ng-message="pattern">{{::err.data.validations.employeeContact.pattern}}</span>
+			                                                <span ng-message="minlength">{{::err.data.validations.employeeContact.minlength}}</span>
+			                                                <span ng-message="maxlength">{{::err.data.validations.employeeContact.maxlength}}</span>
+			                                            </div>
+						          					</div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Employee Location<span class="errMsg">*</span></label>
+						          						<select class="form-control" name="personLocation" id="empLocation"
+						          						 ng-model="empObj.employeeLocation" ng-options="city for city in personalDetails.employeeLocation"
+	                                            		required>
+	                                            			<option value="">--Select Location--</option>
+	                                            		</select>
+	                                            		<div ng-messages="ctrl.personal.personLocation.$error" ng-if="ctrl.personal.personLocation.$invalid && ctrl.personal.$submitted" class="errMsg error">
+			                                                <span ng-message="required">{{::err.data.validations.employeeLocation.required}}</span>
+			                                            </div>
+						          					</div>
+						          				</div>
+						          			</div>
+						          			<div class="row">
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Project Code / Charge Code<span class="errMsg">*</span></label>
+						          						 <select class="form-control" ng-model="empObj.project"
+						          						name="personProjectCode" ng-options="project as project.projectCode for project in projectList.listOfProjectDetails"
+	                                            		ng-change="getProjectName()" required>
+	                                            			<option value="">--Select Project--</option>
+														</select>
+			                                            <div ng-messages="ctrl.personal.personProjectCode.$error" ng-if="ctrl.personal.personProjectCode.$invalid && ctrl.personal.$submitted" class="errMsg error">
+			                                                <span ng-message="required">{{::err.data.validations.projectCode.required}}</span>
+			                                                <span ng-message="pattern">{{::err.data.validations.projectCode.pattern}}</span>
+			                                            </div>
+						          					</div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Project Name</label>
+						          						<input type="text" class="form-control" id="projectName" name="personProjectName" ng-model="empObj.project.projectName"
+	                                            		required readonly />
+						          					</div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Activity Code</label>
+														<input type="text" class="form-control" name="personActivityCode" ng-model="empObj.project.activityCode"
+	                                            		required readonly />
+						          					</div>
+						          				</div>
+						          			</div>
+						          			<div class="row">
+						          				<div class="col-sm-4">
+						          					<label>Purpose of travel<span class="errMsg">*</span></label>
+						          					<input type="text" class="form-control" name="employeePurpose" ng-model="empObj.purposeOfTravel"
+	                                            	required />
+	                                            	<div ng-messages="ctrl.personal.employeePurpose.$error" ng-if="ctrl.personal.employeePurpose.$invalid && ctrl.personal.$submitted" class="errMsg error">
+		                                                <span ng-message="required">{{::err.data.validations.employeePurpose.required}}</span>
+		                                            </div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Type of project<span class="errMsg">*</span></label>
+						          						<select class="form-control" ng-model="empObj.typeOfProject" name="personBusinessPurpose" ng-options="businessPurpose for businessPurpose in personalDetails.businessPurpose" required>
+                                                           	<option value="">--Select Type Of Project--</option>
+                                                        </select>
+                                                        <div ng-messages="ctrl.personal.personBusinessPurpose.$error" style="position:absolute;" ng-if="ctrl.personal.personBusinessPurpose.$invalid && ctrl.personal.$submitted" class="errMsg">
+                                                            <span ng-message="required">{{::err.data.validations.typeOfProject.required}}</span>
+                                                        </div>
+						          					</div>
+						          				</div>
+						          				<div class="col-sm-4">
+						          					<div class="form-group">
+						          						<label>Approver Name<span class="errMsg">*</span></label>
+						          						<select class="form-control" id="approverName"  ng-model="empObj.approver"
+						          						name="personApproverName" ng-options="person as person.approverName for person in projectList.listOfApprovers"
+	                                            		required>
+	                                            			<option value="">--Select Approver--</option>
+														</select>
+	                                            		<div ng-messages="ctrl.personal.personApproverName.$error"
+	                                            		ng-if="ctrl.personal.personApproverName.$invalid && ctrl.personal.$submitted"
+	                                            		ng-class="errMsg">
+															<span ng-message="required">{{::err.data.validations.approverName.required}}</span>
+														</div>
+						          					</div>
+						          				</div>
+						          			</div>
+						          		</div>
+				          				<div class="text-right footer-nav">
+				          					<button class="btn btn-default previous" back-button>Back</button>
+				          					<button type="submit" ng-click="TabClick('personal')" class="btn btn-default next">Next</button>
+				          					<button type="button" class="btn btn-default previous" ng-click="resetForm(cell.evaluator)">Cancel</button>
+				          				</div>
+					          		</form>
+					          		
+					          		<!-- End of self form -->
+					          	</div>
+					          </div>
+					        </div>
+					      </uib-tab>
+					      
+					      	<!-- Request Details -->
+					      	
+					      <uib-tab index="1" heading="Request Details" class="text-center" disable="ctrl.personal.$invalid">
+					        <div class="empInfo">
+					        <form name="ctrl.mainForm" novalidate >
+					          <div class="form-group">
+					          		<div class="row">
+	          							<div class="col-sm-4">
+			          						<label>Mode of travel<span class="errMsg">*</span></label>
+			          					</div>
+			          					<div class="col-sm-8">
+				          					<div class="default-radio">
+                                                <input type="radio" class="form-control" id="domestic" name="domestic"
+                                                ng-model="travelRequest.tourType" value="domestic" ng-change="autoActiveTab()" required>
+									            <label class="radio" for="domestic">Domestic</label>
+												<input type="radio" class="form-control" id="international"
+												name="international" ng-model="travelRequest.tourType" value="international" ng-change="autoActiveTab()" required>
+												<label class="radio" for="international">International</label>
+				          					</div>
+				          				</div>
+			          				</div>
+			          				<div class="footer-nav request-back-button" ng-if="travelRequest.tourType == null">
+			          					<div class="text-right">
+			          						<button type="submit" ng-click="ctrl.activePersonalForm = 0" class="btn btn-default previous">Previous</button>
+			          					</div>
+				          			</div>
+					          </div>
+					          <!--<div class="form-group request-checkboxgroup" ng-if="travelRequest.tourType == 'international'">
+					            <h5>What support services are you looking from capco travel assistance portal ?</h5>
+					            <div class="nested-selector request-checkbox">
+									<input type="checkbox" class="form-control" name="visa" ng-change="autoActiveTab()" ng-model="ctrl.savedData.visaAvailable" value="visa">
+									<label class="checkbox flex-child cursor-pointer">Visa</label>
+									<input type="checkbox" class="form-control" name="flight" ng-change="autoActiveTab()" ng-model="ctrl.savedData.flightAvailable" value="flight">
+									<label class="checkbox flex-child cursor-pointer">Flight</label>
+									<input type="checkbox" class="form-control" name="forex" ng-change="autoActiveTab()" ng-model="ctrl.savedData.forexAvailable" value="forex">
+									<label class="checkbox flex-child cursor-pointer">Forex</label>
+						            <input type="checkbox" class="form-control" name="hotel" ng-change="autoActiveTab()" ng-model="ctrl.savedData.hotelAvailable" value="hotel">
+						            <label class="checkbox flex-child cursor-pointer" >Hotel / Accomodation</label>
+								</div>
+					          </div>-->
+					          <!-- <div class="form-group no-margin" ng-if="ctrl.service.type || travelRequest.tourType == 'domestic'">-->
+					          <div class="form-group no-margin" ng-if="travelRequest.tourType">
+					            <h5>Please select the services to request</h5>
+					            <div class="nested-selector">
+									<input type="radio" class="form-control" id="visa" name="visa" ng-model="ctrl.service.type" value="visa"
+									>
+									<!-- <label class="radio flex-child cursor-pointer" for="visa" ng-if="ctrl.savedData.visaAvailable">Visa</label> -->
+									<label class="radio flex-child cursor-pointer" for="visa" ng-if="travelRequest.tourType == 'international'">Visa</label>
+									<input type="radio" class="form-control" id="flight" name="flight" ng-model="ctrl.service.type" value="flight"
+									>
+									<!-- <label class="radio flex-child cursor-pointer" for="flight" ng-if="ctrl.savedData.flightAvailable || travelRequest.tourType == 'domestic'">Flight</label> -->
+									<label class="radio flex-child cursor-pointer" for="flight">Flight</label>
+									<input type="radio" class="form-control" id="forex" name="forex" ng-model="ctrl.service.type" value="forex"
+									>
+									<!-- <label class="radio flex-child cursor-pointer" for="forex" ng-if="ctrl.savedData.forexAvailable">Forex</label> -->
+									<label class="radio flex-child cursor-pointer" for="forex" ng-if="travelRequest.tourType == 'international'">Forex</label>
+						            <input type="radio" class="form-control" id="hotel" name="hotel" ng-model="ctrl.service.type" value="hotel" 
+						            >
+						            <label class="radio flex-child cursor-pointer" for="hotel">Hotel / Accomodation</label>
+						            <!-- <label class="radio flex-child cursor-pointer" for="hotel" ng-if="ctrl.savedData.hotelAvailable || travelRequest.tourType == 'domestic'">Hotel / Accomodation</label> -->
+								</div>
+					          </div>
+					          
+					          		<!-- <div class="form-wrapper" ng-if="ctrl.service.type || travelRequest.tourType == 'domestic'"> -->
+					          		<div class="form-wrapper" ng-if="travelRequest.tourType">
+					          		<!-- hotel form -->
+					          			<div class="form-border">
+					          			
+					          			<!-- Repeated Code -->
+					          				<div ng-if="travelRequest.tourType == 'domestic'">
+							          			<div ng-show="ctrl.service.type == 'hotel'">
+							          					<ng-form name="ctrl.accommodationForm" novalidate>
+							          						<div class="row">
+							          							<div class="col-sm-6">
+							          								<div class="form-group">
+					          											<label>Sponsored by<span class="errMsg">*</span></label>
+					          										</div>
+					          									</div>
+									          					<div class="col-sm-6 ">
+										          					<div class="default-radio">
+										          						<div class="form-group">
+							                                                <input type="radio" class="form-control" name="hotelSponsoredBy"
+							                                                ng-model="accomodationObj.sponsoredBy" value="capco" required>
+																            <label class="radio" for="capco">Capco</label>
+																			<input type="radio" class="form-control"
+																			name="client" ng-model="accomodationObj.sponsoredBy" name="hotelSponsoredBy" value="client" required>
+																			<label class="radio" for="client">Client</label>
+																			<div style="position:absolute;" ng-messages="ctrl.accommodationForm.hotelSponsoredBy.$error" ng-if="ctrl.accommodationForm.hotelSponsoredBy.$invalid && ctrl.accommodationForm.$submitted"
+														                	ng-class="errMsg">
+															                	<span ng-message="required">{{::err.data.validations.sponseredBy.required}}</span>
+															            	</div>
+															            </div>
+										          					</div>
+										          				</div>
+									          				</div>
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Country<span class="errMsg">*</span></label>
+										          						<select class="form-control" ng-model="accomodationObj.country"
+											          						name="accomodationCountry" ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+						                                            		ng-change="checkAccomodationCity(accomodationObj.country,accomodationObj.city)" required >
+					                                            			<option value="">--Select Country--</option>
+					                                            		</select>
+			                                                            <div ng-messages="ctrl.accommodationForm.accomodationCountry.$error" ng-if="ctrl.accommodationForm.accomodationCountry.$invalid && ctrl.accommodationForm.$submitted"
+			                                                            ng-class="errMsg">
+			                                                                <span ng-message="required">{{::err.data.validations.country.required}}</span>
+			                                                                <span ng-message="pattern">{{::err.data.validations.country.pattern}}</span>
+			                                                            </div>
+										          					</div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Type of Accomodation<span class="errMsg">*</span></label>
+										          						<select class="form-control" ng-model="accomodationObj.category" name="accommodationTypeOfRoom" ng-options="typeOfRoom for typeOfRoom in accomodation.typeOfRoom"
+			                                                            required>
+			                                                            	<option value="">--Select Value--</option>
+			                                                            </select>
+			                                                            <div ng-messages="ctrl.accommodationForm.accommodationTypeOfRoom.$error" ng-if="ctrl.accommodationForm.accommodationTypeOfRoom.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+			                                                                <span ng-message="required">{{::err.data.validations.typeOfRoom.required}}</span>
+			                                                            </div>
+										          					</div>
+										          				</div>
+										          			</div>
+										          			<div class="row">
+										          				<div class="col-sm-12">
+										          					<div class="form-group">
+											          					<label>Stay Location<span class="errMsg">*</span></label>
+				                                                        <textarea class="form-control input-sm" name="address" placeholder="Address" ng-model="accomodationObj.stayLocation" required></textarea>
+										          						<div style="position:absolute;" ng-messages="ctrl.accommodationForm.address.$error" ng-if="ctrl.accommodationForm.address.$invalid && ctrl.accommodationForm.$submitted"
+															             class="errMsg">
+														                	<span ng-message="required">{{::err.data.validations.hotelAddress.required}}</span>
+														            	</div>
+										          					</div>
+										          				</div>
+										          			</div>
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>City<span class="errMsg">*</span></label>
+			                                                             <input type="text" class="form-control" ng-model="accomodationObj.city" name="accommodationCity" ng-pattern="/^[a-zA-Z\s]*$/" placeholder="City" ng-blur="checkAccomodationCity(accomodationObj.country,accomodationObj.city)" required/>
+			
+			                                                             <div ng-messages="ctrl.accommodationForm.accommodationCity.$error" ng-if="ctrl.accommodationForm.accommodationCity.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+			                                                                 <span ng-message="required">{{::err.data.validations.accomodationCity.required}}</span>
+			                                                                 <span ng-message="pattern">{{::err.data.validations.accomodationCity.pattern}}</span>
+			                                                             </div>
+			                                                             <span class="errMsg">{{accomodationCityErr}}</span>
+										          					</div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Currency</label>
+										          						<select class="form-control" ng-model="accomodationObj.currency" name="accommodationCurrency" ng-options="currency for currency in accomodation.currency">
+				                                                        	<option value="">--Select Currency--</option>
+				                                                        </select>
+										          					</div>
+		                                                         </div>
+										          			</div>
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Check-in-date<span class="errMsg">*</span></label>
+										          						<div class="input-form">
+				                                                            <input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control" id="checkIn" name="checkIn" ng-model="accomodationObj.checkInDate" ng-required="true" ng-blur="chooseCheckInDate();" placeholder="Check in Date" />
+				                                                            <label ng-show="showMessages && addJobForm.checkIn.$invalid" class="text-danger">
+				                                                            </label>
+				                                                            <span class="errMsg">{{checkInErr}}</span>
+				                                                        </div>
+				                                                        <div ng-messages="ctrl.accommodationForm.checkIn.$error" ng-if="ctrl.accommodationForm.checkIn.$invalid && ctrl.accommodationForm.$submitted"
+				                                                        ng-class="errMsg">
+				                                                            <span ng-message="required">{{::err.data.validations.checkInDate.required}}</span>
+				                                                        </div>
+										          					</div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Check-in-time<span class="errMsg">*</span></label>
+										          						<select class="form-control" ng-model="accomodationObj.checkInTime" name="accommodationCheckInTime" ng-options="interval for interval in intervals"
+			                                                        	required>
+			                                                        		<option value="">--Select Value--</option>
+			                                                        	</select>
+			                                                        	<div ng-messages="ctrl.accommodationForm.accommodationCheckInTime.$error" ng-if="ctrl.accommodationForm.accommodationCheckInTime.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+			                                                            	<span ng-message="required">{{::err.data.validations.checkInTime.required}}</span>
+			                                                        	</div>	
+										          					</div>
+										          				</div>
+										          			</div>
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Check-out-date<span class="errMsg">*</span></label>
+										          						<div class="input-form">
+			                                                            	<input type="date" min="{{accomodationObj.checkInDate || minDate | date:'yyyy-MM-dd'}}" class="form-control" id="checkOut" ng-model="accomodationObj.checkOutDate" name="checkOut" ng-blur="chooseCheckOutDate();"
+			                                                            placeholder="Check out Date"  required/>
+			                                                            	<label ng-show="showMessages && accommodationForm.checkOut.$invalid" class="text-danger">
+			                                                            	</label>
+			                                                            	<span ng-class="errMsg">{{checkOutErr}}</span>
+			                                                        	</div>
+			                                                        	<div ng-messages="ctrl.accommodationForm.checkOut.$error" ng-if="ctrl.accommodationForm.checkOut.$invalid && ctrl.accommodationForm.$submitted"
+			                                                            ng-class="errMsg">
+			                                                            	<span ng-message="required">{{::err.data.validations.checkOutDate.required}}</span>
+			                                                        	</div>
+										          					</div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+										          						<label>Check-out-time<span class="errMsg">*</span></label>
+										          						<select class="form-control" ng-model="accomodationObj.checkOutTime" name="accommodationCheckOutTime" ng-options="interval for interval in intervals"
+			                                                            required>
+			                                                        		<option value="">--Select Value--</option>
+			                                                        	</select>
+			                                                        	<div ng-messages="ctrl.accommodationForm.accommodationCheckOutTime.$error" ng-if="ctrl.accommodationForm.accommodationCheckOutTime.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+			                                                            	<span ng-message="required">{{::err.data.validations.checkOutTime.required}}</span>
+			                                                        	</div>
+										          					</div>
+										          				</div>
+										          			</div>
+										          			
+										          			
+										          			<div class="row">
+										          				<div class="col-sm-12">
+										          					<div class="form-group">
+											          					<label>Remark</label>
+				                                                        <textarea class="form-control input-sm" placeholder="Remark" ng-model="accomodationObj.remarks"></textarea>
+										          					</div>
+										          				</div>
+										          			</div>
+									     				</ng-form>
+								          			</div>
+								    				<!-- End of hotel form -->
+								          			
+								          			<!-- filght form -->
+								          			<div ng-show="ctrl.service.type == 'flight'">
+								          				<ng-form name="ctrl.flightForm" novalidate>
+								          					
+							          						<div class="row">
+							          							<div class="col-sm-6">
+							          								<div class="form-group">
+					          											<label>Sponsored by<span class="errMsg">*</span></label>
+					          										</div>
+					          									</div>
+									          					<div class="col-sm-6">
+									          						<div class="form-group">
+											          					<div class="default-radio">
+							                                                <input type="radio" class="form-control" name="flightSponsoredBy"
+							                                                ng-model="flightObj.sponsoredBy" value="capco" required>
+																            <label class="radio" for="capco">Capco</label>
+																			<input type="radio" class="form-control" name="flightSponsoredBy"
+																			ng-model="flightObj.sponsoredBy" value="client" required>
+																			<label class="radio" for="client">Client</label>
+											          					</div>
+												          				<div style="position:absolute;" ng-messages="ctrl.flightForm.flightSponsoredBy.$error" ng-if="ctrl.flightForm.flightSponsoredBy.$invalid && ctrl.flightForm.$submitted"
+														                	ng-class="errMsg">
+														                	<span ng-message="required">{{::err.data.validations.sponsoredBy.required}}</span>
+														            	</div>
+														            </div>
+										          				</div>
+										          			</div>
+							          						
+							          						<div class="row">
+							          							<div class="col-sm-6">
+							          								<div class="form-group">
+								          								<label>Select travel type<span class="errMsg">*</span></label>
+								          							</div>
+								          						</div>
+								          						<div class="col-sm-6">
+								          							<div class="default-radio inline-block padding-horizontal">
+										          						<div class="form-group">
+											          						<input type="radio" name="flightTravelType" class="form-control" id="one_way" name="flightTravelType" ng-model="flightObj.travelType" value="one way" required>
+																            <label class="radio" for="one_way">One Way</label>
+																			<input type="radio" name="flightTravelType" class="form-control" id="round_way" name="flightTravelType" ng-model="flightObj.travelType" value="round way" required>
+																			<label class="radio" for="round_way">Round Trip</label>
+																		
+																			<div style="position:absolute;" ng-messages="ctrl.flightForm.flightTravelType.$error" ng-if="ctrl.flightForm.flightTravelType.$invalid && ctrl.flightForm.$submitted"
+														                	ng-class="errMsg">
+															                	<span ng-message="required">{{::err.data.validations.flightTravelType.required}}</span>
+															            	</div>
+															            </div>
+														            </div>
+																</div>
+															</div>
+															
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>From City<span class="errMsg">*</span></label>
+											          					<select class="form-control input-sm" ng-model="flightObj.departureLocation" ng-change="checkCity()" ng-options="city for city in requestDetails.flight.domesticCities" name="flightFromCity" required>
+											          						<option value="">--Select City--</option>
+											          					</select>
+																        <div ng-messages="ctrl.flightForm.flightFromCity.$error" ng-if="ctrl.flightForm.flightFromCity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+																            <span ng-message="pattern">{{::err.data.validations.fromCity.pattern}}</span>
+																            <span ng-message="required">{{::err.data.validations.fromCity.required}}</span>
+																        </div>
+																        <span class="errMsg">{{originCityErr}}</span>
+																    </div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>To City<span class="errMsg">*</span></label>
+											          					<select class="form-control input-sm" ng-model="flightObj.destinationLocation" ng-change="checkCity()" ng-options="city for city in requestDetails.flight.domesticCities" name="flightToCity" required>
+											          						<option value="">--Select City--</option>
+											          					</select>
+																        <div ng-messages="ctrl.flightForm.flightToCity.$error" ng-if="ctrl.flightForm.flightToCity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+																            <span ng-message="pattern">{{::err.data.validations.toCity.pattern}}</span>
+																            <span ng-message="required">{{::err.data.validations.toCity.required}}</span>
+																        </div>
+																        <span class="errMsg">{{originCityErr}}</span>
+																    </div>
+										          				</div>
+										          			</div>
+										          			
+										          			<div class="row">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>Departure Date<span class="errMsg">*</span></label>
+																        <div class="input-form">
+															            	<input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control input-sm" id="departureDate" name="flightDepartureDate" ng-required="true" ng-blur="chooseDepartureDate();" 
+															            	placeholder="Available Date" ng-model="flightObj.departureDate"/>
+															             </div>
+															             <span class="errMsg">{{DepartureDateErr}}</span>
+															             <div ng-messages="ctrl.flightForm.flightDepartureDate.$error" ng-if="ctrl.flightForm.flightDepartureDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+															                <span ng-message="required">{{::err.data.validations.departureDate.required}}</span>
+															            </div>
+															        </div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>Departure Time<span class="errMsg">*</span></label>
+											          					<select class="form-control input-sm" ng-model="flightObj.departureTime" name="flightDepartureTime" required>
+					                                                        <option value="">--Select Time--</option>
+					                                                        <option value="Morning">Morning (06:00 AM - 12:00 PM)</option>
+					                                                        <option value="Afternoon">Afternoon (12:01 PM - 05:00 PM)</option>
+					                                                        <option value="Evening">Evening (05:01 PM - 08:00 PM)</option>
+					                                                        <option value="Night">Night (08:00 PM - 05:59 AM)</option>
+					                                                    </select>
+				                                                    	<div ng-messages="ctrl.flightForm.flightDepartureTime.$error" ng-if="ctrl.flightForm.flightDepartureTime.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+				                                                        	<span ng-message="required">{{::err.data.validations.departureTime.required}}</span>
+				                                                    	</div>
+				                                                    </div>
+										          				</div>
+										          			</div>
+										          			
+										          			<div class="row"  ng-if="flightObj.travelType=='round way'">
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>Return Date<span class="errMsg">*</span></label>
+				                                                		<div class="input-form">
+				                                                    		<input type="date" min="{{flightObj.departureDate || minDate | date:'yyyy-MM-dd'}}" ng-model="flightObj.returnDate" class="form-control input-sm" id="returnDate" name="flightReturnDate"  
+				                                                    		ng-blur="chooseReturnDate()"  placeholder="Return Date" required/>
+					                                                    	<label ng-show="showMessages && addJobForm.returnDate.$invalid" class="text-danger">
+					                                                    	</label>
+				                                                    	</div>
+																		<div ng-messages="ctrl.flightForm.returnDate.$error" ng-if="ctrl.flightForm.returnDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+																			<span ng-message="required">{{::err.data.validations.returnDate.required}}</span>
+				                                                		</div>
+				                                                		<span class="errMsg">{{returnDateErr}}</span>
+				                                                	</div>
+										          				</div>
+										          				<div class="col-sm-6">
+										          					<div class="form-group">
+											          					<label>Return Time<span class="errMsg">*</span></label>
+											          					<select class="form-control input-sm" ng-model="flightObj.returnTime" name="flightReturnTime" 
+							                                                required>
+							                                                <option value="">--Select Time--</option>
+							                                                <option value="Morning">Morning (06:00 AM - 12:00 PM)</option>
+					                                                        <option value="Afternoon">Afternoon (12:01 PM - 05:00 PM)</option>
+					                                                        <option value="Evening">Evening (05:01 PM - 08:00 PM)</option>
+					                                                        <option value="Night">Night (08:00 PM - 05:59 AM)</option>
+							                                            </select>
+							                                            <div ng-messages="ctrl.flightForm.flightReturnTime.$error" ng-if="ctrl.flightForm.flightReturnTime.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                                <span ng-message="required">{{::err.data.validations.returnTime.required}}</span>
+							                                            </div>
+							                                         </div>
+										          				</div>
+										          			</div>
+										          			
+										          			<div ng-if="travelRequest.tourType == 'international'">
+											          			<div class="row">
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Origin Country<span class="errMsg">*</span></label>
+																            <select class="form-control" ng-model="flightObj.originCountry" name="flightOriginCountry"  ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+							                                            		required>
+							                                            		<option value="">--Select Country--</option>
+						                                            		</select>
+																            <div style="position:absolute;" ng-messages="ctrl.flightForm.flightOriginCountry.$error" ng-if="ctrl.flightForm.flightOriginCountry.$invalid && ctrl.flightForm.$submitted"
+																            ng-class="errMsg">
+																	            <span ng-message="pattern">{{::err.data.validations.originCountry.pattern}}</span>
+																	            <span ng-message="required">{{::err.data.validations.originCountry.required}}</span>
+																        	</div>
+																        </div>
+											          				</div>
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Destination Country<span class="errMsg">*</span></label>
+												          					<select class="form-control" ng-model="flightObj.destinationCountry" 
+												          					name="flightDestinationCountry" ng-change="checkCity()"   ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+							                                            		required>
+							                                            		<option value="">--Select Country--</option>
+						                                            		</select>
+																	        <div style="position:absolute;" ng-messages="ctrl.flightForm.flightDestinationCountry.$error" ng-if="ctrl.flightForm.flightDestinationCountry.$invalid && ctrl.flightForm.$submitted"
+																	        ng-class="errMsg">
+																				<span ng-message="pattern">{{::err.data.validations.destinationCountry.pattern}}</span>
+																		        <span ng-message="required">{{::err.data.validations.destinationCountry.required}}</span>
+																		    </div>
+																	    	<span class="errMsg" ng-bind="originCountryErr"></span>
+																	    </div>
+											          				</div>
+											          			</div>
+											          			
+											          			<div class="row">
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Passport Issue Date<span class="errMsg">*</span></label>
+										                                    <div class="input-form">
+										                                        <input type="date" onkeydown="return false" class="form-control" id="passportIssueDate" name="passIssueDate" ng-model="flightObj.passportIssueDate" 
+										                                        ng-blur="choosePassportIssueDate()" placeholder="Passport Issue Date" required/>
+										                                        <label ng-show="showMessages && addJobForm.passIssueDate.$invalid" class="text-danger">
+										                                            Date is required.
+										                                        </label>
+										                                    </div>
+									                                        <div ng-messages="ctrl.flightForm.passIssueDate.$error" ng-if="ctrl.flightForm.passIssueDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                            <span ng-message="required">{{::err.data.validations.passportIssueDate.required}}</span>
+									                                        </div>
+										                                    <span class="errMsg">{{passportIssueDateErr}}</span>
+										                                 </div>
+											          				</div>
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Passport Expiry Date<span class="errMsg">*</span></label>
+										                                    <div class="input-form">
+										                                        <input type="date" onkeydown="return false" class="form-control" id="passportExpiryDate" name="passExpiryDate"  ng-model="flightObj.passportExpiryDate" required 
+										                                        ng-blur="choosePassportExpiryDate()" placeholder="Passport Expire Date" />
+										                                        <label ng-show="showMessages && addJobForm.passExpiryDate.$invalid" class="text-danger">
+										                                           Date is required.
+										                                       </label>
+										                                   </div>
+										                                    <div ng-messages="ctrl.flightForm.passExpiryDate.$error" ng-if="ctrl.flightForm.passExpiryDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+										                                        <span ng-message="required">{{::err.data.validations.passportExpiryDate.required}}</span>
+										                                    </div>
+										                                   <!-- <div ng-if="flightObj.passportIssueDate!=undefined">
+											                                    <div ng-messages="ctrl.flightForm.passExpiryDate.$error" ng-if="ctrl.flightForm.passExpiryDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+											                                        <span ng-message="required">{{::err.data.validations.passportExpiryDate.required}}</span>
+											                                    </div>
+											                                </div> -->
+										                                	<span class="errMsg" ng-bind="passportExpiryDateErr"></span>
+										                                </div>
+											          				</div>
+											          			</div>
+											          			
+											          			<div class="row">
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Passport Number<span class="errMsg">*</span></label>
+									                                        <input type="text" class="form-control input-sm" placeholder="Passport Number" ng-model="flightObj.passportNumber" name="flightPassportNumber" ng-pattern="/^[a-zA-Z0-9]*$/"
+									                                        required>
+									                                        <div ng-messages="ctrl.flightForm.flightPassportNumber.$error" ng-if="ctrl.flightForm.flightPassportNumber.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                            <span ng-message="required">{{::err.data.validations.passportNumber.required}}</span>
+									                                        </div>
+									                                     </div>
+											          				</div>
+												          			<div class="col-sm-6">
+												          				<div class="form-group">
+												          					<label>Passport Issue Location<span class="errMsg">*</span></label>
+									                                        <input type="text" name="passportIssueLocation" class="form-control input-sm" placeholder="Passport Issue Location" ng-model="flightObj.passportIssuePlace" name="flightPassportIssueLocation"
+									                                        required>
+									                                        <div ng-messages="ctrl.flightForm.passportIssueLocation.$error" ng-if="ctrl.flightForm.passportIssueLocation.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                            <span ng-message="required">{{::err.data.validations.passportIssueLocation.required}}</span>
+									                                        </div>
+									                                     </div>
+												          			</div>
+											          			</div>
+											          			
+											          			<div class="row">
+											          				<div class="col-sm-4">
+											          					<div class="form-group">
+												          					<label>Surname<span class="errMsg">*</span></label>
+									                                        <input type="text" class="form-control input-sm" placeholder="Surname" ng-model="flightObj.surname" name="flightSurname" required  ng-pattern="/^[a-zA-Z]*$/">
+									                                        <div ng-messages="ctrl.flightForm.flightSurname.$error" ng-if="ctrl.flightForm.flightSurname.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                            <span ng-message="pattern">{{::err.data.validations.surname.pattern}}</span>
+									                                            <span ng-message="required">{{::err.data.validations.surname.required}}</span>
+									                                        </div>
+									                                    </div>
+											          				</div>
+											          				<div class="col-sm-4">
+											          					<div class="form-group">
+												          					<label>Given name as per in Passport<span class="errMsg">*</span></label>
+									                                        <input type="text" class="form-control input-sm" placeholder="Given Name" ng-model="flightObj.givenName" name="flightGivenName" 
+									                                        ng-pattern="/^[a-zA-Z]*$/" required />
+									                                        <div ng-messages="ctrl.flightForm.flightGivenName.$error" ng-if="ctrl.flightForm.flightGivenName.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                            <span ng-message="pattern">{{::err.data.validations.givenName.pattern}}</span>
+									                                            <span ng-message="required">{{::err.data.validations.givenName.required}}</span>
+									                                        </div>
+									                                    </div>
+											          				</div>
+											          				<div class="col-sm-4">
+											          					<div class="form-group">
+												          					<label>Date of Birth<span class="errMsg">*</span></label>
+									                                        <div class="input-form">
+									                                           <input type="date" onkeydown="return false" class="form-control" ng-model="flightObj.dateOfBirth" id="dob" name="dob" ng-required="true"
+									                                           ng-blur="chooseDOB()" placeholder="Date of Birth" />
+									                                           <label ng-show="showMessages && addJobForm.passIssueDate.$invalid" class="text-danger">
+									                                               Available Date is required.
+									                                           </label>
+									                                           <span class="errMsg"> {{invalidDOB}}</span>
+									                                       </div>
+									                                       <div ng-messages="ctrl.flightForm.dob.$error" ng-if="ctrl.flightForm.dob.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                        	<span ng-message="required">{{::err.data.validations.dob.required}}</span>
+									                                    	</div>
+									                                    </div>
+											          				</div>
+											          			</div>
+											          			
+											          			<div class="row">
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Nationality<span class="errMsg">*</span></label>
+					                                            			<input type="text" class="form-control input-sm" placeholder="Nationallity" ng-model="flightObj.nationality" name="flightNationallity"
+					                                            			ng-pattern="/^[a-zA-Z\s]*$/" required>
+					                                            			<div ng-messages="ctrl.flightForm.flightNationallity.$error" ng-if="ctrl.flightForm.flightNationallity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+					                                                			<span ng-message="pattern">{{::err.data.validations.nationality.pattern}}</span>
+					                                                			<span ng-message="required">{{::err.data.validations.nationality.required}}</span>
+					                                            			</div>
+					                                            		</div>
+											          				</div>
+											          				<div class="col-sm-6">
+											          					<div class="form-group">
+												          					<label>Meal Preference<span class="errMsg">*</span></label>
+							                                                <select class="form-control input-sm" ng-model="flightObj.mealPref" name="flightMealPreferance" ng-options="mealPreferance for mealPreferance in flight.mealPreferance"
+							                                                required>
+							                                                	<option value="">--Select Value--</option>
+							                                            	</select>
+								                                            <div ng-messages="ctrl.flightForm.flightMealPreferance.$error" ng-if="ctrl.flightForm.flightMealPreferance.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+								                                                <span ng-message="required">{{::err.data.validations.mealPreferences.required}}</span>
+								                                            </div>
+								                                        </div>		
+											          				</div>
+											          			</div>
+										          			</div>
+										          			<div class="row">
+															    <div class="col-sm-12">
+															    	<div class="form-group">
+																        <label>Remark</label>
+																        <textarea class="form-control input-sm" ng-model="flightObj.remarks" placeholder="Remark"></textarea>
+															    	</div>
+															    </div>
+															</div>
+									          			</ng-form>
+								          			</div>
+					          					</div>
+					          					
+					          					<!-- Repeated Code -->
+					          			
+					          				<div ng-if="ctrl.service.type == 'hotel' && travelRequest.tourType == 'international'">
+					          					<ng-form name="ctrl.accommodationForm" novalidate>
+					          						<div class="row">
+					          							<div class="col-sm-6">
+					          								<div class="form-group">
+			          											<label>Sponsored by<span class="errMsg">*</span></label>
+			          										</div>
+			          									</div>
+							          					<div class="col-sm-6 ">
+								          					<div class="default-radio">
+								          						<div class="form-group">
+					                                                <input type="radio" class="form-control" name="hotelSponsoredBy"
+					                                                ng-model="accomodationObj.sponsoredBy" value="capco" required>
+														            <label class="radio" for="capco">Capco</label>
+																	<input type="radio" class="form-control"
+																	name="client" ng-model="accomodationObj.sponsoredBy" name="hotelSponsoredBy" value="client" required>
+																	<label class="radio" for="client">Client</label>
+																	<div style="position:absolute;" ng-messages="ctrl.accommodationForm.hotelSponsoredBy.$error" ng-if="ctrl.accommodationForm.hotelSponsoredBy.$invalid && ctrl.accommodationForm.$submitted"
+														                	ng-class="errMsg">
+													                	<span ng-message="required">{{::err.data.validations.sponseredBy.required}}</span>
+													            	</div>
+													            </div>
+								          					</div>
+								          				</div>
+							          				</div>
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Country<span class="errMsg">*</span></label>
+								          						<select class="form-control" ng-model="accomodationObj.country"
+									          						name="accomodationCountry" ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+				                                            		ng-change="checkAccomodationCity(accomodationObj.country,accomodationObj.city)" required >
+			                                            			<option value="">--Select Country--</option>
+			                                            		</select>
+	                                                            <div ng-messages="ctrl.accommodationForm.accomodationCountry.$error" ng-if="ctrl.accommodationForm.accomodationCountry.$invalid && ctrl.accommodationForm.$submitted"
+	                                                            ng-class="errMsg">
+	                                                                <span ng-message="required">{{::err.data.validations.country.required}}</span>
+	                                                                <span ng-message="pattern">{{::err.data.validations.country.pattern}}</span>
+	                                                            </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Type of Accomodation<span class="errMsg">*</span></label>
+								          						<select class="form-control" ng-model="accomodationObj.category" name="accommodationTypeOfRoom" ng-options="typeOfRoom for typeOfRoom in accomodation.typeOfRoom"
+	                                                            required>
+	                                                            	<option value="">--Select Value--</option>
+	                                                            </select>
+	                                                            <div ng-messages="ctrl.accommodationForm.accommodationTypeOfRoom.$error" ng-if="ctrl.accommodationForm.accommodationTypeOfRoom.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+	                                                                <span ng-message="required">{{::err.data.validations.typeOfRoom.required}}</span>
+	                                                            </div>
+								          					</div>
+								          				</div>
+								          			</div>
+								          			<div class="row">
+								          				<div class="col-sm-12">
+								          					<div class="form-group">
+									          					<label>Stay Location<span class="errMsg">*</span></label>
+		                                                        <textarea class="form-control input-sm" name="address" placeholder="Address" ng-model="accomodationObj.stayLocation" required></textarea>
+								          						<div style="position:absolute;" ng-messages="ctrl.accommodationForm.address.$error" ng-if="ctrl.accommodationForm.address.$invalid && ctrl.accommodationForm.$submitted"
+													             class="errMsg">
+												                	<span ng-message="required">{{::err.data.validations.hotelAddress.required}}</span>
+												            	</div>
+								          					</div>
+								          				</div>
+								          			</div>
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>City<span class="errMsg">*</span></label>
+	                                                             <input type="text" class="form-control" ng-model="accomodationObj.city" name="accommodationCity" ng-pattern="/^[a-zA-Z\s]*$/" placeholder="City" ng-blur="checkAccomodationCity(accomodationObj.country,accomodationObj.city)" required/>
+	
+	                                                             <div ng-messages="ctrl.accommodationForm.accommodationCity.$error" ng-if="ctrl.accommodationForm.accommodationCity.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+	                                                                 <span ng-message="required">{{::err.data.validations.accomodationCity.required}}</span>
+	                                                                 <span ng-message="pattern">{{::err.data.validations.accomodationCity.pattern}}</span>
+	                                                             </div>
+	                                                             <span class="errMsg">{{accomodationCityErr}}</span>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Currency</label>
+								          						<select class="form-control" ng-model="accomodationObj.currency" name="accommodationCurrency" ng-options="currency for currency in accomodation.currency">
+		                                                        	<option value="">--Select Currency--</option>
+		                                                        </select>
+								          					</div>
+                                                         </div>
+								          			</div>
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Check-in-date<span class="errMsg">*</span></label>
+								          						<div class="input-form">
+		                                                            <input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control" id="checkIn" name="checkIn" ng-model="accomodationObj.checkInDate" ng-required="true" ng-blur="chooseCheckInDate();" placeholder="Check in Date" />
+		                                                            <label ng-show="showMessages && addJobForm.checkIn.$invalid" class="text-danger">
+		                                                            </label>
+		                                                            <span class="errMsg">{{checkInErr}}</span>
+		                                                        </div>
+		                                                        <div ng-messages="ctrl.accommodationForm.checkIn.$error" ng-if="ctrl.accommodationForm.checkIn.$invalid && ctrl.accommodationForm.$submitted"
+		                                                        ng-class="errMsg">
+		                                                            <span ng-message="required">{{::err.data.validations.checkInDate.required}}</span>
+		                                                        </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Check-in-time<span class="errMsg">*</span></label>
+								          						<select class="form-control" ng-model="accomodationObj.checkInTime" name="accommodationCheckInTime" ng-options="interval for interval in intervals"
+	                                                        	required>
+	                                                        		<option value="">--Select Value--</option>
+	                                                        	</select>
+	                                                        	<div ng-messages="ctrl.accommodationForm.accommodationCheckInTime.$error" ng-if="ctrl.accommodationForm.accommodationCheckInTime.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+	                                                            	<span ng-message="required">{{::err.data.validations.checkInTime.required}}</span>
+	                                                        	</div>	
+								          					</div>
+								          				</div>
+								          			</div>
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Check-out-date<span class="errMsg">*</span></label>
+								          						<div class="input-form">
+	                                                            	<input type="date" min="{{accomodationObj.checkInDate || minDate | date:'yyyy-MM-dd'}}" class="form-control" id="checkOut" ng-model="accomodationObj.checkOutDate" name="checkOut" ng-blur="chooseCheckOutDate();"
+	                                                            placeholder="Check out Date"  required/>
+	                                                            	<label ng-show="showMessages && accommodationForm.checkOut.$invalid" class="text-danger">
+	                                                            	</label>
+	                                                            	<span ng-class="errMsg">{{checkOutErr}}</span>
+	                                                        	</div>
+	                                                        	<div ng-messages="ctrl.accommodationForm.checkOut.$error" ng-if="ctrl.accommodationForm.checkOut.$invalid && ctrl.accommodationForm.$submitted"
+	                                                            ng-class="errMsg">
+	                                                            	<span ng-message="required">{{::err.data.validations.checkOutDate.required}}</span>
+	                                                        	</div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Check-out-time<span class="errMsg">*</span></label>
+								          						<select class="form-control" ng-model="accomodationObj.checkOutTime" name="accommodationCheckOutTime" ng-options="interval for interval in intervals"
+	                                                            required>
+	                                                        		<option value="">--Select Value--</option>
+	                                                        	</select>
+	                                                        	<div ng-messages="ctrl.accommodationForm.accommodationCheckOutTime.$error" ng-if="ctrl.accommodationForm.accommodationCheckOutTime.$invalid && ctrl.accommodationForm.$submitted" ng-class="errMsg">
+	                                                            	<span ng-message="required">{{::err.data.validations.checkOutTime.required}}</span>
+	                                                        	</div>
+								          					</div>
+								          				</div>
+								          			</div>
+								          			
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-12">
+								          					<div class="form-group">
+									          					<label>Remark</label>
+		                                                        <textarea class="form-control input-sm" placeholder="Remark" ng-model="accomodationObj.remarks"></textarea>
+								          					</div>
+								          				</div>
+								          			</div>
+							     				</ng-form>
+						          			</div>
+						    				<!-- End of hotel form -->
+						          			
+						          			<!-- filght form -->
+						          			<div ng-if="ctrl.service.type == 'flight' && travelRequest.tourType == 'international'">
+						          				<ng-form name="ctrl.flightForm" novalidate>
+						          					
+					          						<div class="row">
+					          							<div class="col-sm-6">
+					          								<div class="form-group">
+			          											<label>Sponsored by<span class="errMsg">*</span></label>
+			          										</div>
+			          									</div>
+							          					<div class="col-sm-6">
+							          						<div class="form-group">
+									          					<div class="default-radio">
+					                                                <input type="radio" class="form-control" name="flightSponsoredBy"
+					                                                ng-model="flightObj.sponsoredBy" value="capco" required>
+														            <label class="radio" for="capco">Capco</label>
+																	<input type="radio" class="form-control" name="flightSponsoredBy"
+																	ng-model="flightObj.sponsoredBy" value="client" required>
+																	<label class="radio" for="client">Client</label>
+									          					</div>
+										          				<div style="position:absolute;" ng-messages="ctrl.flightForm.flightSponsoredBy.$error" ng-if="ctrl.flightForm.flightSponsoredBy.$invalid && ctrl.flightForm.$submitted"
+												                	ng-class="errMsg">
+												                	<span ng-message="required">{{::err.data.validations.sponseredBy.required}}</span>
+												            	</div>
+												            </div>
+								          				</div>
+								          			</div>
+					          						
+					          						<div class="row">
+					          							<div class="col-sm-6">
+					          								<div class="form-group">
+						          								<label>Select travel type<span class="errMsg">*</span></label>
+						          							</div>
+						          						</div>
+						          						<div class="col-sm-6">
+						          							<div class="default-radio inline-block padding-horizontal">
+								          						<div class="form-group">
+									          						<input type="radio" name="flightTravelType" class="form-control" id="one_way" name="flightTravelType" ng-model="flightObj.travelType" value="one way" required>
+														            <label class="radio" for="one_way">One Way</label>
+																	<input type="radio" name="flightTravelType" class="form-control" id="round_way" name="flightTravelType" ng-model="flightObj.travelType" value="round way" required>
+																	<label class="radio" for="round_way">Round Trip</label>
+																
+																	<div style="position:absolute;" ng-messages="ctrl.flightForm.flightTravelType.$error" ng-if="ctrl.flightForm.flightTravelType.$invalid && ctrl.flightForm.$submitted"
+												                	ng-class="errMsg">
+													                	<span ng-message="required">{{::err.data.validations.flightTravelType.required}}</span>
+													            	</div>
+													            </div>
+												            </div>
+														</div>
+													</div>
+													
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>From City<span class="errMsg">*</span></label>
+									          					<select class="form-control input-sm" ng-model="flightObj.departureLocation" ng-change="checkCity()" ng-options="city for city in requestDetails.flight.domesticCities" name="flightFromCity" required>
+									          						<option value="">--Select City--</option>
+									          					</select>
+														        <div ng-messages="ctrl.flightForm.flightFromCity.$error" ng-if="ctrl.flightForm.flightFromCity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+														            <span ng-message="pattern">{{::err.data.validations.fromCity.pattern}}</span>
+														            <span ng-message="required">{{::err.data.validations.fromCity.required}}</span>
+														        </div>
+														        <span class="errMsg">{{originCityErr}}</span>
+														    </div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>To City<span class="errMsg">*</span></label>
+									          					<select class="form-control input-sm" ng-model="flightObj.destinationLocation" ng-change="checkCity()" ng-options="city for city in requestDetails.flight.domesticCities" name="flightToCity" required>
+									          						<option value="">--Select City--</option>
+									          					</select>
+														        <div ng-messages="ctrl.flightForm.flightToCity.$error" ng-if="ctrl.flightForm.flightToCity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+														            <span ng-message="pattern">{{::err.data.validations.toCity.pattern}}</span>
+														            <span ng-message="required">{{::err.data.validations.toCity.required}}</span>
+														        </div>
+														        <span class="errMsg">{{originCityErr}}</span>
+														    </div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>Departure Date<span class="errMsg">*</span></label>
+														        <div class="input-form">
+													            	<!-- <input type="date" max="{{flightObj.returnDate | date:'yyyy-MM-dd'}}" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control input-sm" id="departureDate" name="flightDepartureDate" ng-required="true" ng-blur="chooseDepartureDate()" 
+													            	placeholder="Available Date" ng-model="flightObj.departureDate"/>-->
+													            	<input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control input-sm" id="departureDate" name="flightDepartureDate" ng-required="true" ng-blur="chooseDepartureDate()" 
+													            	placeholder="Available Date" ng-model="flightObj.departureDate"/>
+													             </div>
+													             <span class="errMsg">{{DepartureDateErr}}</span>
+													             <div ng-messages="ctrl.flightForm.flightDepartureDate.$error" ng-if="ctrl.flightForm.flightDepartureDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+													                <span ng-message="required">{{::err.data.validations.departureDate.required}}</span>
+													            </div>
+													        </div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>Departure Time<span class="errMsg">*</span></label>
+									          					<select class="form-control input-sm" ng-model="flightObj.departureTime" name="flightDepartureTime" required>
+			                                                        <option value="">--Select Time--</option>
+			                                                        <option value="Morning">Morning (06:00 AM - 12:00 PM)</option>
+			                                                        <option value="Afternoon">Afternoon (12:01 PM - 05:00 PM)</option>
+			                                                        <option value="Evening">Evening (05:01 PM - 08:00 PM)</option>
+			                                                        <option value="Night">Night (08:00 PM - 05:59 AM)</option>
+			                                                    </select>
+		                                                    	<div ng-messages="ctrl.flightForm.flightDepartureTime.$error" ng-if="ctrl.flightForm.flightDepartureTime.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+		                                                        	<span ng-message="required">{{::err.data.validations.departureTime.required}}</span>
+		                                                    	</div>
+		                                                    </div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div class="row"  ng-if="flightObj.travelType=='round way'">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>Return Date<span class="errMsg">*</span></label>
+		                                                		<div class="input-form">
+		                                                    		<input type="date" ng-disabled="!flightObj.departureDate" min="{{flightObj.departureDate || minDate | date:'yyyy-MM-dd'}}" ng-model="flightObj.returnDate" class="form-control input-sm" id="returnDate" name="flightReturnDate"  
+		                                                    		ng-blur="chooseReturnDate()"  placeholder="Return Date" required/>
+			                                                    	<label ng-show="showMessages && addJobForm.returnDate.$invalid" class="text-danger">
+			                                                    	</label>
+		                                                    	</div>
+																<div ng-messages="ctrl.flightForm.flightReturnDate.$error" ng-if="ctrl.flightForm.flightReturnDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+																	<span ng-message="required">{{::err.data.validations.returnDate.required}}</span>
+		                                                		</div>
+		                                                		<span class="errMsg">{{returnDateErr}}</span>
+		                                                	</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+									          					<label>Return Time<span class="errMsg">*</span></label>
+									          					<select class="form-control input-sm" ng-disabled="!flightObj.departureDate" ng-model="flightObj.returnTime" name="flightReturnTime" 
+					                                                required>
+					                                                <option value="">--Select Time--</option>
+					                                                <option value="Morning">Morning (06:00 AM - 12:00 PM)</option>
+			                                                        <option value="Afternoon">Afternoon (12:01 PM - 05:00 PM)</option>
+			                                                        <option value="Evening">Evening (05:01 PM - 08:00 PM)</option>
+			                                                        <option value="Night">Night (08:00 PM - 05:59 AM)</option>
+					                                            </select>
+					                                            <div ng-messages="ctrl.flightForm.flightReturnTime.$error" ng-if="ctrl.flightForm.flightReturnTime.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+					                                                <span ng-message="required">{{::err.data.validations.returnTime.required}}</span>
+					                                            </div>
+					                                         </div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div ng-if="travelRequest.tourType == 'international'">
+									          			<div class="row">
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Origin Country<span class="errMsg">*</span></label>
+														            <select class="form-control" ng-model="flightObj.originCountry" name="flightOriginCountry"  ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+					                                            		required>
+					                                            		<option value="">--Select Country--</option>
+				                                            		</select>
+														            <div style="position:absolute;" ng-messages="ctrl.flightForm.flightOriginCountry.$error" ng-if="ctrl.flightForm.flightOriginCountry.$invalid && ctrl.flightForm.$submitted"
+														            ng-class="errMsg">
+															            <span ng-message="pattern">{{::err.data.validations.originCountry.pattern}}</span>
+															            <span ng-message="required">{{::err.data.validations.originCountry.required}}</span>
+														        	</div>
+														        </div>
+									          				</div>
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Destination Country<span class="errMsg">*</span></label>
+										          					<select class="form-control" ng-model="flightObj.destinationCountry" 
+										          					name="flightDestinationCountry" ng-change="checkCity()"   ng-options="perDeim.country as perDeim.country for perDeim in projectList.perDeimList"
+					                                            		required>
+					                                            		<option value="">--Select Country--</option>
+				                                            		</select>
+															        <div style="position:absolute;" ng-messages="ctrl.flightForm.flightDestinationCountry.$error" ng-if="ctrl.flightForm.flightDestinationCountry.$invalid && ctrl.flightForm.$submitted"
+															        ng-class="errMsg">
+																		<span ng-message="pattern">{{::err.data.validations.destinationCountry.pattern}}</span>
+																        <span ng-message="required">{{::err.data.validations.destinationCountry.required}}</span>
+																    </div>
+															    	<span class="errMsg" ng-bind="originCountryErr"></span>
+															    </div>
+									          				</div>
+									          			</div>
+									          			
+									          			<div class="row">
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Passport Issue Date<span class="errMsg">*</span></label>
+								                                    <div class="input-form">
+								                                        <input type="date" max="{{flightObj.departureDate || minDate | date:'yyyy-MM-dd'}}" class="form-control" id="passportIssueDate" name="passIssueDate" ng-model="flightObj.passportIssueDate" 
+								                                        ng-blur="choosePassportIssueDate()" placeholder="Passport Issue Date" required/>
+								                                        <label ng-show="showMessages && addJobForm.passIssueDate.$invalid" class="text-danger">
+								                                            Date is required.
+								                                        </label>
+								                                    </div>
+							                                        <div ng-messages="ctrl.flightForm.passIssueDate.$error" ng-if="ctrl.flightForm.passIssueDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                            <span ng-message="required">{{::err.data.validations.passportIssueDate.required}}</span>
+							                                        </div>
+								                                    <span class="errMsg">{{passportIssueDateErr}}</span>
+								                                 </div>
+									          				</div>
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Passport Expiry Date<span class="errMsg">*</span></label>
+								                                    <div class="input-form">
+								                                        <input type="date" onkeydown="return false" class="form-control" id="passportExpiryDate" name="passExpiryDate"  ng-model="flightObj.passportExpiryDate" required 
+								                                        ng-blur="choosePassportExpiryDate()" placeholder="Passport Expire Date" />
+								                                        <label ng-show="showMessages && addJobForm.passExpiryDate.$invalid" class="text-danger">
+								                                           Date is required.
+								                                       </label>
+								                                   </div>
+								                                    <div ng-messages="ctrl.flightForm.passExpiryDate.$error" ng-if="ctrl.flightForm.passExpiryDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+								                                        <span ng-message="required">{{::err.data.validations.passportExpiryDate.required}}</span>
+								                                    </div>
+								                                   <!-- <div ng-if="flightObj.passportIssueDate!=undefined">
+									                                    <div ng-messages="ctrl.flightForm.passExpiryDate.$error" ng-if="ctrl.flightForm.passExpiryDate.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+									                                        <span ng-message="required">{{::err.data.validations.passportExpiryDate.required}}</span>
+									                                    </div>
+									                                </div> -->
+								                                	<span class="errMsg" ng-bind="passportExpiryDateErr"></span>
+								                                </div>
+									          				</div>
+									          			</div>
+									          			
+									          			<div class="row">
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Passport Number<span class="errMsg">*</span></label>
+							                                        <input type="text" class="form-control input-sm" placeholder="Passport Number" ng-model="flightObj.passportNumber" name="flightPassportNumber" ng-pattern="/^[a-zA-Z0-9]*$/"
+							                                        required>
+							                                        <div ng-messages="ctrl.flightForm.flightPassportNumber.$error" ng-if="ctrl.flightForm.flightPassportNumber.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                            <span ng-message="required">{{::err.data.validations.passportNumber.required}}</span>
+							                                        </div>
+							                                     </div>
+									          				</div>
+										          			<div class="col-sm-6">
+										          				<div class="form-group">
+										          					<label>Passport Issue Location<span class="errMsg">*</span></label>
+							                                        <input type="text" name="passportIssueLocation" class="form-control input-sm" placeholder="Passport Issue Location" ng-model="flightObj.passportIssuePlace" name="flightPassportIssueLocation"
+							                                        required>
+							                                        <div ng-messages="ctrl.flightForm.passportIssueLocation.$error" ng-if="ctrl.flightForm.passportIssueLocation.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                            <span ng-message="required">{{::err.data.validations.passportIssueLocation.required}}</span>
+							                                        </div>
+							                                     </div>
+										          			</div>
+									          			</div>
+									          			
+									          			<div class="row">
+									          				<div class="col-sm-4">
+									          					<div class="form-group">
+										          					<label>Surname<span class="errMsg">*</span></label>
+							                                        <input type="text" class="form-control input-sm" placeholder="Surname" ng-model="flightObj.surname" name="flightSurname" required  ng-pattern="/^[a-zA-Z]*$/">
+							                                        <div ng-messages="ctrl.flightForm.flightSurname.$error" ng-if="ctrl.flightForm.flightSurname.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                            <span ng-message="pattern">{{::err.data.validations.surname.pattern}}</span>
+							                                            <span ng-message="required">{{::err.data.validations.surname.required}}</span>
+							                                        </div>
+							                                    </div>
+									          				</div>
+									          				<div class="col-sm-4">
+									          					<div class="form-group">
+										          					<label>Given name as per in Passport<span class="errMsg">*</span></label>
+							                                        <input type="text" class="form-control input-sm" placeholder="Given Name" ng-model="flightObj.givenName" name="flightGivenName" 
+							                                        ng-pattern="/^[a-zA-Z]*$/" required />
+							                                        <div ng-messages="ctrl.flightForm.flightGivenName.$error" ng-if="ctrl.flightForm.flightGivenName.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                            <span ng-message="pattern">{{::err.data.validations.givenName.pattern}}</span>
+							                                            <span ng-message="required">{{::err.data.validations.givenName.required}}</span>
+							                                        </div>
+							                                    </div>
+									          				</div>
+									          				<div class="col-sm-4">
+									          					<div class="form-group">
+										          					<label>Date of Birth<span class="errMsg">*</span></label>
+							                                        <div class="input-form">
+							                                           <input type="date" onkeydown="return false" class="form-control" ng-model="flightObj.dateOfBirth" id="dob" name="dob" ng-required="true"
+							                                           ng-blur="chooseDOB()" placeholder="Date of Birth" />
+							                                           <label ng-show="showMessages && addJobForm.passIssueDate.$invalid" class="text-danger">
+							                                               Available Date is required.
+							                                           </label>
+							                                           <span class="errMsg"> {{invalidDOB}}</span>
+							                                       </div>
+							                                       <div ng-messages="ctrl.flightForm.dob.$error" ng-if="ctrl.flightForm.dob.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+							                                        	<span ng-message="required">{{::err.data.validations.dob.required}}</span>
+							                                    	</div>
+							                                    </div>
+									          				</div>
+									          			</div>
+									          			
+									          			<div class="row">
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Nationality<span class="errMsg">*</span></label>
+			                                            			<input type="text" class="form-control input-sm" placeholder="Nationallity" ng-model="flightObj.nationality" name="flightNationallity"
+			                                            			ng-pattern="/^[a-zA-Z\s]*$/" required>
+			                                            			<div ng-messages="ctrl.flightForm.flightNationallity.$error" ng-if="ctrl.flightForm.flightNationallity.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+			                                                			<span ng-message="pattern">{{::err.data.validations.nationality.pattern}}</span>
+			                                                			<span ng-message="required">{{::err.data.validations.nationality.required}}</span>
+			                                            			</div>
+			                                            		</div>
+									          				</div>
+									          				<div class="col-sm-6">
+									          					<div class="form-group">
+										          					<label>Meal Preference<span class="errMsg">*</span></label>
+					                                                <select class="form-control input-sm" ng-model="flightObj.mealPref" name="flightMealPreferance" ng-options="mealPreferance for mealPreferance in flight.mealPreferance"
+					                                                required>
+					                                                	<option value="">--Select Value--</option>
+					                                            	</select>
+						                                            <div ng-messages="ctrl.flightForm.flightMealPreferance.$error" ng-if="ctrl.flightForm.flightMealPreferance.$invalid && ctrl.flightForm.$submitted" ng-class="errMsg">
+						                                                <span ng-message="required">{{::err.data.validations.mealPreferences.required}}</span>
+						                                            </div>
+						                                        </div>		
+									          				</div>
+									          			</div>
+								          			</div>
+								          			<div class="row">
+													    <div class="col-sm-12">
+													    	<div class="form-group">
+														        <label>Remark</label>
+														        <textarea class="form-control input-sm" ng-model="flightObj.remarks" placeholder="Remark"></textarea>
+													    	</div>
+													    </div>
+													</div>
+							          			</ng-form>
+						          			</div>
+						          			<!-- End of flight form -->
+						          			
+						          			<!-- Forex form -->
+						          			<div ng-if="ctrl.service.type == 'forex'">
+						          				<ng-form name="ctrl.forexForm" novalidate>
+						          					<div class="row">
+						          						<div class="col-sm-12">
+							          						<div class="row">
+							          							<div class="col-sm-6">
+							          								<div class="form-group">
+								          								<label>Previously travelled with capco<span class="errMsg">*</span></label>
+								          							</div>
+								          						</div>
+								          						<div class="col-sm-6">
+									          						<div class="default-radio inline-block padding-horizontal">
+									          							<div class="form-group">
+											          						<input type="radio" class="form-control" name="is_travelled" ng-model="forexObj.isActive" ng-value=true required>
+																            <label class="radio">Yes</label>
+																			<input type="radio" class="form-control" name="is_travelled" ng-model="forexObj.isActive" ng-value=false required>
+																			<label class="radio">No</label>
+																			<div ng-messages="ctrl.forexForm.is_travelled.$error" ng-if="ctrl.forexForm.is_travelled.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+															                    <span ng-message="required">{{::err.data.validations.isTravelled.required}}</span>
+															                </div>
+															            </div>
+																	</div>
+																</div>
+															</div>
+								          				</div>
+						          					</div>
+						          					<div class="row" ng-if="forexObj.isActive">
+						          						<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Forex Card Number<span class="errMsg">*</span></label>
+								          						<input type="number" name="forexCardNumber" ng-model="forexObj.cardNumber" class="form-control input-sm"
+														        name="forexCardNumber" required />
+														        <div ng-messages="ctrl.forexForm.forexCardNumber.$error" ng-if="ctrl.forexForm.forexCardNumber.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+												                    <span ng-message="required">{{::err.data.validations.forexCardNumber.required}}</span>
+												                </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Card holder name<span class="errMsg">*</span></label>
+								          						<input type="text" name="cardHolderName" ng-model="forexObj.cardHolderName"  ng-pattern="/^[a-zA-Z]*$/" class="form-control input-sm"
+														        name="forexCardHolderName" required />
+														        <div ng-messages="ctrl.forexForm.cardHolderName.$error" ng-if="ctrl.forexForm.cardHolderName.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+												                    <span ng-message="required">{{::err.data.validations.cardHolderName.required}}</span>
+												                </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Select Bank<span class="errMsg">*</span></label>
+								          						 <select class="form-control input-sm" ng-model="forexObj.bank" name="forexCollectionCentre" ng-options="collectionCenter for collectionCenter in forex.collectionCenter"
+															     required>
+															     	<option value="">--Select Bank--</option>
+															    </select>
+															    <div ng-messages="ctrl.forexForm.forexCollectionCentre.$error" ng-if="ctrl.forexForm.forexCollectionCentre.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+															        <span ng-message="required">{{::err.data.validations.collectionCenter.required}}</span>
+															    </div>
+								          					</div>
+								          				</div>
+						          					</div>
+							          				<div class="row">
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Select Country<span class="errMsg">*</span></label>
+								          						 <select class="form-control input-sm" ng-model="forexObj.forexCountry" name="forexCountry" ng-options="forexCountry.country as forexCountry.country for forexCountry in projectList.perDeimList"
+											                        required>
+											                        <option value="">--Select Country--</option>
+											                    </select>
+											                    <div ng-messages="ctrl.forexForm.forexCountry.$error" ng-if="ctrl.forexForm.forexCountry.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+											                        <span ng-message="required">{{::err.data.validations.country.required}}</span>
+											                    </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Currency<span class="errMsg">*</span></label>
+								          						<select class="form-control input-sm" ng-model="forexObj.forexCurrency" name="forexCurrency" ng-options="currency for currency in forex.currency"
+												                required>
+												                	<option value="">--Select Currency--</option>
+												                </select>
+												                <div ng-messages="ctrl.forexForm.forexCurrency.$error" ng-if="ctrl.forexForm.forexCurrency.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+												                    <span ng-message="required">{{::err.data.validations.currency.required}}</span>
+												                </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Location<span class="errMsg">*</span></label>
+								          						<select class="form-control input-sm" ng-model="forexObj.forexBankDesk" name="forexBankdesk" ng-options="bankdesk for bankdesk in forex.bankdesk"
+													             required>
+													             	<option value="">--Select Location--</option>
+													            </select>
+													            <div ng-messages="ctrl.forexForm.forexBankdesk.$error" ng-if="ctrl.forexForm.forexBankdesk.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+													                <span ng-message="required">{{::err.data.validations.bankdesk.required}}</span>
+													            </div>
+								          					</div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Date Of Arrival<span class="errMsg">*</span></label>
+								          						 <div class="input-form">
+													                <input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control" id="forexFromDate" ng-model="forexObj.forexFromDate" name="forexFromDate" ng-required="true"
+													                ng-blur="chooseFromDate(ctrl.service.type,forexObj.forexFromDate,forexObj.forexToDate)" placeholder="From Date"/>
+													         	</div>
+													         	<div ng-messages="ctrl.forexForm.forexFromDate.$error" ng-if="ctrl.forexForm.forexFromDate.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+													            	<span ng-message="required">{{::err.data.validations.fromDate.required}}</span>
+													        	</div>
+													        	<span class="errMsg" ng-bind="forexFromDateErr"></span>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Date Of Departure<span class="errMsg">*</span></label>
+								          						<input type="date" min="{{forexObj.forexFromDate || minDate | date:'yyyy-MM-dd'}}" class="form-control" id="forexToDate" ng-model="forexObj.forexToDate" name="forexToDate" required="required" ng-blur="chooseToDate(ctrl.service.type,forexObj.forexFromDate,forexObj.forexToDate);">
+														        <div ng-messages="ctrl.forexForm.forexToDate.$error" ng-if="ctrl.forexForm.forexToDate.$invalid && ctrl.forexForm.$submitted" ng-class="errMsg">
+														            <span ng-message="required">{{::err.data.validations.toDate.required}}</span>
+														        </div>
+														        <span class="errMsg">{{forexToDateErr}}</span>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Travelling Days</label>
+								          						<input type="text" string-to-number ng-model="forexObj.forexNoOfDays" class="form-control input-sm" id="numdays2" placeholder="Travelling Days"
+														        name="forexTravellingDays" readonly
+														        required />
+								          					</div>
+								          				</div>
+								          			</div>
+								          			
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-12">
+								          					<div class="form-group">
+								          						<label>Remarks</label>
+								          						<textarea class="form-control input-sm" placeholder="Remark" ng-model="forexObj.forexRemarks"></textarea>
+								          					</div>
+								          				</div>
+								          			</div>
+							          			</ng-form>
+						          			</div>
+						          			<!-- End of forex form -->
+						          			
+						          			<!-- Visa form -->
+						          			<div ng-if="ctrl.service.type == 'visa'">
+						          				<ng-form name="ctrl.VisaForm" novalidate>
+						          					<div class="row">
+						          						<div class="form-group">
+						          							<div class="col-sm-6">
+				          										<label>Do you already have existing visa<span class="errMsg">*</span></label>
+				          									</div>
+								          					<div class="col-sm-6">
+									          					<div class="default-radio form-group">
+					                                                <input type="radio" name="isValidVisa" class="form-control"
+					                                                ng-model="visaObj.isValidVisa" value="true" required>
+														            <label class="radio">Yes</label>
+																	<input type="radio" name="isValidVisa" class="form-control"
+																	ng-model="visaObj.isValidVisa" value="false" required>
+																	<label class="radio">No</label>
+																	<div ng-messages="ctrl.VisaForm.isValidVisa.$error" ng-if="ctrl.VisaForm.isValidVisa.$invalid && ctrl.VisaForm.$submitted" ng-class="errMsg">
+												                        <span ng-message="required">{{::err.data.validations.isValidVisa.required}}</span>
+												                    </div>
+									          					</div>
+									          				</div>
+									          			</div>
+					          						</div>
+							          				<div class="row">
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Travel Destination<span class="errMsg">*</span></label>
+								          						<input type="text" class="form-control input-sm" ng-model="visaObj.travelDestination" name="travelDestination" placeholder="Please enter travel destination" ng-pattern="/^[a-zA-Z\s]*$/" required/>
+											                    <div ng-messages="ctrl.VisaForm.travelDestination.$error" ng-if="ctrl.VisaForm.travelDestination.$invalid && ctrl.VisaForm.$submitted" ng-class="errMsg">
+											                        <span ng-message="pattern">{{::err.data.validations.travelDestination.pattern}}</span>
+											                        <span ng-message="required">{{::err.data.validations.travelDestination.required}}</span>
+											                    </div>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-6">
+								          					<div class="form-group">
+								          						<label>Visa Type<span class="errMsg">*</span></label>
+								          						<select class="form-control input-sm" ng-model="visaObj.visaType" name="visaType" 
+												                    ng-options="types for types in requestDetails.visa.visaTypes" required>
+												                	<option value="">--Select Visa Type--</option>
+												                </select>
+												                <div ng-messages="ctrl.VisaForm.visaType.$error" ng-if="ctrl.VisaForm.visaType.$invalid && ctrl.VisaForm.$submitted" class="errMsg">
+												                    <span ng-message="required">{{::err.data.validations.visaType.required}}</span>
+												                </div>
+								          					</div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>From Date<span class="errMsg">*</span></label>
+								          						<div class="input-form">
+													                <input type="date" min="{{minDate | date:'yyyy-MM-dd'}}" class="form-control input-sm" ng-model="visaObj.fromDate" name="visaFromDate" required
+													                placeholder="From Date" ng-blur="chooseFromDate(ctrl.service.type,visaObj.fromDate,visaObj.toDate);"/>
+													         	</div>
+													         	<div ng-messages="ctrl.VisaForm.visaFromDate.$error" ng-if="ctrl.VisaForm.visaFromDate.$invalid && ctrl.VisaForm.$submitted" class="errMsg">
+													            	<span ng-message="required">{{::err.data.validations.visaFromDate.required}}</span>
+													        	</div>
+													        	<span class="errMsg" ng-bind="visaFromDateErr"></span>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>To Date<span class="errMsg">*</span></label>
+								          						<input type="date" min="{{visaObj.fromDate || minDate | date:'yyyy-MM-dd'}}" name="visaToDate"  class="form-control input-sm" ng-model="visaObj.toDate" ng-blur="chooseToDate(ctrl.service.type,visaObj.fromDate,visaObj.toDate)" required>
+														        <div ng-messages="ctrl.VisaForm.visaToDate.$error" ng-if="ctrl.VisaForm.visaToDate.$invalid && ctrl.VisaForm.$submitted" class="errMsg">
+														            <span ng-message="required">{{::err.data.validations.visaToDate.required}}</span>
+														        </div>
+														        <span class="errMsg">{{visaToDateErr}}</span>
+								          					</div>
+								          				</div>
+								          				<div class="col-sm-4">
+								          					<div class="form-group">
+								          						<label>Travelling Days</label>
+								          						<input type="text" string-to-number ng-model="visaObj.travellingDays" class="form-control input-sm" placeholder="Travelling Days"
+														        name="visaTravellingDays" readonly
+														        required />
+								          					</div>
+								          				</div>
+								          			</div>
+								          			
+								          			<div class="row">
+								          				<div class="col-sm-12">
+								          					<label>Remark</label>
+								          					<textarea class="form-control input-sm" placeholder="Remark" ng-model="visaObj.visaRemarks"></textarea>
+								          				</div>
+								          			</div>
+							          			
+							          			</ng-form>
+						          			</div>
+						          			
+						          		</div>
+						          		<div class="footer-nav">
+				          					<div class="text-right">
+				          						<button type="submit" ng-click="ctrl.activePersonalForm = 0" class="btn btn-default previous">Previous</button>
+				          						<button type="submit" ng-if="travelRequest.tourType == 'domestic'" ng-click="TabClick(ctrl.service.type);bindDateAndTime()"  ng-disabled="ctrl.mainForm.$invalid" class="btn btn-default next">Next</button>
+				          						<button type="submit" ng-if="travelRequest.tourType == 'international'" ng-click="TabClick(ctrl.service.type);bindDateAndTime()" class="btn btn-default next">Next</button>
+				          						<button type="button" class="btn btn-default previous" ng-click="resetForm(ctrl.service.type)">Cancel</button>
+				          					</div>
+					          			</div>
+						          	</div>
+					          	</form>
+					          </div>
+					      </uib-tab>
+					      
+					      <!--  confirm -->
+					      <uib-tab index="2" heading="Confirm" class="text-center" disable="ctrl.mainForm.$invalid || ctrl.personal.$invalid || !ctrl.service.type">
+					        <div class="form-wrapper confirm-tab">
+					        	<div class="tab-name">
+					        		Personal Details
+					        	</div>
+					        	<div class="form-data">
+					        		<div class="flex-child">
+						        		<div class="data-label">
+						        			Employee Name
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.employeeName || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Location
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.employeeLocation || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Contact Number
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.employeeMobileNumber || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Project Code
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.project.projectCode || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Project Name
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.project.projectName || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Activity Code
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.project.activityCode || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Purpose Of Travel
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.purposeOfTravel || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Type Of Project
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.typeOfProject || '-'}}
+						        		</div>
+						        	</div>
+						        	<div class="flex-child">
+						        		<div class="data-label">
+						        			Approver's Name
+						        		</div> 
+						        		<div class="data-value">
+						        			{{empObj.approver.approverName || '-'}}
+						        		</div>
+						        	</div>
+					        	</div>
+					        	<div class="tab-name request-details">
+					        		Request Details
+					        	</div>
+					        	<div class="border-bottom" ng-if="checkObjIsEmpty(accomodationObj)">
+					        		<div class="form-label">Hotel/Accommodation Booking</div>
+						        	<div class="form-data">
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Country
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.country || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			City
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.city || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Check-in date & time
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.checkInDate |date:'dd-MM-yyyy' || '-'}},<br>
+							        			{{accomodationObj.checkInTime || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Check-out date & time
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.checkOutDate | date:'dd-MM-yyyy' || '-'}},<br>
+							        			{{accomodationObj.checkOutTime || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Type of accomodation
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.category || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="accomodationObj.currency">
+							        		<div class="data-label">
+							        			Currency
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.currency || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Stay Location
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.stayLocation || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Remark
+							        		</div> 
+							        		<div class="data-value">
+							        			{{accomodationObj.remarks || '-'}}
+							        		</div>
+							        	</div>
+						        	</div>
+						        </div>
+						        
+						        <div class="border-bottom" ng-if="checkObjIsEmpty(flightObj) > 1">
+						        	<div class="form-label">Flight</div>
+						        	<div class="form-data">
+						        		<div class="flex-child">
+							        		<div class="data-label">
+							        			Tour Type
+							        		</div> 
+							        		<div class="data-value">
+							        			{{travelRequest.tourType || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Travel Type
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.travelType || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Origin Country
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.originCountry || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Destination Country
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.destinationCountry || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			From
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.departureLocation || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			To
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.destinationLocation || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Departure Date & Time
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.departureDate | date:'dd-MM-yyyy' || '-'}},<br>
+							        			{{flightObj.departureTime || '-'}}
+							        		</div>
+							        	</div>
+							        	
+							        	<div class="flex-child" ng-if="flightObj.travelType=='round way'">
+							        		<div class="data-label">
+							        			Return Date & Time
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.returnDate | date:'dd-MM-yyyy' || '-'}},<br>
+							        			{{flightObj.returnTime || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Surname
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.surname || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Given name as per in Passport
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.givenName || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Date of Birth
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.dateOfBirth | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Passport Number
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.passportNumber || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Passport Issue date
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.passportIssueDate | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Passport Expiry Date
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.passportExpiryDate | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Passport Issue Location
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.passportIssuePlace || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Meal Preference
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.mealPref || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="travelRequest.tourType =='international'">
+							        		<div class="data-label">
+							        			Remark
+							        		</div> 
+							        		<div class="data-value">
+							        			{{flightObj.remarks || '-'}}
+							        		</div>
+							        	</div>
+						        	</div>
+						        </div>
+						        
+						        <div class="border-bottom" ng-if="checkObjIsEmpty(visaObj)">
+						        	<div class="form-label">Visa</div>
+						        	<div class="form-data">
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Travel Destination
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.travelDestination || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Visa Type
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.visaType || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			From Date
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.fromDate | date:'dd-MM-yyyy'|| '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			To Date
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.toDate | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Travelling Days
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.travellingDays || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-show="visaObj.visaRemarks">
+							        		<div class="data-label">
+							        			Remark
+							        		</div> 
+							        		<div class="data-value">
+							        			{{visaObj.visaRemarks || '-'}}
+							        		</div>
+							        	</div>
+						        	</div>
+						        </div>
+						        
+						        <div class="border-bottom" ng-if="checkObjIsEmpty(forexObj)">
+						        	<div class="form-label">Forex</div>
+						        	<div class="form-data">
+					        			<div class="flex-child" ng-if="forexObj.isActive">
+							        		<div class="data-label">
+							        			Forex Card Number
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.cardNumber || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="forexObj.isActive">
+							        		<div class="data-label">
+							        			Forex Card Holder Name
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.cardHolderName || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child" ng-if="forexObj.isActive">
+							        		<div class="data-label">
+							        			Bank
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.bank || '-'}}
+							        		</div>
+							        	</div>
+						        		
+						        		<div class="flex-child">
+							        		<div class="data-label">
+							        			Country
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexCountry || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Currency
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexCurrency || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Location
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexBankDesk || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			From
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexFromDate | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			To
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexToDate | date:'dd-MM-yyyy' || '-'}}
+							        		</div>
+							        	</div>
+							        	
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Travelling Days
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexNoOfDays || '-'}}
+							        		</div>
+							        	</div>
+							        	<div class="flex-child">
+							        		<div class="data-label">
+							        			Remark
+							        		</div> 
+							        		<div class="data-value">
+							        			{{forexObj.forexRemarks || '-'}}
+							        		</div>
+							        	</div>
+						        	</div>
+						        </div>
+						        <div class="form-group margin-top" ng-if="travelRequest.tourType == 'international'">
+						        	<form name="ctrl.isosData">
+							        	<div class="row">
+		          							<div class="col-sm-6">
+		          								<div class="form-group">
+			          								<label class="isosLabel">Do you already have ISOS card?<span class="errMsg">*</span></label>
+			          							</div>
+			          						</div>
+			          						<div class="col-sm-6">
+			          							<div class="form-group">
+					          						<div class="default-radio inline-block padding-horizontal">
+						          						<input type="radio" class="form-control" name="isosCardexist" ng-model="isos.isosCardexist" ng-value=1 required>
+											            <label class="radio">Yes</label>
+														<input type="radio" class="form-control" name="isosCardexist" ng-model="isos.isosCardexist" ng-value=0 required>
+														<label class="radio">No</label>
+														<div ng-if="ctrl.isosData.isosCardexist.$invalid && ctrl.isosData.$submitted" class="errMsg">
+											                <span>{{::err.data.validations.isosCardexist.required}}</span>
+											            </div>
+											            <div ng-show="isos.isosCardexist==0" class="errMsg">
+											                <span>Please connect to travel desk to collect/generate your ISOS card</span>
+											            </div>
+											         </div>
+											      </div>
+											</div>
+										</div>
+										<div class="row margin-top" ng-if="isos.isosCardexist">
+											<div class="col-sm-6">
+												<div class="form-group">
+													<label class="isosLabel">Please enter ISOS Number</label>
+												</div>
+											</div>
+											<div class="col-sm-6">
+												<div class="form-group">
+													<input type="number" name="isosCardNumber" ng-model="travelRequest.isos" class="form-control input-sm" placeholder="ISOS card number"
+													name="isosNumber" required />
+													<div ng-messages="ctrl.isosData.isosCardNumber.$error" ng-if="ctrl.isosData.isosCardNumber.$invalid && ctrl.isosData.$submitted" class="errMsg">
+										                <span ng-message="number">{{::err.data.validations.isosCardNumber.number}}</span>
+										                <span ng-message="required">{{::err.data.validations.isosCardNumber.required}}</span>
+										            </div>
+												</div>
+											</div>
+										</div>
+										<div class="row margin-top">
+											<div class="col-sm-6">
+												<div class="form-group">
+				          							<label class="isosLabel">Select Travel Insurance<span class="errMsg">*</span></label>
+				          						</div>
+				          					</div>
+				          					<div class="col-sm-6">
+			          							<div class="form-group">
+													<select class="form-control input-sm" name="insurance" ng-model="travelRequest.insurance" required>
+														<option value="">--Select Insurance--</option>
+														<option value="Tata AIG">Tata AIG</option>
+													</select>
+													<div ng-messages="ctrl.isosData.insurance.$error"  ng-if="ctrl.isosData.insurance.$invalid && ctrl.isosData.$submitted" class="errMsg">
+										                <span ng-message="required">{{::err.data.validations.insurance.required}}</span>
+										            </div>
+												</div>
+											</div>
+										</div>
+									</form>
+						        </div>
+						        <div class="footer-nav">
+		          					<div class="text-right">
+		          						<button type="submit" ng-click="ctrl.activePersonalForm = 1" class="btn btn-default previous">Previous</button>
+		          						<button type="submit" ng-click="bindDateAndTime();send('draft')" class="btn btn-default next">Save As Draft</button>
+		          						<button type="submit" ng-click="send();" class="btn btn-default confirm">Confirm & Submit</button>
+		          					</div>
+			          			</div>
+					        </div>
+					      </uib-tab>
+					    </uib-tabset>
+					    <div id="myModal" class="modal fade" role="dialog">
+						  <div class="modal-dialog modal-sm custom-dialog">
+						
+						    <!-- Modal content-->
+						    <div class="modal-content custom-modal text-center">
+						    
+						      <div class="modal-body">
+						        <p>{{serverResponse}}</p>
+						      </div>
+						      <div class="modal-footer">
+						      	<button type="button" class="button-default" data-dismiss="modal" ng-click="closeMsgPopup()">Cancel</button>
+						      </div>
+						    </div>
+						
+						  </div>
+						</div>
+					 
+					    
+					  </div>
+       			</div>
+       		</section>
+      </div>
+    </div>
+    
+       	
+
+<footer-component></footer-component>

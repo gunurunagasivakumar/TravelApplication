@@ -1,0 +1,311 @@
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Approve Request</title>
+
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/cust-Travel-Portal.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+
+
+        /* section{
+            background-color: #fff;
+            padding: 20px;
+        } */
+        </style>
+</head>
+<body>
+
+     <!------------------------- Start of header------------------------------- -->
+
+     <header class="hdr-h f-box p">
+            <section>
+                <article class="pull-left">
+                    <img class="tp-logo img-responsive" src="../assets/images/logo.png">
+                </article>
+
+                <article class="pull-right head-pad">
+                    <div class="dropdown">
+                        <div class="travel-user-btn dropdown-toggle" type="button" data-toggle="dropdown"><span><img class="img-circle" width="20px" src="../assets/images/user.png" alt=""></span>
+                            <label>Hemant Vedak</label>
+                            <span class="caret"></span>
+                        </div>
+                        <ul class="dropdown-menu">
+                                <li><a href="../html/requestlist.html">Request List</a>
+                                </li>
+                                <li><a href="../html/approveRequest.html">Approve Request</a>
+                                </li>
+                                <li><a href="#">Logout</a>
+                                </li>
+                            </ul>
+                    </div>
+                </article>
+            </section>
+        </header>
+
+        <!------------------------- End of header------------------------------- -->
+
+
+        <!------------------------------------------------------
+        |                   Section                         |
+        ------------------------------------------------------- -->
+        <section class="f-box" ng-controller="requestController">
+                <header class="row">
+                        <h1 class="p-tb-md m-n p">Approve Request</h1>
+                    
+                    </header>
+                <div class="main-bg p">
+                <header>
+                <div class="row">
+                    <div class="col-md-6"><h3>Personal Details</h3></div>    
+                    <div class="col-md-6"><h3 class="pull-right req">Request ID: #56</h3></div>    
+                    
+                
+            </div>
+
+                </header>
+                <hr>
+                <!-- --------------------article ------------------------ -->
+                <div class="article">
+                <!-- --------------------row ------------------------ -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Employee name:</label>
+                        <span>Sumit Lokhande</span>
+                    </div>
+                    <div class="col-md-4">
+                            <label>Location:</label>
+                            <span>Pune</span>
+                        </div>
+        
+                        <div class="col-md-4">
+                                <label>Contact Number:</label>
+                                <span>+91 9976 456 899</span>
+                            </div>
+                </div>
+                 <!-- --------------------end of row ---------------------------- -->
+                
+                 <!-- --------------------row ------------------------ -->
+                <div class="row">
+                        <div class="col-md-4">
+                            <label>Project Code:</label>
+                            <span>5028758</span>
+                        </div>
+                        <div class="col-md-4">
+                                <label>Project Name:</label>
+                                <span>Backbase Internal Pune</span>
+                            </div>
+            
+                            <div class="col-md-4">
+                                    <label>Approvers Name:</label>
+                                    <span>Mr. Paras Mishra</span>
+                                </div>
+                    </div>
+                     <!-- --------------------end of row ---------------------------- -->
+        
+                    </div>
+                    <!-- --------------------end of article ------------------------ -->
+                    
+        
+                            <header>
+                               <h3>Request Details</h3>
+                            </header>
+                            <hr>
+                            <!-- --------------------article ------------------------ -->
+                            <article>
+                                
+                                    <h4>Flight Booking</h4>
+                                    <table class="table table-bordered">
+                                        <tr>
+                                            <td><label>Tour Type:</label></td>
+                                            <td colspan="2">Domestic</td>
+                                            <td><label>Travel Type:</label></td>
+                                            <td colspan="2">One way</td>
+                                        </tr>
+        
+                                        <tr>
+                                                <td><label>Buisness Purpose:</label></td>
+                                                <td >Client visit</td>
+                                                <td><label>From:</label></td>
+                                                <td>Benglore</td>
+                                                <td><label>To:</label></td>
+                                                <td>Pune</td>
+                                        </tr>
+        
+                                        <tr>
+                                                <td><label>Departure Date:</label></td>
+                                                <td >21/10/2017</td>
+                                                <td><label>Departure Time:</label></td>
+                                                <td>Morning</td>
+                                                <td><label>Booking Type:</label></td>
+                                                <td>Company Booking</td>
+                                        </tr>
+                                        <tr>
+                                            <td><label>Remark</label></td>
+                                            <td colspan="5">Visiting client location for offial purpose. Need veg meal.</td>
+                                        </tr>
+                                    </table>
+        
+        
+                          
+                            </article>
+                             <!-- --------------------end of article ------------------------ -->
+        
+                              <!-- --------------------article ------------------------ -->
+                            <article>
+                                    
+                                        <h4>Taxi Booking</h4>
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <td><label>From:</label></td>
+                                                <td>Pune International Airport</td>
+                                                <td><label>To:</label></td>
+                                                <td>World Trade Centre, Kharadi,Pune</td>
+                                            </tr>
+            
+                                          
+            
+                                            <tr>
+                                                    <td><label>Departure Date:</label></td>
+                                                    <td >21/10/2017</td>
+                                                    <td><label>Departure Time:</label></td>
+                                                    <td>1:00 PM</td>
+                                                    
+                                            </tr>
+                                            <tr>
+                                                <td><label>Remark</label></td>
+                                                <td colspan="3">Time may vary due to delay in flight.</td>
+                                            </tr>
+                                        </table>
+            
+            
+                              
+                                    </article>
+                                 <!-- --------------------end of article ------------------------ -->
+
+                                  <!-- -------------------- article ------------------------ -->
+                                 <article>
+                                    <h4>Hotel/Accommodation Booking</h4>
+
+                                    <table class="table table-bordered">
+                                        <tr>
+                                                <td>Country:</td><td colspan="2">India</td>
+                                                <td>City:</td><td colspan="2">Benglore</td>
+                                        </tr>
+
+                                        <tr>
+                                                <td>Check-in Date & Time:</td><td colspan="2">21/11/2017 9:00 PM</td>
+                                                <td>Check-out Date & Time:</td><td colspan="2">23/11/2017 11:00 AM</td>
+                                        </tr>
+
+                                        <tr>
+                                                <td>Budget Per Day:</td><td>2000 INR</td>
+                                                <td>Type of Room:</td><td>Non-AC</td>
+                                                <td>Nearest Facility:</td><td>Hospital</td>
+                                        </tr>
+                                        <tr>
+                                                <td>Remark:</td><td colspan="5">Veg meal</td>
+                                        </tr>
+                                    </table>
+
+                                 </article>
+                                  <!-- --------------------end of article ------------------------ -->
+
+                                  <div class="panel panel-default p container-bg">
+                             <div class="row">
+                                 <div class="col-md-6">
+                                     <p>Select Type:</p>
+                                     <input type="radio" name="type"> <label>Billable</label>
+                                     <input type="radio" name="type"> <label>Non-Billable</label>
+                                 </div>
+
+                                 <div class="col-md-6">
+                                        <label>Select Second Level Approvers:</label>
+                                            <select name="" id="" class="form-control">
+                                                <option>---Select Approver--</option>
+
+                                            </select>                                       
+                                    </div>
+                                 
+                             </div>
+
+                             <div class="row" align="center">
+                                 <button class="btn btn-danger" data-toggle="modal" data-target="#rejectRequestModal"><i class="fa fa-times"></i> Reject</button>
+                                 <button class="btn btn-success" data-toggle="modal" data-target="#approveRequestModal"><i class="fa fa-check"></i> Approve</button>
+
+
+                             </div>
+                                  </div>
+                </div>
+        
+            </section>
+            <!-- ----------------------------------------------------
+                |                  end of section                         |
+                ------------------------------------------------------- -->
+                <div class="modal fade" id="rejectRequestModal" role="dialog">
+                        <div class="modal-dialog">
+                        
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Reject Request</h4>
+                            </div>
+                            <div class="modal-body">
+                              <label>Remark*</label>
+                              <textarea class="form-control" placeholder="Remark"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <button type="button" class="btn btn-success" ng-click="forwardToApprove()">Submit</button>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+
+
+                      <div class="modal fade" id="approveRequestModal" role="dialog">
+                            <div class="modal-dialog">
+                            
+                              <!-- Modal content-->
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">Approve Request</h4>
+                                </div>
+                                <div class="modal-body">
+                                  <h3>Are you sure you want to approve request?</h3>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                  <button type="button" class="btn btn-success" >Approve</button>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+         <!------------------------- Start of Footer------------------------------- -->
+         <footer class="f-box center-block tp-footer">
+                <div class="pull-left">
+                    Capco & 2017 Forming the Future of Finance
+                </div>
+    
+                <div class="pull-right">
+                    <div>
+                        All rights reserved.
+                    </div>
+            </footer>
+            <!------------------------- End of Footer------------------------------- -->
+    
+<script src="../capco-travel-portal-webApp/assets/js/angular/angular.min.js"></script>
+    <script src="/capco-travel-portal-webApp/modules/module.js"></script>
+        <script src="/capco-travel-portal-webApp/controllers/controller.js"></script>
+</body>
+</html>

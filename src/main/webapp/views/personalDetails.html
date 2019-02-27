@@ -1,0 +1,142 @@
+<div id="personalDetails" class="tab-pane in active">
+    <form action="" name="personal">
+
+        <!-- Creating a contianer having padding-->
+
+        <section>
+            <!-- Radio button selector i.e mandatory for selecting booking travel for self 
+                    or others-->
+            <!-- -------- Start of radio ---------- -->
+
+            <div class="input">
+                <header class="tp-radio-pad">
+                    Please select from one of the following options*
+                </header>
+                <label class="radio-inline">
+            
+                 <input type="radio" name="self-other">
+                <i></i>
+                Self
+        </label>
+                <label class="radio-inline m-l-lg">
+                    <input type="radio" name="self-other">
+                    <i></i>
+                    Other Employee
+        </label>
+            </div>
+
+            <!-- ------------ Ends of radio ----------------- -->
+
+
+            <!------------- Start of input field section
+                                 Starts here        -------- -->
+            <div class="row tp-field-heading">
+
+
+                <div class="col-xs-12 col-md-6">
+                    <label>Employee Name*</label>
+                    <input type="text" class="form-control input-sm" name="personName" placeholder="Employee Name" ng-model="employeeName" ng-minlength="4"
+                        ng-maxlength="50" ng-pattern="/^[a-zA-Z ][^\s]*$/" required />
+                    <div style="position : absolute;" ng-messages="personal.personName.$error" ng-if="personal.personName.$touched" ng-class="errMsg">
+                        <span ng-message="required">{{::err.data.validations.employeeName.required}}</span>
+                        <span ng-message="pattern">{{::err.data.validations.employeeName.pattern}}</span>
+                        <span ng-message="minlength">{{::err.data.validations.employeeName.minlength}}</span>
+                        <span ng-message="maxlength">{{::err.data.validations.employeeName.maxlength}}</span>
+                    </div>
+                </div>
+
+
+
+                <div class="col-xs-12 col-md-6">
+
+                    <label>Employee Contact*</label>
+                    <input type="text" class="form-control input-sm" placeholder="Employee Contact" name="personContact" ng-model="employeeMobileNumber"
+                        ng-minlength="10" ng-maxlength="10" ng-pattern="/^[0-9][^\s]*$/" required />
+                    <div style="position : absolute;" ng-messages="personal.personContact.$error" ng-if="personal.personContact.$touched" ng-class="errMsg">
+                        <span ng-message="required">{{::err.data.validations.employeeContact.required}}</span>
+                        <span ng-message="pattern">{{::err.data.validations.employeeContact.pattern}}</span>
+                        <span ng-message="minlength">{{::err.data.validations.employeeContact.minlength}}</span>
+                        <span ng-message="maxlength">{{::err.data.validations.employeeContact.maxlength}}</span>
+                    </div>
+                </div>
+                <!-- right side column ends-->
+
+            </div>
+
+
+            <div class="row tp-field-heading">
+                <div class="col-xs-12 col-md-6">
+                    <label>Employee Location*</label>
+                    <select class="form-control input-sm" ng-model="employeeLocation" name="personLocation" ng-options="city for city in personalDetails.employeeLocation" required>
+                    <option value="" disabled selected>--Select Location--</option>
+                   <!--  <option value="1">{{err.data.personalDetails.employeeLocation[0]}}</option>
+                    <option value="2">{{err.data.personalDetails.employeeLocation[1]}}</option> -->
+                </select>
+                    <div ng-messages="personal.personLocation.$error" ng-if="personal.personLocation.$touched" ng-class="errMsg">
+                        <span ng-message="required">{{::err.data.validations.employeeLocation.required}}</span>
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+                    <label>Approver Name*</label>
+                    <select class="form-control input-sm" ng-model="approverName" name="personApproverName" placeholder="Approver Name" ng-options="person for person in personalDetails.approverName">
+                    <option value="" disabled selected>--Select Name--</option>
+                    <!-- <option value="1">{{err.data.personalDetails.approverName[1]}}</option>  --> 
+                </select>
+                    <div ng-messages="personal.personApproverName.$error" ng-if="personal.personApproverName.$touched" ng-class="errMsg">
+
+                        <span ng-message="required">hi{{::err.data.validations.approverName.required}}</span>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="row tp-field-heading">
+                <div class="col-xs-12 col-md-6">
+
+                    <label>Project Name*</label>
+                    <input type="text" class="form-control input-sm" placeholder="Project Name" name="personProjectName" ng-model="projectName"
+                        required />
+                    <div ng-messages="personal.personProjectName.$error" ng-if="personal.personProjectName.$touched" ng-class="errMsg">
+                        <span ng-message="required">{{::err.data.validations.projectName.required}}</span>
+
+                    </div>
+
+                </div>
+
+                <div class="col-xs-12 col-md-6">
+
+                    <label>Project Code/Charge Code*</label>
+                    <input type="text" class="form-control input-sm" placeholder="Project Code" name="personProjectCode" ng-model="projectCode"
+                        required />
+                    <div ng-messages="personal.personProjectCode.$error" ng-if="personal.personProjectCode.$touched" ng-class="errMsg">
+                        <span ng-message="required">{{::err.data.validations.projectCode.required}}</span>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Start of buttons section
+                      Starts here  -->
+            <footer>
+                <nav aria-label="...">
+                    <ul class="pager">
+                        <li class="next"><a data-toggle="tab" href="#reqDetails1">Next</a></li>
+                    </ul>
+                </nav>
+            </footer>
+
+
+
+        </section>
+
+
+
+        <!-- -----------end of container section---------- -->
+
+    </form>
+</div>

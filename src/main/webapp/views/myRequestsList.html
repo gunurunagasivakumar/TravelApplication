@@ -1,0 +1,533 @@
+
+ <style>.tab-name {font-weight: 600;
+    color: #000000;
+    font-size: 20px;
+    }
+    .form-data {
+  flex-direction: row;
+  flex-wrap: wrap;
+  color: #000000;
+}
+.form-data .flex-child {
+  flex: 1 0 20%;
+  padding: 10px 0px;
+}
+.form-data .data-label {
+  font-size: 12px;
+  color: #4e4e4e;
+}
+.form-data .data-value {
+  padding: 2px 0px;
+  font-size: 16px;
+}
+.form-label {
+  color: #00aabb;
+  font-size: 18px;
+  /* padding-top: 15px; */
+}
+hr {margin: 10px 0px;}
+.modal-header {background: #ededed;    padding: 10px;}
+.modal-header .close { position: relative;
+    right: 20px;
+    bottom: 10px;
+    font-size: 40px;
+    width: 21.4px;
+    height: 21.4px;
+    transform: rotate(90deg);}
+.view-request {    letter-spacing: 0.4px;
+    font-size: 20px;
+    color: #737373;    top: 10px;
+    left: 15px;position : relative;}
+    .modal-footer {border: none;}
+    .f-box {box-shadow: none;}
+    .radio-btn {
+    display: inline;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.radio-btn input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    height: 18px;
+    width: 18px;
+    background-color: white;
+    border: 1px solid #00aeed;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.radio-btn:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.radio-btn input:checked ~ .checkmark {
+    background-color: #00aeed;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.radio-btn:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.radio-btn input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.radio-btn .checkmark:after {
+ 	top: 4px;
+	left: 4px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: white;
+}
+.approve-text, .reject-text {font-size: 14px;color: #4e4e4e;letter-spacing: 0.6px;}
+
+
+    </style> 
+    
+    
+   
+  <header-component></header-component>
+ <div ng-if="!reqViewClicked">
+ 
+ <div class="col-sm-2 aside">
+     <ul class="nav nav-stacked">
+     	<li ng-click="home()" ><button ><img src="assets/login/images/home.png" alt="IMG" ><br /><span>HOME</span></button></li>
+        <li ng-click="newrequest()"><button  ><img src="assets/login/images/new_request.png" alt="IMG" ><br /><span>NEW REQUEST</span></button></li>
+        <li ><button ><img src="assets/login/images/request_list_selected.png" alt="IMG"><br /><span>REQUEST LIST</span></button></li>
+        <li ng-click="requestList()"  ng-if="user.grade == 'M5' || user.grade == 'M6' && user.isApprover"><button  ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		<li ng-click="requestList()" ng-if="user.grade != 'M5' && user.grade != 'M6' && user.isApprover"><button   ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		
+      </ul>
+    </div>
+    
+    <div class="col-sm-10">
+    	
+             <h4>{{typeOfReq}} Request Lists </h4>
+       
+        
+        	<div  class="table-responsive approval-list">
+                                <table class="table table-striped ">
+                                  <thead>
+                                    <tr>
+                                     
+                                      <th width="25%">Request ID</th>
+                                      <th class="th-sortable" data-toggle="class" width="25%">Creation Date
+                                       
+                                      </th>
+                                      <th width="25%">Status</th>
+                                      <th width="25%">Action</th>
+                                      
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr ng-repeat="req in userRequest" >
+                                      
+                                      <td>{{req.requestId}}</td>
+                                      <td>{{req.createdOn}}</td>
+                                     
+                                      <td ng-if="req.currentStatus == 'Approved'" style="color:#3db200">{{req.currentStatus}}</td>
+                                      <td ng-if="req.currentStatus != 'Approved' && (req.currentStatus != 'Rejected')" style="color:#ff7500">{{req.currentStatus}}</td>
+                                      <td ng-if="(req.currentStatus == 'Rejected')" style="color:#c00d0d">{{req.currentStatus}}</td>
+                                      <td>
+                                        <button class="btn btn-primary"   ng-click="getRequestDetails(req.requestId)" data-toggle="modal" title="View" data-target="#rejectRequestModal"><i class="fa fa-eye"></i></button>
+                                      	<!-- <button class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Edit" ng-disabled="req.currentStatus!='Manager Approval Pending' && req.currentStatus!='Rejected' && req.currentStatus!='Pending' && !(user.isApprover==true && req.currentStatus =='Partner Approval Pending')" ng-click="editRequest(req.requestId)"><i class="fa fa-edit"></i></button> -->
+                                      	<button class="btn btn-success" data-toggle="tooltip" data-placement="right" title="Edit" ng-disabled="(req.currentStatus == 'Manager Approval Pending' || req.currentStatus == 'Draft') ?  false : true" ng-click="editRequest(req.requestId)"><i class="fa fa-edit"></i></button>
+                                      	<!-- <button class="btn btn-danger" ng-if="!user.isApprover" ng-disabled="req.currentStatus!='Manager Approval Pending' && req.currentStatus!='Rejected' && req.currentStatus!='Pending'" data-toggle="tooltip" data-placement="right" title="Cancel" ng-click="deleteRequest(req.requestId)"><i class="fa fa-trash-o"></i></button> -->
+                                      	<button class="btn btn-danger" ng-disabled="(req.currentStatus == 'Manager Approval Pending' || req.currentStatus == 'Draft') ?  false : true" data-toggle="tooltip" data-placement="right" title="Cancel" ng-click="deleteRequest(req.requestId)"><i class="fa fa-trash-o"></i></button>
+                                      	<!--  
+                                      		<button class="btn btn-danger" ng-if="user.isApprover" ng-disabled="req.currentStatus=='Approved'" data-toggle="tooltip" data-placement="right" title="Cancel"  ng-click="deleteRequest(req.requestId);"><i class="fa fa-trash-o"></i></button>
+                                      	-->
+                                      </td>
+                                      
+                                    </tr>
+                                   
+                                  </tbody>
+                                </table>
+                                <div class="text-center">
+                                	<ul  ng-if="totalItems > pagination.itemsPerPage" uib-pagination total-items="totalItems" max-size="pagination.maxSize" ng-model="pagination.currentPage" items-per-page="pagination.itemsPerPage" ng-change="setPagingData()"></ul>
+                                </div>
+                              </div>
+                              
+        </div>
+    
+   	</div>
+    
+ 
+
+    
+    
+    
+    
+    <div ng-if="reqViewClicked">
+    
+    <div class="col-sm-2 aside">
+     <ul class="nav nav-stacked">
+     	<li ng-click="home()" ><button ><img src="assets/login/images/home.png" alt="IMG" ><br /><span>HOME</span></button></li>
+        <li ng-click="newrequest()"><button  ><img src="assets/login/images/new_request.png" alt="IMG" ><br /><span>NEW REQUEST</span></button></li>
+        <li ><button ><img src="assets/login/images/request_list_selected.png" alt="IMG"><br /><span>REQUEST LIST</span></button></li>
+        <li ng-click="requestList()"  ng-if="user.grade == 'M5' || user.grade == 'M6' && user.isApprover"><button  ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		<li ng-click="requestList()" ng-if="user.grade != 'M5' && user.grade != 'M6' && user.isApprover"><button   ><img src="assets/login/images/manager_request_list.png" alt="IMG"><br /><span>MANAGER REQUEST LIST</span></button></li>
+		
+      </ul>
+    </div>
+    
+    <div class="col-sm-10">
+      
+      
+                 <section class="f-box">
+                                            <header >
+                                                <!-- <h1 class="p-tb-md m-n p">Approve Request</h1> -->
+
+                                            </header>
+                                            <div class="main-bg p">
+                                            	<div class="padding-left">
+	                                                <header>
+	                                                    <div class="row">
+	                                                        <div class="col-sm-6">
+	                                                            <h3>Personal Details</h3>
+	                                                        </div>
+	                                                        <div class="col-sm-6">
+	                                                        <h3 class="req pull-right">Request ID: #{{requestDetails.travelRequest.requestId}}</h3>
+	                                                        </div>
+	                                                        </div>
+	                                                        
+	                                                        
+	                                                </header>
+	                                                
+	                                               
+	
+	                                               
+	                                                <!-- ===============article====================== -->
+	                                                <!-- Confirmation screen goes here -->
+	                                                
+	                         					<div class="article">
+	                                                    <!-- ========row 1========== -->
+	                                                    <div >
+	                                                        <div>
+	                                                            <b>Employee name:</b>
+	                                                            <span>{{requestDetails.travelRequest.requestedFor}}</span>
+	                                                        </div>
+	                                                        <div>
+	                                                            <b>Location:</b>
+	                                                            <span>{{user.employeeLocation}}</span>
+	                                                        </div>
+	
+	                                                        <div>
+	                                                            <b>Contact Number:</b>
+	                                                            <span>{{user.employeeMobileNumber}}</span>
+	                                                        </div>
+	                                                    </div>
+	                                                    <!-- ========end of row 1==========-->
+	
+	                                                    <!--=========row 2 =========== -->
+	                                                    <div >
+	                                                        <div>
+	                                                            <b>Project Code:</b>
+	                                                            <span>{{requestDetails.travelRequest.projectCode}}</span>
+	                                                        </div>
+	                                                        <div>
+	                                                            <b>Project Name:</b>
+	                                                            <span>{{requestDetails.travelRequest.projectName}}</span>
+	                                                        </div>
+	
+	                                                        <div>
+	                                                            <b>Approvers Name:</b>
+	                                                            <span>{{empDetails[1].employeeName}}</span>
+	                                                            
+	                                                        </div>
+	                                                        <div>
+	                                                        	<b>Purpose of travel:</b>
+	                                                       		<span>{{requestDetails.travelRequest.purposeOfTravel}}</span>
+	                                                       	</div>
+	                                                       	<div>
+	                                                       		<b>Type of Project:</b>
+	                                                       		<span>{{requestDetails.travelRequest.typeOfProject}}</span>
+	                                                       	</div>
+	                                                    </div>
+	                                                    <!-- ========end of row 2 ========= -->
+	
+	                                                </div>
+	                                                <!-- ==================end of article =================- -->
+												</div>
+
+                                                <header>
+                                                	<div style="padding-left: 10px;padding-top: 20px;">
+                                                	
+                                                    <h3>Request Details</h3>
+                                                    </div>
+                                                </header>
+                                                <hr>
+                                                
+                                                <!-- ==================== confirmation section for hotel/accomodation =========================-->
+                                                <article ng-if="accomodationObj!=null">
+                                                    <h4><b>Hotel/Accommodation Booking</b></h4>
+
+                                                    <table class="table table-bordered">
+                                                       	<tr>
+                                                            <td><b>Country:</b></td>
+                                                            <td colspan="2">{{accomodationObj.country}}</td>
+                                                            <td><b>Stay Location:</b></td>
+                                                            <td colspan="2">{{accomodationObj.stayLocation}}</td>
+                                                            <td><b>City:</b></td>
+                                                            <td colspan="2">{{accomodationObj.city}}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><b>Check-in Date & Time:</b></td>
+                                                            <td colspan="2">{{accomodationObj.checkIn}}</td>
+                                                            <td><b>Check-out Date & Time:</b></td>
+                                                            <td colspan="2">{{accomodationObj.checkOut}}</td>
+                                                            <td><b>Type of Accomodation:</b></td>
+                                                            <td colspan="2">{{accomodationObj.category}}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><b>Remark:</b></td>
+                                                        	<td colspan="8">{{accomodationObj.remarks || '-'}}</td>
+                                                        </tr>
+                                                        
+                                                       
+                                                    </table>
+														<hr> 
+                                                </article>
+                                                <!-- ==================== end of hotel/accomodation section ==================== -->
+                                                
+                                                
+                                                
+                                                
+                                                
+                                                <!-- ===============confirmation section for flight====================== -->
+                                                <article ng-if="flightObj!=null">
+
+                                                    <h4><b>Flight Booking</b></h4>
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <td><b>Tour Type:</b></td>
+                                                            <td colspan="2">{{requestDetails.travelRequest.tourType}}</td>
+                                                            <td><b>Travel Type:</b></td>
+                                                            <td colspan="2">{{flightObj.travelType}}</td>
+                                                        </tr>
+
+                                                        <tr ng-if="flightObj.tourType=='international'">
+                                                                <td><b>Origin Country:</b></td>
+                                                                <td colspan="2">{{flightObj.originCountry}}</td>
+                                                                <td><b>Destination Country:</b></td>
+                                                                <td colspan="2">{{flightObj.destinationCountry}}</td>
+                                                        </tr>
+                                                        
+
+                                                        <tr>
+                                                            <td><b>From:</b></td>
+                                                            <td colspan="2">{{flightObj.departureLocation}}</td>
+                                                            <td><b>To:</b></td>
+                                                            <td colspan="2">{{flightObj.destinationLocation}}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td><b>Departure Date:</b></td>
+                                                            <td colspan="2">{{flightObj.departureDate}}</td>
+                                                            <td><b>Departure Time:</b></td>
+                                                            <td colspan="2">{{flightObj.departureTime}}</td>
+                                                        </tr>
+
+                                                        <tr ng-if="flightObj.travelType=='round way'">
+                                                                <td><b>Return Date:</b></td>
+                                                                <td colspan="2">{{flightObj.returnDate}}</td>
+                                                                <td><b>Return Time:</b></td>
+                                                                <td colspan="2">{{flightObj.returnTime}}</td>
+                                                            </tr>
+
+                                                            <tr ng-if="flightObj.tourType=='international'">
+                                                                    <td><b>Surname:</b></td>
+                                                                    <td>{{flightObj.surname}}</td>
+                                                                    <td><b>Given Name:</b></td>
+                                                                    <td>{{flightObj.givenName}}</td>
+                                                                    <td><b>Date of Birth:</b></td>
+                                                                    <td>{{flightObj.dateOfBirth}}</td>
+                                                                </tr>
+
+                                                                <tr ng-if="flightObj.tourType=='international'">
+                                                                        <td><b>Passport Number:</b></td>
+                                                                        <td>{{flightObj.passportNumber}}</td>
+                                                                        <td><b>Passport Issue date:</b></td>
+                                                                        <td>{{flightObj.passportIssueDate}}</td>
+                                                                        <td><b>Meal Preference</b></td>
+                                                            			<td>{{flightObj.mealPref}}</td>
+                                                                    </tr>
+
+														
+
+                                                        <tr>
+                                                            
+                                                            <td><b>Remark</b></td>
+                                                            <td colspan="5">{{flightObj.remark || '-'}}</td>
+                                                        </tr>
+
+                                                        
+
+                                                    </table>
+
+													<hr> 
+
+                                                </article>
+                                                
+                                                 
+                                                <!-- ===================end of section for flight======================-->
+
+                                               
+
+                                                <!-- ===================confirmation section for forex======================-->
+                                                
+                                                <article ng-if="forexObj!=null">
+                                                        <h4><b>Forex</b></h4>
+    
+                                                        <table class="table table-bordered">
+                                                                <tr>
+                                                                        <td><b>Country:</b></td>
+                                                                        <td>{{forexObj.forexCountry}}</td>
+                                                                        <td><b>Currency:</b></td>
+                                                                        <td>{{forexObj.forexCurrency || '-'}}</td>
+                                                                        <td><b>Location:</b></td>
+                                                                        <td>{{forexObj.forexBankDesk}}</td>
+                                                                    </tr>
+
+																	<tr ng-if="forexObj.isActive">
+                                                                            <td><b>Card Holder Name:</b></td>
+                                                                            <td>{{forexObj.cardHolderName}}</td>
+                                                                            <td><b>Card Number:</b></td>
+                                                                            <td>{{forexObj.cardNumber}}</td>
+                                                                            <td><b>Bank:</b></td>
+                                                                            <td>{{forexObj.bank}}</td>
+                                                                     </tr>
+                                                                    <tr>
+                                                                            <td><b>From:</b></td>
+                                                                            <td colspan="3">{{forexObj.forexFromDate}}</td>
+                                                                            <td><b>To:</b></td>
+                                                                            <td colspan="3">{{forexObj.forexToDate}}</td>
+                                                                        </tr>
+
+                                                                        <tr>
+                                                                            <td><b>Remark:</b></td>
+                                                                            <td colspan="5">{{forexObj.forexRemarks}}</td>    
+                                                                        </tr>
+
+    
+                                                        </table>
+    													<hr> 
+                                                    </article>
+                                                    
+                                                    
+                                                     <!-- ===================confirmation section for visa======================-->
+                                                
+                                                <article ng-if="visaObj!=null">
+                                                        <h4><b>Visa</b></h4>
+    
+                                                        <table class="table table-bordered">
+                                                               <tr>
+                                                                    <td><b>Travel Destination:</b></td>
+                                                                    <td>{{visaObj.travelDestination}}</td>
+                                                                    <td><b>Visa Type:</b></td>
+                                                                    <td>{{visaObj.visaType}}</td>
+                                                                 </tr>
+                                                                  <tr>
+                                                                        
+                                                                        <td><b>From Date<b></td>
+                                                                        <td>{{visaObj.fromDate}}</td>
+                                                                        <td><b>To Date<b></td>
+                                                                        <td>{{visaObj.toDate}}</td>
+                                                                        
+                                                                    </tr>
+
+
+                                                                   
+
+                                                                        <tr>
+                                                                            
+                                                                            <td><b>Remark:</b></td>
+                                                                            <td colspan="3">{{visaObj.visaRemarks || '-'}}</td>    
+                                                                        </tr>
+
+    
+                                                        </table>
+    
+                                                    </article>
+                                                <!-- ================end of section for Visa====================== -->
+                                                
+                                               
+                                                <article ng-if="accomodationObj!=null || cabObj!=null || flightObj!=null || forexObj!=null || visaObj!=null">
+                                                    <h4><b>Remarks History</b></h4>  
+												<table class="table table-stripped">   
+                                                <tr>
+                                                <th>Status</th>
+                                                <th>Updated By</th>
+                                                <th>Updated On</th>
+                                                <th>Remarks</th>
+                                                </tr>                                           
+                                                <tr ng-repeat="com in requestDetails.travelRequest.commentList">
+                                                	<td>{{com.status}}</td>
+                                                	<td>{{com.updaterName}}</td>
+                                                	<td>{{com.createdOn}}</td>
+                                                	<td>{{com.remarks}}</td>
+                                                </tr>
+                                                </table>
+                                                </article>
+                                                </div>
+                                                <!-- ====================article====================-->
+                                                
+
+                                                 <div class="p">
+													<button class="btn btn-primary"  ng-click="backBtnClick()">Back</button>
+												</div>
+                                                
+                                               
+                                                
+                                                
+
+                                        </section>
+                                        
+                                       
+          
+  
+    
+    
+    </div>
+    </div>
+    
+   
+    
+   
+     
+    
+    		
+   <footer-component></footer-component> 
+      
+   
+  
+    
+    
+    
+   

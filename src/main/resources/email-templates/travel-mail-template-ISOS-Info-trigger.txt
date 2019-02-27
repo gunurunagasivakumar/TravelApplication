@@ -1,0 +1,17 @@
+Hi Travel Desk,
+
+You are receiving this mail as part of new travel request . Below are the details:
+
+Employee Name: {{employeeName}}
+
+Employee Number: {{employeeNumber}}
+
+Project Name: {{projectName}}
+
+Travel Request raised on: {{today}}
+
+Please note that, the employee does not have ISOS. Kindly, do the needful
+
+
+Thanks!
+CapcoTravelAssist Team

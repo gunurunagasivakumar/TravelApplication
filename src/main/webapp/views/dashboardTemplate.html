@@ -1,0 +1,198 @@
+<div class="f-box">
+
+
+
+        <!--============= Start of Main============== -->
+
+        <header class="row p">
+            <h1 class="p-tb-md m-n pull-left p">Travel Portal</h1>
+            <button class="btn btn-primary pull-right m" ng-click="newrequest()">New Request</button>
+            <button class="btn btn-primary pull-right m" ng-click="requestList()">Request list</button>
+            <!-- <div class="p pull-right">
+                <a href="../html/requestlist.html">Request List</a>
+            </div>             -->
+        </header>
+
+
+        <!-- Status And Calender Block Start -->
+        <div class="row center-block">
+
+            <!-- Status Block Start -->
+            <div class="col-sm-6">
+
+                <!--Status Block Row 1 Start-->
+                <div class="row">
+
+                    <!--Status Block Row 1 Block 1 Start-->
+                    <div class="col-sm-6">
+
+                        <div class="tp-status-block">
+                            <div class="row">
+                                <div class="text-center tp-status-icon tp-status-col1">
+                                    <div class="col-sm-12">
+                                        <i class="fa fa-plane fa-3x " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="tp-request-status-block">
+                                    <div class="col-sm-6 tp-request-status-block1 ">
+                                        <div class="text-center">
+                                            <h4>4</h4>
+                                            <label>Pending</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 tp-request-status-block2">
+                                        <div class="text-center">
+                                            <h4>90</h4>
+                                            <label>Approved</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Status Block Row 1 Block 1 End-->
+
+                <!--Status Block Row 1 Block 2 Start-->
+                    <div class="col-sm-6">
+                        <div class="tp-status-block">
+                            <div class="row">
+                                <div class="text-center tp-status-icon tp-status-col2">
+                                    <div class="col-sm-12">
+                                        <i class="fa fa-money fa-3x " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="tp-request-status-block">
+                                    <div class="col-sm-6 tp-request-status-block1 ">
+                                        <div class="text-center">
+
+                                                <h4>{{db.a}}</h4>
+                                                <label>Pending</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 tp-request-status-block2">
+                                        <div class="text-center">
+                                            <h4>90</h4>
+                                            <label>Approved</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Status Block Row 1 Block 2 End-->
+
+                </div>
+                <!--Status Block Row 1 End-->
+
+                <!--Status Block Row 2 Start-->
+                <div class="row">
+
+                <!--Status Block Row 2 Block 1 Start-->
+                    <div class="col-sm-6">
+
+                        <div class="tp-status-block">
+                            <div class="row">
+                                <div class="text-center tp-status-icon tp-status-col1">
+                                    <div class="col-sm-12">
+                                        <i class="fa fa-home fa-3x " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="tp-request-status-block">
+                                    <div class="col-sm-6 tp-request-status-block1 ">
+                                        <div class="text-center">
+
+                                            <h4>4</h4>
+                                            <label>Pending</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 tp-request-status-block2">
+                                        <div class="text-center">
+                                            <h4>90</h4>
+                                            <label>Approved</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--Status Block Row 2 Block 1 End-->
+
+                    <!--Status Block Row 2 Block 2 Start-->
+                    <div class="col-sm-6">
+                        <div class="tp-status-block">
+                            <div class="row">
+                                <div class="text-center tp-status-icon tp-status-col2">
+                                    <div class="col-sm-12">
+                                        <i class="fa fa-taxi fa-3x " aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="tp-request-status-block">
+                                    <div class="col-sm-6 tp-request-status-block1 ">
+                                        <div class="text-center">
+                                            <h4>{{db.a}}</h4>
+                                            <label>Pending</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 tp-request-status-block2">
+                                        <div class="text-center">
+                                            <h4>90</h4>
+                                            <label>Approved</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--Status Block Row 2 Block 2 End-->
+
+                </div>
+                <!--Status Block Row 2 End-->
+
+            </div>
+            <!-- Status Block End -->
+
+            <!-- Calender Block Start -->
+            <div class="col-sm-6 p">
+                   <section class="panel b-light">
+                        <header class="panel-heading p">
+                            <strong>Calendar</strong>
+                        </header>
+                        <div id="calendar" class="bg-light dker m-l-n-xxs m-r-n-xxs"></div>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item text-ellipsis">
+                                <span class="badge bg-warning">4th Oct 7:30AM</span> Cab Request - Meeting with HSBC Bank
+                            </a>
+                            <a href="#" class="list-group-item text-ellipsis">
+                                <span class="badge bg-success">7th Oct 9:30AM</span> Flight Request - Have a kick off meeting with .Icano company
+                            </a>
+                        </div>
+                    </section>
+            </div>
+            <!-- Calender Block End -->
+
+        </div>
+         <!-- Status And Calender Block End-->
+</div>
+        <!-- main section i.e tab-content class ends-->
+
+        <!--===============-End of main==================-->

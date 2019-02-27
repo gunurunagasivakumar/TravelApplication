@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html ng-app="testModule">
+
+<head>
+    <title></title>
+
+    
+
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/cust-Travel-Portal.css">
+
+</head>
+
+<body ng-controller="testController">
+
+    <div class="f-box">
+
+        
+
+        <!-- ============================================
+            |               Start of Main                |
+            ============================================= -->
+
+        <section class="container-bg">
+
+            <header>
+                <h1 class="p-tb-md m-n p">New Travel Request</h1>
+            </header>
+            <section class="main-bg">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <section>
+                            <ul class="nav nav-tabs text-center">
+                                <li class="active"><a data-toggle="tab" href="#personalDetails">Personal Details</a></li>
+                                <li><a data-toggle="tab" href="#reqDetails">Request Details</a></li>
+                                <li><a data-toggle="tab" href="#confirm">Confirm</a></li>
+                            </ul>
+                        </section>
+                    </div>
+                    <section class="tab-content panel-body">
+                        <div class="progress progress-xs m-t-md">
+                            <div class="progress-bar bg-success" style="width: 33.3333%;"></div>
+                        </div>
+                        <section class="tab-content panel-body">
+                               
+                            <div id="personalDetails" class="tab-pane fade in active">
+                                <form action="" name="personal">
+
+                                    <!-- Cerating a contianer having padding-->
+
+                                    <section>
+                                        <!-- Radio button selector i.e mandatory for selecting booking travel for self 
+                                                    or others-->
+                                               <!-- -------- Start of radio ---------- -->
+
+                                    <div class="input">
+                                        <header class="tp-radio-pad">
+                                            Please select from one of the following options*
+                                        </header>
+                                        <label class="radio-inline">
+                                                Self <input type="radio" name="self-other">
+                                                        <i></i>
+                                                    </label>
+                                        <label class="radio-inline m-l-lg">
+                                            Other Employee <input type="radio" name="self-other">
+                                                        <i></i>
+                                        </label>
+                                    </div>
+
+                                        <!-- ------------ Ends of radio ----------------- -->
+
+
+                                        <!------------- Start of input field section
+                                                                 Starts here        -------- -->
+                                        <div class="row tp-field-heading">
+
+                                           
+                                            <div class="col-xs-12 col-md-6">
+                                                <label>Employee Name*</label>
+                                                <input type="text" class="form-control input-sm" name="personName" placeholder="Employee Name" ng-model="person.employeeName" ng-minlength="4" ng-maxlength="50" ng-patteng-pattern="/^[a-zA-Z ][^\s]*$/" required />
+                                                <div ng-messages="personal.personName.$error" ng-if="personal.personName.$touched"> 
+                                                    <p ng-message="pattern">Numbers and special characters are not allowed</p>
+                                                    <div ng-messages-include="errorMessages.html"></div>
+                                                    <p ng-message="required">Please enter employee name</p>                                                    
+                                                    
+                                                </div>
+                                            </div>
+
+                                           
+
+                                            <div class="col-xs-12 col-md-6">
+
+                                                <label>Employee Contact*</label>
+                                                <input type="text" class="form-control input-sm" placeholder="Employee Contact" name="personContact" ng-model="person.contact" ng-minlength="10" ng-maxlength="10" ng-pattern="/^[0-9][^\s]*$/" required />
+                                                <div ng-messages="personal.personContact.$error" ng-if="personal.personContact.$touched"> 
+                                                        <p ng-message="pattern">Only numbers are allowed</p>
+                                                        <div ng-messages-include="errorMessages.html"></div>
+                                                        <p ng-message="required">Please enter employee contact number</p>                                                    
+                                                        
+                                                    </div>
+                                            </div>
+                                            <!-- right side column ends-->
+
+                                        </div>
+
+                                        <div class="row tp-field-heading">
+                                            <div class="col-xs-12 col-md-6">
+                                                <label>Employee Location*</label>
+                                                <select class="form-control input-sm" ng-model="person.employeeLocation" name="personLocation" required>
+                                                    <option value="">--Select Location--</option>
+                                                    <option value="1">Pune</option>
+                                                    <option value="2">Banglore</option>
+                                                </select>
+                                                <div ng-messages="personal.personLocation.$error" ng-if="personal.personLocation.$touched"> 
+                                                        <p ng-message="required">Please select location</p>                                                      
+                                                    </div>
+                                                
+                                            </div>
+
+                                            <div class="col-xs-12 col-md-6">
+                                                <label>Approver Name*</label>
+                                                <select class="form-control input-sm" ng-model="person.approverName" name="personApproverName" placeholder="Approver Name">
+                                                    <option value="">--Select Name--</option>
+                                                    <option value="">Rajnish</option>  
+                                                </select>
+                                                <div ng-messages="personal.personApproverName.$error" ng-if="personal.personApproverName.$touched"> 
+                                                        
+                                                        <p ng-message="required">Please select approver's name</p>                                                    
+                                                        
+                                                    </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="row tp-field-heading">
+                                            <div class="col-xs-12 col-md-6">
+
+                                            <label>Project Name*</label>
+                                            <input type="text" class="form-control input-sm" placeholder="Project Name" name="personProjectName" ng-model="person.ProjectName" ng-model="person.contact" required />
+                                            <div ng-messages="personal.personProjectName.$error" ng-if="personal.personProjectName.$touched"> 
+                                                    <p ng-message="required">Please enter project name</p>                                                    
+                                                    
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-xs-12 col-md-6">
+
+                                            <label>Project Code/Charge Code*</label>
+                                            <input type="text" class="form-control input-sm" placeholder="Project Name" name="personProjectCode" ng-model="person.ProjectCode" ng-model="person.projectCode" required />
+                                            <div ng-messages="personal.personProjectCode.$error" ng-if="personal.personProjectCode.$touched"> 
+                                                    <p ng-message="required">Please enter project code/charge code</p>                                                    
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- Start of buttons section
+                                                      Starts here  -->
+                                        <footer>
+                                            <nav aria-label="...">
+                                                <ul class="pager">
+                                                    <li class="next"><a data-toggle="tab" href="#reqDetails1">Next</a></li>
+                                                </ul>
+                                            </nav>
+                                        </footer>
+                                        
+
+
+                                </section>
+
+
+
+                                    <!-- -----------end of container section---------- -->
+
+                            </form>
+                        </div>
+
+
+                        <!-- second tab-->
+
+                            <div id="reqDetails" class=" tab-pane fade">
+                                <!-- ============================================
+                                    |    start of Request Details form section   |
+                                    ==============================================-->
+                                <section>
+                                        <div class="row">
+                                            <div class="col-lg-3 col-xs-6">
+                                                <input type="checkbox" >
+                                                <label>Hotel/Accomodation</label>
+                                            </div>
+                                
+                                
+                                            <div class="col-lg-3 col-xs-6">
+                                                <input type="checkbox">
+                                                <label>Taxi</label>
+                                            </div>
+                                
+                                            <div class="col-lg-3 col-xs-6">
+                                                <input type="checkbox">
+                                                <label>Flight</label>
+                                            </div>
+                                
+                                            <div class="col-lg-3 col-xs-6">
+                                                <input type="checkbox">
+                                                <label>Forex</label>
+                                            </div>
+                                        </div>
+                                
+                                        <div class="">
+                                            <!-- ===============================================================
+                                                |						panel group || accordians               |
+                                                ================================================================- -->
+                                            <div class="panel-group">
+                                                <!-- ---------------- Hotel / Accomodation panel/accordion ---------------- -->
+                                               <form action="" name="accommodationForm">
+                                                <div class="panel panel-default">
+                                                    <!-- -------------Panel Heaading------------- -->
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title p">
+                                                            <a data-toggle="collapse" data-parent="#accordion">
+                                                            Hotel/Accommodation</a>
+
+                                                    <!-- <div class="pull-right">
+                                                                    <i class="fa fa-chevron-down"></i>
+                                                                </div> -->
+                                                        </h4>
+                                                       
+                                                    </div>
+                                                     <!-- -------------Panel Heaading------------- -->
+                                                    <div id="collapseOne" class="panel-collapse collapse in">
+                                                        <div class="panel-body">
+                                                            <form action="" name="accomodationForm">
+                                                            <div class="row tp-field-heading">
+                                                                <div class="col-xs-12 col-md-6">
+                                                                    <label>Country*</label>
+                                                                    <select class="form-control" name="accommodationCountry" ng-model="accommodation.country" required>
+                                                                        <option value="">--Select Country--</option>
+                                                                    </select>
+                                                                    <div ng-messages="accommodationForm.accommodationCountry.$error" ng-if="accommodationForm.accommodationCountry.$touched"> 
+                                                                            <p ng-message="required">Please select country</p>                                                      
+                                                                        </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-6">
+
+                                                            <label>City*</label>
+                                                            <select class="form-control input-sm" ng-model="accommodation.city" name="accommodationCity" required>
+                                                                                <option value="">--Select City--</option>
+                                                                            </select>
+                                                                            <div ng-messages="accommodationForm.accommodationCity.$error" ng-if="accommodationForm.accommodationCity.$touched"> 
+                                                                                    <p ng-message="required">Please select City</p>                                                      
+                                                                                </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <label>Check-in Date*</label>
+                                                                        <!-- <input type="date" class="form-control" ng-model="accommodation.checkInDate" name="accommodationCheckInDate" required> -->
+
+
+                                                                        <div class="input-form">
+                                                                        <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="AvailableDate" name="availabledate" is-open="availableDatePopup.opened" datepicker-options="availableDateOptions" ng-required="true" close-text="Close" ng-click="OpenAvailableDate()"
+                                                                        ng-change="ChangeExpiryMinDate(AvailableDate)" placeholder="Available Date" />
+                                                                        <label ng-show="showMessages && addJobForm.availabledate.$invalid" class="text-danger">
+                                                                            Available Date is required.
+                                                                        </label>
+                                                                    </div>
+                                                                        <div ng-messages="accommodationForm.accommodationCheckInDate.$error" ng-if="accommodationForm.accommodationCheckInDate.$touched"> 
+                                                                                <p ng-message="required">Please enter Check-in date</p>                                                      
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        
+                                                                            <label>Check-in Time*</label>
+                                                                            <!-- <input type="text" class="form-control" ng-model="accommodation.checkInTime" name="accommodationCheckInTime" placeholder="Check-in Time" required> -->
+
+
+                                                                            <div class="form-group">
+                                                                                    <!-- <div class='input-group date' id='datetimepicker3'>
+                                                                                        <input type='text' class="form-control" />
+                                                                                        <span class="input-group-addon">
+                                                                                            <span class="fa fa-clock-o"></span>
+                                                                                        </span>
+                                                                                    </div> -->
+                                                                                    <!-- <div uib-timepicker ng-model="time"></div> -->
+                                                                                    <!-- <input  ez-timepicker="form.time" data-clock-icon-class="fa fa-clock-o" data-inc-icon-class="fa fa-chevron-up" data-dec-icon-class="fa fa-chevron-down"/> -->
+                                                                                     <select id="" class="form-control" ng-model="accommodation.checkInTime" 
+                                                                                    name="accommodationCheckInTime" required>
+                                                                                   <option value="" ng-repeat="t in timeInterval.intervals" ng-value="t.value">{{t.display}}</option>
+
+                                                                                    </select> 
+                                                                               
+                                                                                </div>
+
+
+                                                                            <div ng-messages="accommodationForm.accommodationCheckInTime.$error" ng-if="accommodationForm.accommodationCheckInTime.$touched"> 
+                                                                                    <p ng-message="required">Please enter Check-in time</p>                                                      
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                <div class="row tp-field-heading">
+                                                                        <div class="col-xs-12 col-md-6">
+                                                                            <label>Check-out Date*</label>
+                                                                            <!-- <input type="date" class="form-control" ng-model="accommodation.checkOutDate" name="accommodationCheckOutDate" required> -->
+                                                                            <div class="input-form">
+                                                                                <input type="text" class="form-control" uib-datepicker-popup="{{dateFormat}}" ng-model="ExpireDate" name="expiredate" is-open="expireDatePopup.opened" datepicker-options="expireDateOptions" ng-required="true" close-text="Close" ng-click="OpenExpireDate()"
+                                                                                placeholder="Expire Date" />
+                                                                                <label ng-show="showMessages && addJobForm.expiredate.$invalid" class="text-danger">
+                                                                                    Expire Date is required.
+                                                                                </label>
+                                                                            </div>
+                                                                            <div ng-messages="accommodationForm.accommodationCheckOutDate.$error" ng-if="accommodationForm.accommodationCheckOutDate.$touched"> 
+                                                                                    <p ng-message="required">Please enter Check-out date</p>                                                      
+                                                                                </div>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-md-6">
+                                                                            
+                                                                                <label>Check-out Time*</label>
+                                                                                <input type="text" class="form-control" placeholder="Check-out Time" ng-model="accommodation.checkOutTime" name="accommodationCheckOutTime" required>
+
+                                                                                <div ng-messages="accommodationForm.accommodationCheckOutTime.$error" ng-if="accommodationForm.accommodationCheckOutTime.$touched"> 
+                                                                                        <p ng-message="required">Please enter Check-out time</p>                                                      
+                                                                                    </div>
+                                                                        </div>
+                                                                </div>
+                                
+                                                            <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <label>Budget Per Day*</label>
+                                                                        <input type="text" class="form-control" placeholder="Budget Per Day" ng-model="accommodation.budgetPerDay" name="accommodationBudgetPerDay" required ng-pattern="/^[0-9]*$/">
+
+                                                                        <div ng-messages="accommodationForm.accommodationBudgetPerDay.$error" ng-if="accommodationForm.accommodationBudgetPerDay.$touched"> 
+                                                                                <p ng-message="pattern">Only numbers are allowed</p>       
+                                                                                <p ng-message="required">Please enter budget per day</p>  
+                                                                                                                                
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        
+                                                                            <label>Currency*</label>
+                                                                            <select class="form-control" ng-model="accommodation.currency" name="accommodationCurrency">
+                                                                                <option value="">--Select Currency--</option>
+                                                                            </select>
+
+                                                                            <div ng-messages="accommodationForm.accommodationCurrency.$error" ng-if="accommodationForm.accommodationCurrency.$touched"> 
+                                                                                   
+                                                                                    <p ng-message="required">Please select currency</p>  
+                                                                                                                                    
+                                                                                </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-6">
+                                                                        <label>Type of Room*</label>
+                                                                        <select class="form-control" ng-model="accommodation.typeOfRoom" name="accommodationTypeOfRoom" required>
+                                                                                <option value="">--Select Type--</option>
+                                                                            </select>
+                                                                            <div ng-messages="accommodationForm.accommodationTypeOfRoom.$error" ng-if="accommodationForm.accommodationTypeOfRoom.$touched"> 
+                                                                                    
+                                                                                     <p ng-message="required">Please select type of room</p>  
+                                                                                                                                     
+                                                                                 </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-6">
+
+                                                            <label>Nearest Facility*</label>
+                                                                             <select class="form-control input-sm" ng-model="accommodation.nearestFacility" name="accommodationNearestFacility" required>
+                                                                                    <option value="">--Select facility--</option>
+                                                                                </select>
+
+                                                                                <div ng-messages="accommodationForm.accommodationNearestFacility.$error" ng-if="accommodationForm.accommodationNearestFacility.$touched"> 
+                                                                                        
+                                                                                         <p ng-message="required">Please select nearest facility</p>  
+                                                                                                                                         
+                                                                                     </div>
+                                                                    </div>
+                                                                </div>
+                                
+                                                            <div class="row tp-field-heading">
+                                                                <div class="col-xs-12 col-md-12">
+                                                                    <label>Remark</label>
+                                                                    <textarea class="form-control" placeholder="Remark"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+
+                                                 
+                                                </div>
+                                            </form>
+                                                <!-- --------------------end of Hotel/Accomodation panel/accordion----------------------- -->
+                                
+                                                <!-- ----------------------Cab/Taxi panel/accordion ------------- -->
+                                                <form action="" name="cabForm">
+                                                <div class="panel panel-default" >
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title p">
+                                                            <a data-toggle="collapse" data-parent="#accordion">
+                                                            Cab/Taxi Request</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseTwo" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Car Request Type*</label>
+                                                            <select class="form-control input-sm" ng-model="cab.carRequestType" name="cabCarRequestType" required>
+                                                                        <option value="">--Select Type--</option>
+                                                                    </select>
+                                                                    <div ng-messages="cabForm.cabCarRequestType.$error" ng-if="cabForm.cabCarRequestType.$touched"> 
+                                                                        
+                                                                         <p ng-message="required">Please select car request type</p>  
+                                                                                                                         
+                                                                     </div>
+                                                                    
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Select City*</label>
+                                                            <select class="form-control input-sm" ng-model="cab.city" name="cabCity" required>
+                                                                              <option value="">--Select City--</option>
+                                                                          </select>
+                                                                          <div ng-messages="cabForm.cabCity.$error" ng-if="cabForm.cabCity.$touched"> 
+                                                                            
+                                                                             <p ng-message="required">Please select citye</p>  
+                                                                                                                             
+                                                                         </div>
+
+
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Pickup Point/Place*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Pickup Point/Place"  ng-model="cab.pickupPoint" name="cabPickupPoint" required>
+                                                                <div ng-messages="cabForm.cabPickupPoint.$error" ng-if="cabForm.cabPickupPoint.$touched"> 
+                                                                    
+                                                                     <p ng-message="required">Please enter pickup point/place</p>  
+                                                                                                                     
+                                                                 </div>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>If other,Enter Address*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Address"
+                                                                 ng-model="cab.otherAddress" name="cabOtherAddress" required>
+                                                                 <div ng-messages="cabForm.cabOtherAddress.$error" ng-if="cabForm.cabOtherAddress.$touched"> 
+                                                                    
+                                                                     <p ng-message="required">Please enter address</p>  
+                                                                                                                     
+                                                                 </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>If Outstation, Select City*</label>
+                                                            <select class="form-control input-sm" ng-model="cab.outstationCity" name="cabOutstationCity" required>
+                                                                                        <option>--Select City--</option>
+                                                                                    </select>
+                                                                     <div ng-messages="cabForm.cabOutstationCity.$error" ng-if="cabForm.cabOutstationCity.$touched"> 
+                                                                                        
+                                                                                         <p ng-message="required">Please enter outstation city</p>  
+                                                                                                                                         
+                                                                       </div>           
+                                                                                    
+
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Drop Point/Place*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Drop Location" ng-model="cab.dropPoint" name="cabDropPoint" required>
+                                                                <div ng-messages="cabForm.cabDropPoint.$error" ng-if="cabForm.cabDropPoint.$touched"> 
+                                                                    
+                                                                    <p ng-message="required">Please enter drop point/place</p>  
+                                                                                                                    
+                                                                </div>           
+                                                       
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>From date*</label>
+                                                            <input type="date" class="form-control input-sm" placeholder="From Date"
+                                                            ng-model="cab.fromDate" name="cabFromCity" required>
+                                                            <div ng-messages="cabForm.cabFromCity.$error" ng-if="cabForm.cabFromCity.$touched"> 
+                                                                
+                                                                <p ng-message="required">Please enter from date</p>  
+                                                                                                                
+                                                            </div>   
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>To Date*</label>
+                                                            <input type="date" class="form-control input-sm" placeholder="To Date"
+                                                            ng-model="cab.toDate" name="cabToDate" required>
+                                                            
+                                                            <div ng-messages="cabForm.cabToDate.$error" ng-if="cabForm.cabToDate.$touched"> 
+                                                                
+                                                                <p ng-message="required">Please enter to date</p>  
+                                                                                                                
+                                                            </div> 
+
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Pickup Time*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Pickup Time"
+                                                            ng-model="cab.pickupTime" name="cabPickupTime" required>
+                                                            <div ng-messages="cabForm.cabPickupTime.$error" ng-if="cabForm.cabPickupTime.$touched"> 
+                                                                
+                                                                <p ng-message="required">Please enter pickup time</p>  
+                                                                                                                
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Type of Car*</label>
+                                                            <select class="form-control input-sm" ng-model="cab.typeOfCar" name="cabTypeOfCar" required>
+                                                                            <option value="">--Select Type--</option>
+                                                             </select>
+                                                                <div ng-messages="cabForm.cabTypeOfCar.$error" ng-if="cabForm.cabTypeOfCar.$touched"> 
+                                                                            
+                                                                            <p ng-message="required">Please select type of car</p>  
+                                                                                                                            
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Number of Person/s*</label>
+                                                            <input type="number" class="form-control input-sm" placeholder="Number of person/s"
+                                                            ng-model="cab.numberOfPersons" name="cabNumberOfPersons" ng-pattern="/^[0-9]*$/" required>
+                                                            <div ng-messages="cabForm.cabNumberOfPersons.$error" ng-if="cabForm.cabNumberOfPersons.$touched"> 
+                                                                <p ng-message="pattern">Only numbers are allowed</p>
+    
+                                                                <p ng-message="required">Please enter number of person/s</p> 
+                                                        </div>
+                                                         
+                                                                                                            
+                                                </div>
+
+                                                    </div>
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 ">
+                                                            <label>Remark</label>
+                                                            <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                                </div>
+                                                </form>
+                                                <!-- ------------------- end of Cab/Taxi  panel/accordion ---------------- -->
+                                
+                                                <!-- --------------------Flight panel/accordion ------------------ -->
+                                                <form action="" name="flightForm">
+                                                <div class="panel panel-default" >
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title p">
+                                                            <a data-toggle="collapse" data-parent="#accordion">
+                                                            Flight</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseThree" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-md-12 form-group input">
+                                                            <header class="tp-radio-pad">Select Tour Type*</header>
+
+                                                            <label class="radio-inline">
+                                                                Domestic 
+                                                                    <input type="radio" name="tour">
+                                                                        <i></i>
+                                                            </label>
+
+                                                            <label class="radio-inline m-l-lg">
+                                                                International 
+                                                                    <input type="radio" name="tour">
+                                                                        <i></i>
+                                                            </label>
+                                                           
+
+                                                                    <!-- <label><input type="radio" name="tourType" id="doemstic" value="domestic"><i></i>Domestic</label>                                    &nbsp&nbsp -->
+                                                                    <!-- <label><input type="radio" name="tourType" id="international" value="international"><i></i>International</label> -->
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row tp-field-heading input">
+                                                        <div class="col-xs-12 col-md-12 form-group">
+                                                            <p>Select Travel Type*</p>
+                                                            <label class="radio-inline">
+                                                                One Way 
+                                                                    <input type="radio" name="travel" checked>
+                                                                    <i></i>
+                                                            </label> 
+                                                            <label class="radio-inline m-l-lg">
+                                                                Round Way 
+                                                                    <input type="radio" name="travel">
+                                                                    <i></i>
+                                                        </div>
+                                                        <label>
+                                                                    </label>
+                                                    </div>
+                                                    <!-- --------Domestic flight------------>
+                                                    <!-- <div>
+                                                                <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                        <label>Buisness Purpose*</label>
+                                                                        <select class="form-control">
+                                                                        <option>--Select Purpose--</option>
+                                                                        <option>option 1</option>
+                                                                    </select>
+                                                                    </div>
+                                
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                        <label>From*</label>
+                                                                        <input type="text" class="form-control" placeholder="Location">
+                                                                    </div>
+                                
+                                                                    <div class="col-xs-12 col-md-4">
+                                
+                                                                        <label>To*</label>
+                                                                        <input type="number" class="form-control" placeholder="Days">
+                                
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                        <label>Departure Date*</label>
+                                                                        <input type="date" class="form-control">
+                                                                    </div>
+                                
+                                                                    <div class="col-xs-12 col-md-4">
+                                                                        <label>Departure Time*</label>
+                                                                        <select class="form-control">
+                                                                                    <option>--Select Time--</option>
+                                                                                    <option>Morning</option>
+                                                                                    <option>Night</option>
+                                                                                </select>
+                                                                    </div>
+                                
+                                                                    <div class="col-xs-12 col-md-4">
+                                
+                                                                        <label>Booking Type*</label>
+                                                                        <select class="form-control">
+                                                                                <option>--Select Type--</option>
+                                                                                <option>Company Booking</option>
+                                                                                <option>Personal Booking</option>
+                                                                            </select>
+                                
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row tp-field-heading">
+                                                                    <div class="col-xs-12 col-md-12">
+                                                                        <label>Remark</label>
+                                                                        <textarea class="form-control" placeholder="Remark"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
+                                                    <!-- --------------International flight------------ -->
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Buisness Purpose*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.buisnesPurpose" 
+                                                            name="flightBuisnessPurpose" required>
+                                                                                    <option value="">--Select Purpose--</option>
+                                                                            </select>
+                                                                            <div ng-messages="flightForm.flightBuisnessPurpose.$error" ng-if="flightForm.flightBuisnessPurpose.$touched"> 
+                                                                                
+                    
+                                                                                <p ng-message="required">Please select buisness purpose</p> 
+                                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Origin Country*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.originCountry" name="flightOriginCountry" required>
+                                                                                        <option value="">--Select Country--</option>
+                                                                                    </select>
+                                                                                <div ng-messages="flightForm.flightOriginCountry.$error" ng-if="flightForm.flightOriginCountry.$touched"> 
+                                                                                        
+                            
+                                                                                        <p ng-message="required">Please select origin country</p> 
+                                                                                </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Destination Country*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.destinationCountry" name="flightDestinationCountry" required>
+                                                                                    <option value="">--Select Country--</option>
+                                                            </select>
+
+                                                            <div ng-messages="flightForm.flightDestinationCountry.$error" ng-if="flightForm.flightDestinationCountry.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please select destination country</p> 
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>From City*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.fromCity" name="flightFromCity" required>
+                                                                                        <option value="">--Select City--</option>
+                                                            </select>
+                                                            <div ng-messages="flightForm.flightDestinationCountry.$error" ng-if="flightForm.flightDestinationCountry.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please select from city</p> 
+                                                        </div>
+
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>To City*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.toCity" name="flightToCity" required>
+                                                                                            <option value="">--Select City--</option>
+                                                            </select>
+
+                                                            <div ng-messages="flightForm.flightDestinationCountry.$error" ng-if="flightForm.flightDestinationCountry.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please select to city</p> 
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Departure Date*</label>
+                                                            <input type="date" class="form-control input-sm" ng-model="flight.departureDate"
+                                                            name="flightDepartureDate" required>
+
+                                                            <div ng-messages="flightForm.flightDepartureDate.$error" ng-if="flightForm.flightDepartureDate.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please enter departure date</p> 
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Departure Time*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.departureTime"
+                                                            name="flightDepartureTime" required>
+                                                                                <option value="">--Select Time--</option>
+                                                            </select>
+
+                                                            <div ng-messages="flightForm.flightDepartureTime.$error" ng-if="flightForm.flightDepartureTime.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please enter departure time</p> 
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Preferred Class*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.preferredClass"
+                                                            name="flightPreferredClass" required>
+                                                                                                <option value="">--Select Class--</option>
+                                                              </select>
+                                                              <div ng-messages="flightForm.flightPreferredClass.$error" ng-if="flightForm.flightPreferredClass.$touched"> 
+                                                                
+    
+                                                                <p ng-message="required">Please enter preferred class</p> 
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Meal Preferance*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.mealPreferance"
+                                                            name="flightMealPreferance" required>
+                                                                       <option value="">--Select Preferance--</option>
+                                
+                                                             </select>
+
+                                                             <div ng-messages="flightForm.flightMealPreferance.$error" ng-if="flightForm.flightMealPreferance.$touched"> 
+                                                                
+                                                                <p ng-message="required">Please select meal preferance</p> 
+                                                        </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Return Date*</label>
+                                                            <input type="date" class="form-control input-sm" ng-model="flight.returnDate"
+                                                            name="flightReturnDate" required>
+
+                                                            <div ng-messages="flightForm.flightReturnDate.$error" ng-if="flightForm.flightReturnDate.$touched"> 
+                                                                
+                                                                <p ng-message="required">Please enter return date</p> 
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Return Time*</label>
+                                                            <select class="form-control input-sm" ng-model="flight.returnTime"
+                                                            name="flightReturnTime" required>
+                                                                          <option value="">--Select Time--</option>
+                                                              </select>
+
+                                                              <div ng-messages="flightForm.flightReturnTime.$error" ng-if="flightForm.flightReturnTime.$touched"> 
+                                                                    <p ng-message="required">Please select return time</p> 
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Passport Number*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Passport Number"
+                                                            ng-model="flight.passportNumber" name="flightPassportNumber" required>
+
+                                                            <div ng-messages="flightForm.flightPassportNumber.$error" ng-if="flightForm.flightReturnTime.$touched"> 
+                                                                <p ng-message="required">Please enter passport number</p> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Surname*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Surname"
+                                                            ng-model="flight.surname" name="flightSurname" required ng-pattern="/^[a-zA-Z]*$/">
+
+                                                            <div ng-messages="flightForm.flightSurname.$error" ng-if="flightForm.flightSurname.$touched"> 
+                                                                <p ng-message="pattern">Only characters are allowed</p>                                                                
+                                                                <p ng-message="required">Please enter surname</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Given Name*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Given Name"
+                                                            ng-model="flight.givenName" name="flightGivenName" required ng-pattern="/^[a-zA-Z]*$/">
+
+                                                            
+                                                            <div ng-messages="flightForm.flightGivenName.$error" ng-if="flightForm.flightGivenName.$touched"> 
+                                                                <p ng-message="pattern">Only characters are allowed</p>                                                                
+                                                                <p ng-message="required">Please enter given name</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Date of Birth*</label>
+                                                            <input type="date" class="form-control input-sm" ng-model="flight.dateOfBirth" 
+                                                            name="flightDateOfBirth" required>
+
+                                                            <div ng-messages="flightForm.flightDateOfBirth.$error" ng-if="flightForm.flightDateOfBirth.$touched"> 
+                                                                <p ng-message="required">Please enter date of birth</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Passport Issue Date*</label>
+                                                            <input type="date" class="form-control input-sm" ng-model="flight.passportIssueDate"
+                                                            name="flightPassportIssueDate" required>
+
+                                                            <div ng-messages="flightForm.flightPassportIssueDate.$error" ng-if="flightForm.flightPassportIssueDate.$touched"> 
+                                                                <p ng-message="required">Please enter passport issue date</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Passport Expiry Date*</label>
+                                                            <input type="date" class="form-control input-sm" ng-model="flight.passportExpiryDate"
+                                                            name="flightPassportExpiryDate" required>
+
+                                                            <div ng-messages="flightForm.flightPassportExpiryDate.$error" ng-if="flightForm.flightPassportExpiryDate.$touched"> 
+                                                                <p ng-message="required">Please enter passport expiry date</p>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xs-12 col-md-4">
+
+                                                            <label>Nationallity*</label>
+                                                            <input type="text" class="form-control input-sm" placeholder="Nationallity"
+                                                            ng-model="flight.nationallity" name="flightNationallity" ng-pattern="/^[a-zA-Z ]*$/" required>
+
+                                                            <div ng-messages="flightForm.flightNationallity.$error" ng-if="flightForm.flightNationallity.$touched"> 
+                                                             <p ng-message="pattern">Only characters are allowed</p>
+                                                                <p ng-message="required">Please enter nationallity</p>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <label>Remark</label>
+                                                            <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+                                                </div>
+                                                </form>
+                                                <!-- ---------------- End of Flight panel/accordion------------ -->
+                                
+                                
+                                                <!-- ---------------- Forex panel/accordion----------- -->
+                                                <form action="" name="forexForm">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title p">
+                                                            <a data-toggle="collapse" data-parent="#accordion" ng-click="collapseAccordion('forexAccordion')">
+                                                            Forex</a>
+                                                </h4>
+                                            </div>
+                                            <div id="collapseFour" class="panel-collapse collapse in">
+                                                <div class="panel-body">
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Select Country*</label>
+                                                            <select class="form-control input-sm" ng-model="forex.country" name="forexCountry" required>
+                                                                       <option value="">--Select Country--</option>
+                                                                   </select>
+                                                                   <div ng-messages="forexForm.forexCountry.$error" ng-if="forexForm.forexCountry.$touched"> 
+                                                                    <p ng-message="required">Please select country</p> 
+                                                                   </div>   
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Currency*</label>
+                                                            <select class="form-control input-sm" ng-model="forex.currency" name="forexCurrency" required>
+                                                                           <option value="">--Select Currency--</option>
+                                                                       </select>
+                                                                       <div ng-messages="forexForm.forexCurrency.$error" ng-if="forexForm.forexCurrency.$touched"> 
+                                                                        <p ng-message="required">Please select currency</p> 
+                                                                       </div> 
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Select Bankdesk*</label>
+                                                            <select class="form-control input-sm" ng-model="forex.bankdesk" name="forexBankdesk" required>
+                                                                               <option value="">--Select Bankdesk--</option>
+                                                                           </select>
+                                                                           <div ng-messages="forexForm.forexBankdesk.$error" ng-if="forexForm.forexBankdesk.$touched"> 
+                                                                            <p ng-message="required">Please select bankdesk</p> 
+                                                                           </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Travelling Days*</label>
+                                                            <input type="number" class="form-control input-sm" placeholder="Travelling Days" 
+                                                            ng-model="forex.travellingDays" name="forexTravellingDays" required>
+
+                                                            <div ng-messages="forexForm.forexTravellingDays.$error" ng-if="forexForm.forexTravellingDays.$touched"> 
+                                                                <p ng-message="required">Please select travelling days</p> 
+                                                               </div>
+
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Amount For Foreign Exchange*</label>
+                                                            <input type="number" class="form-control input-sm" placeholder="Amount For Foreign Exchange"
+                                                            ng-model="forex.amountForForeignExchange" name="forexAmountForForeignExchange" required>
+                                                            <!-- <select class="form-control">
+                                                                               <option>--Select Currency--</option>
+                                                                           </select> -->
+
+                                                                           <div ng-messages="forexForm.forexAmountForForeignExchange.$error" ng-if="forexForm.forexAmountForForeignExchange.$touched"> 
+                                                                            <p ng-message="required">Please enter amount for foreign exchange</p> 
+                                                                           </div>
+                                                        </div>
+                                                        <div class="col-xs-12 col-md-4">
+                                                            <label>Collection Center*</label>
+                                                            <select class="form-control input-sm" ng-model="forex.collectionCentre" name="forexCollectionCentre" required>
+                                                                                   <option value="">--Select Collection Center--</option>
+                                                                               </select>
+
+                                                                               <div ng-messages="forexForm.forexCollectionCentre.$error" ng-if="forexForm.forexCollectionCentre.$touched"> 
+                                                                                <p ng-message="required">Please select collection centre</p> 
+                                                                               </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row tp-field-heading">
+                                                        <div class="col-xs-12 col-md-12">
+                                                            <label>Remark</label>
+                                                            <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                                </div>
+                                                </form>
+                                                <!-- ------------------ end of Forex panel/accordion ------------ -->
+                                            </div>
+                                
+                                            <!-- ================================================================
+                                                 |				end of panel group || accordions 	           	|
+                                                ================================================================-->
+                                        </div>
+                                    
+                                    <!-- ---------- Start of buttons section
+                                                          Starts here       -------- -->
+                                    <footer>
+                                        <nav aria-label="...">
+                                            <ul class="pager">
+                                                <li class="previous"><a data-toggle="tab" href="#personalDetails">Previous</a></li>
+
+                                                <li class="next"><a href="#">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </footer>
+                                </section>
+                                <!-- ===============================================
+                                    |      End of Request Details form section      |
+                                    ================================================== -->
+
+
+
+                        </div>
+
+
+                            <!-- third tab || Confirm view-->
+                            <div id="confirm" class="tab-pane fade">
+                                <!-- ================================================
+                                |             Confirmation Section                  |
+                                ===================================================== -->
+                                <section>
+
+                                    <header>
+                                        <h3>Personal Details</h3>
+                                    </header>
+                                    <hr>
+                                    <!-- =========== Personal details view article ============== -->
+                                    <div class="article ">
+
+                                        <div class="row ">
+                                            <div class="col-md-4 ">
+                                                <label>Employee name:</label>
+                                                <span>Sumit Lokhande</span>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <label>Location:</label>
+                                                <span>Pune</span>
+                                            </div>
+
+                                            <div class="col-md-4 ">
+                                                <label>Contact Number:</label>
+                                                <span>+91 9976 456 899</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row ">
+                                            <div class="col-md-4 ">
+                                                <label>Project Code:</label>
+                                                <span>5028758</span>
+                                            </div>
+                                            <div class="col-md-4 ">
+                                                <label>Project Name:</label>
+                                                <span>Backbase Internal Pune</span>
+                                            </div>
+
+                                            <div class="col-md-4 ">
+                                                <label>Approvers Name:</label>
+                                                <span>Mr. Paras Mishra</span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- ============================================
+                                        |       end of personal details article     |
+                                        ============================================= -->
+
+
+                                    <header>
+                                        <h3>Request Details</h3>
+                                    </header>
+                                    <hr>
+                                    <!-- ============================================
+                                        |         flight booking article             |
+                                        ============================================= -->
+                                    <div class="article ">
+
+                                        <h4>Flight Booking</h4>
+                                        <table class="table table-bordered ">
+                                            <tr>
+                                                <td><label>Tour Type:</label></td>
+                                                <td colspan="2 ">Domestic</td>
+                                                <td><label>Travel Type:</label></td>
+                                                <td colspan="2 ">One way</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><label>Buisness Purpose:</label></td>
+                                                <td>Client visit</td>
+                                                <td><label>From:</label></td>
+                                                <td>Benglore</td>
+                                                <td><label>To:</label></td>
+                                                <td>Pune</td>
+                                            </tr>
+
+                                            <tr>
+                                                <td><label>Departure Date:</label></td>
+                                                <td>21/10/2017</td>
+                                                <td><label>Departure Time:</label></td>
+                                                <td>Morning</td>
+                                                <td><label>Booking Type:</label></td>
+                                                <td>Company Booking</td>
+                                            </tr>
+                                            <tr>
+                                                <td><label>Remark</label></td>
+                                                <td colspan="5 ">Visiting client location for offial purpose. Need veg meal.</td>
+                                            </tr>
+                                        </table>
+
+
+                                    </div>
+                                    <!-- ===========================================
+                                        |       End of Flight booking article       |
+                                        ============================================== -->
+
+                                    <!-- ===============================================
+                                        |        Taxi Booking article                   |
+                                        ================================================ -->
+                                    <div class="article ">
+
+                                        <h4>Taxi Booking</h4>
+                                        <table class="table table-bordered ">
+                                            <tr>
+                                                <td><label>From:</label></td>
+                                                <td>Pune International Airport</td>
+                                                <td><label>To:</label></td>
+                                                <td>World Trade Centre, Kharadi,Pune</td>
+                                            </tr>
+
+
+
+                                            <tr>
+                                                <td><label>Departure Date:</label></td>
+                                                <td>21/10/2017</td>
+                                                <td><label>Departure Time:</label></td>
+                                                <td>1:00 PM</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td><label>Remark</label></td>
+                                                <td colspan="3 ">Time may vary due to delay in flight.</td>
+                                            </tr>
+                                        </table>
+
+
+                                
+                                    <!-- ===============================================
+                                        |          end of taxi booking article            |  
+                                        ================================================= -->
+                                    <div align="right ">
+                                        <button class="btn btn-success ">Confirm & Submit</button>
+                                    </div>
+
+
+
+                                </section>
+                                <!--===========================================================
+                                    |                  end of section                         |
+                                    ===========================================================-->
+
+
+                        </div>
+
+
+
+                    </section>
+                </div>
+                <!-- main section i.e tab-content class ends-->
+            </section>
+
+        </section>
+        <!-- ============================================
+            |               End of Main                  |
+            ============================================= -->
+
+
+       
+
+    </div>
+
+
+    
+
+
+
+
+
+
+    <script src="../assets/js/angular/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-messages.js"></script>
+    <script src="../assets/js/angular/component-router.js"></script>
+    <script src="../assets/js/jquery/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/1.3.2/ui-bootstrap-tpls.js"></script>
+   
+    
+
+    <script>
+
+
+
+        angular.module("testModule", ['ngMessages','ui.bootstrap'])
+            .controller("testController", function ($scope) {
+                $scope.accomodationAccordion = "panel-collapse collapse ";
+                $scope.taxiAccordion = "panel-collapse collapse ";
+                $scope.flightAccordion = "panel-collapse collapse ";
+                $scope.forexAccordion = "panel-collapse collapse ";
+                $scope.collapseAccordion =   function (accordionName) {
+                    // alert(travelType+"-- "+accordionName);
+                    //acc = accordionName;
+                    // if(travelType=="panel-collapse collapse "){
+                    // alert(acc+"--if ");
+                    // $scope.acc="panel-collapse collapse in ";
+                    // alert()
+                    // }else{
+                    // alert($scope.accordionName+"--else ");
+                    // $scope.acc="panel-collapse collapse ";
+                    // }
+
+                    if (accordionName == "accomodationAccordion") {
+
+                        if ($scope.accomodationAccordion == "panel-collapse collapse ") {
+                            $scope.accomodationAccordion = "panel-collapse collapse in ";
+                        } else {
+                            $scope.accomodationAccordion = "panel-collapse collapse ";
+                        }
+                    }
+
+                    if (accordionName == "taxiAccordion") {
+
+                        if ($scope.taxiAccordion == "panel-collapse collapse ") {
+                            $scope.taxiAccordion = "panel-collapse collapse in ";
+                        } else {
+                            $scope.taxiAccordion = "panel-collapse collapse ";
+                        }
+                    }
+
+                    if (accordionName == "flightAccordion") {
+
+                        if ($scope.flightAccordion == "panel-collapse collapse ") {
+                            $scope.flightAccordion = "panel-collapse collapse in ";
+                        } else {
+                            $scope.flightAccordion = "panel-collapse collapse ";
+                        }
+                    }
+
+                    if (accordionName == "forexAccordion") {
+
+                        if ($scope.forexAccordion == "panel-collapse collapse ") {
+                            $scope.forexAccordion = "panel-collapse collapse in ";
+                        } else {
+                            $scope.forexAccordion = "panel-collapse collapse ";
+                        }
+                    }
+
+                }
+
+
+                //Datepicker
+        
+        var today = new Date();
+        $scope.AvailableDate = new Date();
+        $scope.ExpireDate = new Date();
+        $scope.dateFormat = 'yyyy-MM-dd';
+        $scope.availableDateOptions = {
+            formatYear: 'yy',
+            startingDay: 1,
+            minDate: today,
+            maxDate: new Date(2030, 5, 22)
+        };
+        $scope.expireDateOptions = {
+            formatYear: 'yy',
+            startingDay: 1,
+            minDate: today,
+            maxDate: new Date(2030, 5, 22)
+        };
+        $scope.availableDatePopup = {
+            opened: false
+        };
+        $scope.expireDatePopup = {
+            opened: false
+        };
+        $scope.ChangeExpiryMinDate = function(availableDate) {
+            if (availableDate != null) {
+                var expiryMinDate = new Date(availableDate);
+                $scope.expireDateOptions.minDate = expiryMinDate;
+                $scope.ExpireDate = expiryMinDate;
+            }
+        };
+        $scope.ChangeExpiryMinDate();
+        $scope.OpenAvailableDate = function() {
+            $scope.availableDatePopup.opened = !$scope.availableDatePopup.opened;
+        };
+        $scope.OpenExpireDate = function() {
+            $scope.expireDatePopup.opened = !$scope.expireDatePopup.opened;
+        };
+
+        $scope.timeInterval={
+            intervals:[{display:"12:00",value:"12:00:00"},
+                        {display:"12:30",value:"12:30:00"}],
+            type:["AM","PM"]
+        }
+    
+
+                })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,165 @@
+
+
+
+    <section class="container-bg">
+
+        <header>
+            <h1 class="p-tb-md m-n p">New Travel Request</h1>
+        </header>
+        <section class="main-bg">
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <section>
+                        <ul class="nav nav-tabs text-center">
+                            <li class="active"><a data-toggle="tab" href="#personalDetails">Personal Details</a></li>
+                            <li><a data-toggle="tab" href="#reqDetails">Request Details</a></li>
+                            <li><a data-toggle="tab" href="#confirm">Confirm</a></li>
+                        </ul>
+                    </section>
+                </div>
+                <section class="tab-content panel-body">
+                    <div class="progress progress-xs m-t-md">
+                        <div class="progress-bar bg-success" style="width: 33.3333%;"></div>
+                    </div>
+                    <section class="tab-content panel-body">
+
+                        <div id="personalDetails" class="tab-pane fade in active">
+                            <form action="" name="personal">
+
+                                <!-- Cerating a contianer having padding-->
+
+                                <section>
+                                    <!-- Radio button selector i.e mandatory for selecting booking travel for self 
+                                                    or others-->
+                                    <!-- -------- Start of radio ---------- -->
+
+                                    <div class="input">
+                                        <header class="tp-radio-pad">
+                                            Please select from one of the following options*
+                                        </header>
+                                        <label class="radio-inline">
+                                                Self <input type="radio" name="self-other">
+                                                        <i></i>
+                                                    </label>
+                                        <label class="radio-inline m-l-lg">
+                                            Other Employee <input type="radio" name="self-other">
+                                                        <i></i>
+                                        </label>
+                                    </div>
+
+                                    <!-- ------------ Ends of radio ----------------- -->
+
+
+                                    <!------------- Start of input field section
+                                                                 Starts here        -------- -->
+                                    <div class="row tp-field-heading">
+
+
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Employee Name*</label>
+                                            <input type="text" class="form-control input-sm" name="personName" placeholder="Employee Name" ng-model="person.name" ng-minlength="4"
+                                                ng-maxlength="50" ng-patteng-pattern="/^[a-zA-Z ][^\s]*$/" required />
+                                            <div ng-messages="personal.personName.$error" ng-if="personal.personName.$touched">
+                                                <p ng-message="pattern">Numbers and special characters are not allowed</p>
+                                                <div ng-messages-include="errorMessages.html"></div>
+                                                <p ng-message="required">Please enter employee name</p>
+
+                                            </div>
+                                        </div>
+
+
+
+                                        <div class="col-xs-12 col-md-6">
+
+                                            <label>Employee Contact*</label>
+                                            <input type="text" class="form-control input-sm" placeholder="Employee Contact" name="personContact" ng-model="person.contact"
+                                                ng-minlength="10" ng-maxlength="10" ng-pattern="/^[0-9][^\s]*$/" required />
+                                            <div ng-messages="personal.personContact.$error" ng-if="personal.personContact.$touched">
+                                                <p ng-message="pattern">Only numbers are allowed</p>
+                                                <div ng-messages-include="errorMessages.html"></div>
+                                                <p ng-message="required">Please enter employee contact number</p>
+
+                                            </div>
+                                        </div>
+                                        <!-- right side column ends-->
+
+                                    </div>
+
+                                    <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Employee Location*</label>
+                                            <select class="form-control input-sm" ng-model="person.employeeLocation" name="personLocation" required>
+                                                    <option value="">--Select Location--</option>
+                                                    <option value="1">Pune</option>
+                                                    <option value="2">Banglore</option>
+                                                </select>
+                                            <div ng-messages="personal.personLocation.$error" ng-if="personal.personLocation.$touched">
+                                                <p ng-message="required">Please select location</p>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Approver Name*</label>
+                                            <select class="form-control input-sm" ng-model="person.approverName" name="personApproverName" placeholder="Approver Name">
+                                                    <option value="">--Select Name--</option>
+                                                    <option value="">Rajnish</option>  
+                                                </select>
+                                            <div ng-messages="personal.personApproverName.$error" ng-if="personal.personApproverName.$touched">
+
+                                                <p ng-message="required">Please select approver's name</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+
+                                            <label>Project Name*</label>
+                                            <input type="text" class="form-control input-sm" placeholder="Project Name" name="personProjectName" ng-model="person.ProjectName"
+                                                ng-model="person.contact" required />
+                                            <div ng-messages="personal.personProjectName.$error" ng-if="personal.personProjectName.$touched">
+                                                <p ng-message="required">Please enter project name</p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-xs-12 col-md-6">
+
+                                            <label>Project Code/Charge Code*</label>
+                                            <input type="text" class="form-control input-sm" placeholder="Project Name" name="personProjectCode" ng-model="person.ProjectCode"
+                                                ng-model="person.projectCode" required />
+                                            <div ng-messages="personal.personProjectCode.$error" ng-if="personal.personProjectCode.$touched">
+                                                <p ng-message="required">Please enter project code/charge code</p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- Start of buttons section
+                                                      Starts here  -->
+                                    <footer>
+                                        <nav aria-label="...">
+                                            <ul class="pager">
+                                                <li class="next"><a data-toggle="tab" href="#reqDetails1">Next</a></li>
+                                            </ul>
+                                        </nav>
+                                    </footer>
+
+
+
+                                </section>
+
+
+
+                                <!-- -----------end of container section---------- -->
+
+                            </form>
+                        </div>
+                    </section>

@@ -1,0 +1,16 @@
+Hi {{hcbpName}},
+
+You are receiving this mail as part of new travel request . Below are the details:
+
+Employee Name: {{employeeName}}
+
+Employee Number: {{employeeNumber}}
+
+Project Name: {{projectName}}
+
+
+Status: Confirmed
+
+
+Thanks!
+CapcoTravelAssist Team

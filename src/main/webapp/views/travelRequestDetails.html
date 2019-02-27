@@ -1,0 +1,663 @@
+<!Doctype html>
+<html lang="en" ng-app="">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Request</title>
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="../assets/dist/css/cust-Travel-Portal.css">
+
+
+    <style>
+        body {
+            background-color: #f7f7f7;
+            padding: 100px 150px 0px 150px;
+        }
+
+        section {
+            background-color: #fff;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body ng-controller="">
+   <!-- ===============================================
+        |            Request Details form section      |
+        ================================================== -->
+    <section>
+            <div class="row">
+                <div class="col-lg-3 col-xs-6">
+                    <input type="checkbox" class="form-check-input">
+                    <label>Hotel/Accomodation</label>
+                </div>
+    
+    
+                <div class="col-lg-3 col-xs-6">
+                    <input type="checkbox">
+                    <label>Taxi</label>
+                </div>
+    
+                <div class="col-lg-3 col-xs-6">
+                    <input type="checkbox">
+                    <label>Flight</label>
+                </div>
+    
+                <div class="col-lg-3 col-xs-6">
+                    <input type="checkbox">
+                    <label>Forex</label>
+                </div>
+            </div>
+    
+            <div class="">
+                <!-- ===============================================================
+                    |						panel group || accordians               |
+                    ================================================================- -->
+                <div class="panel-group">
+                    <!-- ---------------- Hotel / Accomodation panel/accordion ---------------- -->
+                    <div class="panel panel-default">
+                        <!-- -------------Panel Heaading------------- -->
+                        <div class="panel-heading">
+                            <h4 class="panel-title p">
+                                <a data-toggle="collapse" data-parent="#accordion">
+                                Hotel/Accomodation</a>
+
+                        <!-- <div class="pull-right">
+                                        <i class="fa fa-chevron-down"></i>
+                                    </div> -->
+                            </h4>
+                           
+                        </div>
+                         <!-- -------------Panel Heaading------------- -->
+                        <div id="collapseOne" ng-class="accomodationAccordion">
+                            <div class="panel-body">
+
+                                <div class="row tp-field-heading">
+                                    <div class="col-xs-12 col-md-6">
+                                        <label>Country</label>
+                                        <select class="form-control">
+                                            <option>--Select Country--</option>
+                                        </select>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+
+                                <label>City</label>
+                                <select class="form-control input-sm">
+                                                    <option>--Select City--</option>
+                                                </select>
+                                    </div>
+                                </div>
+
+                                <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Check-in Date</label>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            
+                                                <label>Check-in Time</label>
+                                                <input type="text" class="form-control" placeholder="Check-in Time">
+                                        </div>
+                                    </div>
+
+                                <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Check-out Date</label>
+                                            <input type="date" class="form-control">
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            
+                                                <label>Check-out Time</label>
+                                                <input type="text" class="form-control" placeholder="Check-out Time">
+                                        </div>
+                                    </div>
+    
+                                <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Budget Per Day</label>
+                                            <input type="text" class="form-control" placeholder="Budget Per Day">
+                                        </div>
+                                        <div class="col-xs-12 col-md-6">
+                                            
+                                                <label>Currency</label>
+                                                <select class="form-control">
+                                                    <option>--Select Currency--</option>
+                                                </select>
+                                        </div>
+                                    </div>
+
+                                <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-6">
+                                            <label>Type of Room</label>
+                                            <select class="form-control">
+                                                    <option>--Select Type--</option>
+                                                </select>
+                            </div>
+                            <div class="col-xs-12 col-md-6">
+
+                                <label>Nearest Facility</label>
+                                <select class="form-control input-sm">
+                                                        <option>--Select facility--</option>
+                                                    </select>
+                                        </div>
+                                    </div>
+    
+                                <div class="row tp-field-heading">
+                                    <div class="col-xs-12 col-md-12">
+                                        <label>Remark</label>
+                                        <textarea class="form-control" placeholder="Remark"></textarea>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                    <!-- --------------------end of Hotel/Accomodation panel/accordion----------------------- -->
+    
+                    <!-- ----------------------Cab/Taxi panel/accordion ------------- -->
+                    <div class="panel panel-default" ng-if="taxiCheck">
+                        <div class="panel-heading">
+                            <h4 class="panel-title p">
+                                <a data-toggle="collapse" data-parent="#accordion">
+                                Cab/Taxi Request</a>
+                    </h4>
+                </div>
+                <div id="collapseTwo" ng-class="taxiAccordion">
+                    <div class="panel-body">
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Car Request Type</label>
+                                <select class="form-control input-sm">
+                                            <option>--Select Type--</option>
+                                        </select>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Select City</label>
+                                <select class="form-control input-sm">
+                                                  <option>--Select City--</option>
+                                              </select>
+
+
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Pickup Point/Place</label>
+                                <input type="text" class="form-control input-sm" placeholder="Pickup Point/Place">
+
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>If other,Enter Address</label>
+                                <input type="text" class="form-control input-sm" placeholder="Address">
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>If Outstation, Select City</label>
+                                <select class="form-control input-sm">
+                                                            <option>--Select City--</option>
+                                                        </select>
+
+
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Drop Location</label>
+                                <input type="text" class="form-control input-sm" placeholder="Drop Location">
+
+                            </div>
+                        </div>
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>From date</label>
+                                <input type="date" class="form-control input-sm" placeholder="From Date">
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>To Date</label>
+                                <input type="date" class="form-control input-sm" placeholder="To Date">
+
+
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Pickup Time</label>
+                                <input type="text" class="form-control input-sm" placeholder="Pickup Time">
+                            </div>
+                        </div>
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Type of Car</label>
+                                <select class="form-control input-sm">
+                                                <option>--Select Type--</option>
+                                            </select>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Number of Person/s</label>
+                                <input type="number" class="form-control input-sm" placeholder="From Date">
+                            </div>
+
+                        </div>
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 ">
+                                <label>Remark</label>
+                                <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ------------------- end of Cab/Taxi  panel/accordion ---------------- -->
+    
+                    <!-- --------------------Flight panel/accordion ------------------ -->
+                    <div class="panel panel-default" ng-if="flightCheck">
+                        <div class="panel-heading">
+                            <h4 class="panel-title p">
+                                <a data-toggle="collapse" data-parent="#accordion">
+                                Flight</a>
+                    </h4>
+                </div>
+                <div id="collapseThree" ng-class="flightAccordion">
+                    <div class="panel-body">
+                        <div class="row tp-field-heading">
+                            <div class="col-md-12 form-group input">
+                                <header class="tp-radio-pad">Select Tour Type*</header>
+
+                                <label class="radio-inline">
+                                   
+                                        <input type="radio" name="tour">
+                                            <i></i> 
+                                            Domestic 
+                                </label>
+
+                                <label class="radio-inline m-l-lg">
+                                   
+                                        <input type="radio" name="tour">
+                                            <i></i> International 
+                                </label>
+                                        <!-- <label><input type="radio" name="tourType" id="doemstic" value="domestic"><i></i>Domestic</label>                                    &nbsp&nbsp -->
+                                        <!-- <label><input type="radio" name="tourType" id="international" value="international"><i></i>International</label> -->
+                            </div>
+
+                        </div>
+
+                        <div class="row tp-field-heading input">
+                            <div class="col-xs-12 col-md-12 form-group">
+                                <p>Select Travel Type*</p>
+                                <label class="radio-inline">
+                                
+                                        <input type="radio" name="travel">
+                                        <i></i> One Way 
+                                </label> 
+                                <label class="radio-inline m-l-lg">
+                                    Round Way 
+                                        <input type="radio" name="travel">
+                                        <i></i> Round Way 
+                            </div>
+                            <label>
+                                        </label>
+                        </div>
+                        <!-- --------Domestic flight------------>
+                        <!-- <div>
+                                    <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-4">
+                                            <label>Buisness Purpose*</label>
+                                            <select class="form-control">
+                                            <option>--Select Purpose--</option>
+                                            <option>option 1</option>
+                                        </select>
+                                        </div>
+    
+                                        <div class="col-xs-12 col-md-4">
+                                            <label>From*</label>
+                                            <input type="text" class="form-control" placeholder="Location">
+                                        </div>
+    
+                                        <div class="col-xs-12 col-md-4">
+    
+                                            <label>To*</label>
+                                            <input type="number" class="form-control" placeholder="Days">
+    
+                                        </div>
+                                    </div>
+                                    <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-4">
+                                            <label>Departure Date*</label>
+                                            <input type="date" class="form-control">
+                                        </div>
+    
+                                        <div class="col-xs-12 col-md-4">
+                                            <label>Departure Time*</label>
+                                            <select class="form-control">
+                                                        <option>--Select Time--</option>
+                                                        <option>Morning</option>
+                                                        <option>Night</option>
+                                                    </select>
+                                        </div>
+    
+                                        <div class="col-xs-12 col-md-4">
+    
+                                            <label>Booking Type*</label>
+                                            <select class="form-control">
+                                                    <option>--Select Type--</option>
+                                                    <option>Company Booking</option>
+                                                    <option>Personal Booking</option>
+                                                </select>
+    
+                                        </div>
+                                    </div>
+                                    <div class="row tp-field-heading">
+                                        <div class="col-xs-12 col-md-12">
+                                            <label>Remark</label>
+                                            <textarea class="form-control" placeholder="Remark"></textarea>
+                                        </div>
+                                    </div>
+                                </div> -->
+                        <!-- --------------International flight------------ -->
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Business Purpose*</label>
+                                <select class="form-control input-sm">
+                                                        <option>--Select Purpose--</option>
+                                                </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>Origin Country*</label>
+                                <select class="form-control input-sm">
+                                                            <option>--Select Country--</option>
+                                                        </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Destination Country*</label>
+                                <select class="form-control input-sm">
+                                                        <option>--Select Country--</option>
+                                                    </select>
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>From City*</label>
+                                <select class="form-control input-sm">
+                                                            <option>--Select City--</option>
+                                                    </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>To City*</label>
+                                <select class="form-control input-sm">
+                                                                <option>--Select City--</option>
+                                                            </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Departure Date*</label>
+                                <input type="date" class="form-control input-sm">
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Departure Time*</label>
+                                <select class="form-control input-sm">
+                                                                <option>--Select Time--</option>
+                                                        </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>Preferred Class*</label>
+                                <select class="form-control input-sm">
+                                                                    <option>--Select Class--</option>
+                                                                </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Meal Preferance*</label>
+                                <select class="form-control input-sm">
+                                                                <option>--Select Preferance--</option>
+    
+                                                            </select>
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Return Date*</label>
+                                <input type="date" class="form-control input-sm">
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>Re Time*</label>
+                                <select class="form-control input-sm">
+                                                                <option>--Select Time--</option>
+                                                            </select>
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Passport Number*</label>
+                                <input type="text" class="form-control input-sm" placeholder="Passport Number">
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Surname*</label>
+                                <input type="text" class="form-control input-sm" placeholder="Surname">
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>Given Name*</label>
+                                <input type="text" class="form-control input-sm" placeholder="Given Name">
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Date of Birth*</label>
+                                <input type="date" class="form-control input-sm">
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Passport Issue Date*</label>
+                                <input type="date" class="form-control input-sm">
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+                                <label>Passport Expiry Date*</label>
+                                <input type="date" class="form-control input-sm">
+                            </div>
+
+                            <div class="col-xs-12 col-md-4">
+
+                                <label>Nationallity*</label>
+                                <input type="text" class="form-control input-sm" placeholder="Nationallity">
+
+                            </div>
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-12">
+                                <label>Remark</label>
+                                <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- ---------------- End of Flight panel/accordion------------ -->
+    
+    
+                    <!-- ---------------- Forex panel/accordion----------- -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title p">
+                                <a data-toggle="collapse" data-parent="#accordion" ng-click="collapseAccordion('forexAccordion')">
+                                Forex</a>
+                    </h4>
+                </div>
+                <div id="collapseFour" ng-class="forexAccordion">
+                    <div class="panel-body">
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Select Country*</label>
+                                <select class="form-control input-sm">
+                                           <option>--Select Country--</option>
+                                       </select>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Currency*</label>
+                                <select class="form-control input-sm">
+                                               <option>--Select Currency--</option>
+                                           </select>
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Select Bankdesk*</label>
+                                <select class="form-control input-sm">
+                                                   <option>--Select Bankdesk--</option>
+                                               </select>
+                            </div>
+
+                        </div>
+
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-4">
+                                <label>Travelling Days*</label>
+                                <input type="number" class="form-control input-sm" placeholder="Travelling Days">
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Amount For Foreign Exchange*</label>
+                                <input type="number" class="form-control input-sm" placeholder="Amount For Foreign Exchange">
+                                <!-- <select class="form-control">
+                                                   <option>--Select Currency--</option>
+                                               </select> -->
+                            </div>
+                            <div class="col-xs-12 col-md-4">
+                                <label>Collection Center*</label>
+                                <select class="form-control input-sm">
+                                                       <option>--Select Collection Center--</option>
+                                                   </select>
+                            </div>
+
+                        </div>
+                        <div class="row tp-field-heading">
+                            <div class="col-xs-12 col-md-12">
+                                <label>Remark</label>
+                                <textarea class="form-control input-sm" placeholder="Remark"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ------------------ end of Forex panel/accordion ------------ -->
+                </div>
+    
+                <!-- ================================================================
+                     |				end of panel group || accordions 	           	|
+                    ================================================================-->
+            </div>
+        
+        <!-- ---------- Start of buttons section
+                              Starts here       -------- -->
+        <footer>
+            <nav aria-label="...">
+                <ul class="pager">
+                    <li class="previous"><a data-toggle="tab" href="#personalDetails">Previous</a></li>
+
+                    <li class="next"><a href="#">Next</a></li>
+                </ul>
+            </nav>
+        </footer>
+    </section>
+    <!-- ===============================================
+        |      End of Request Details form section      |
+        ================================================== -->
+
+    <!-- <script>
+        //Include only functions
+        //c
+        angular.module("testModule", [])
+            .controller("testController", function ($scope) {
+
+                $scope.accomodationAccordion = "panel-collapse collapse";
+                $scope.taxiAccordion = "panel-collapse collapse";
+                $scope.flightAccordion = "panel-collapse collapse";
+                $scope.forexAccordion = "panel-collapse collapse";
+
+                $scope.collapseAccordion = function (accordionName) {
+
+                    // alert(travelType+"--"+accordionName);
+                    //acc = accordionName;
+                    // if(travelType=="panel-collapse collapse"){
+                    //     alert(acc+"--if");
+                    // $scope.acc="panel-collapse collapse in";
+                    // alert()
+                    // }else{
+                    //     alert($scope.accordionName+"--else");
+                    //     $scope.acc="panel-collapse collapse";
+                    // }
+
+                    if (accordionName == "accomodationAccordion") {
+
+                        if ($scope.accomodationAccordion == "panel-collapse collapse") {
+                            $scope.accomodationAccordion = "panel-collapse collapse in";
+                        } else {
+                            $scope.accomodationAccordion = "panel-collapse collapse";
+                        }
+                    }
+
+                    if (accordionName == "taxiAccordion") {
+
+                        if ($scope.taxiAccordion == "panel-collapse collapse") {
+                            $scope.taxiAccordion = "panel-collapse collapse in";
+                        } else {
+                            $scope.taxiAccordion = "panel-collapse collapse";
+                        }
+                    }
+
+
+                    if (accordionName == "flightAccordion") {
+
+                        if ($scope.flightAccordion == "panel-collapse collapse") {
+                            $scope.flightAccordion = "panel-collapse collapse in";
+                        } else {
+                            $scope.flightAccordion = "panel-collapse collapse";
+                        }
+                    }
+
+
+                    if (accordionName == "forexAccordion") {
+
+                        if ($scope.forexAccordion == "panel-collapse collapse") {
+                            $scope.forexAccordion = "panel-collapse collapse in";
+                        } else {
+                            $scope.forexAccordion = "panel-collapse collapse";
+                        }
+                    }
+
+
+                }
+
+            })
+    </script> -->
+</body>
+
+</html>

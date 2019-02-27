@@ -1,0 +1,59 @@
+<!--  <login-header-component></login-header-component>  -->
+<!------------------------- Start of Login------------------------------- -->
+<section id="content" >    
+    <div class="wrapper">
+		<div class="container-login">
+			<div class="wrap-login">
+				<div class="login-pic">
+					<!--  <img src="../assets/images/capco_logo.png" alt="IMG">-->
+					<img src="assets/images/capco_logo.png" alt="IMG">
+					<p>Capco<br/>Travel<br/>Assistance<br /></p>
+				</div>
+
+				<form name="form.loginForm" class="login-form validate-form" novalidate>
+					<span class="login-form-title">
+						Login
+					</span>
+
+					<div class="wrap-input" >
+						<input ng-model="user.capcoUserId" class="input" type="text" name="name" size="10"  placeholder="Username" ng-focus="removeSpan()" required>
+						<span class="focus-input"></span>
+						<span class="symbol-input">
+							<i class="fa fa-user" aria-hidden="true"></i>
+						</span>
+						<span ng-if="form.loginForm.$submitted && form.loginForm.name.$invalid" style="color:red">
+						   This field is required
+						</span>
+					</div>
+
+					<div class="wrap-input" >
+						<input ng-model="user.password" class="input" type="password" name="pass" placeholder="Password" ng-focus="removeSpan()"  required>
+						<span class="focus-input"></span>
+						<span class="symbol-input">
+							<i class="fa fa-key" aria-hidden="true"></i>
+						</span>
+						<span  ng-if="form.loginForm.$submitted && form.loginForm.pass.$invalid" style="color:red">
+						   This field is required
+						</span>
+						<span class="loginerror" ng-blur="removeSpan()"  ng-if="form.loginForm.$submitted && loginError" style="color:red">
+						   {{loginError}}
+						</span>
+					</div>
+					
+					<div class="container-login-form-btn">
+						<button class="login-form-btn" ng-click="login()">
+							Login
+						</button>
+					</div>
+
+
+					
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+  </section>
+  <!-- <img src="https://media.giphy.com/media/xTk9ZvMnbIiIew7IpW/giphy.gif" ng-if="true"> -->
+  <!------------------------- Start of Login------------------------------- -->
